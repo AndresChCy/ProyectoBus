@@ -1,7 +1,7 @@
 package Vistas;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
+import java.awt.*;
 
 /**
  * La clase Ventana representa la ventana principal de la aplicación.
@@ -18,6 +18,9 @@ public class Ventana extends JFrame {
         this.setTitle("Reserva de Buses");
         this.setSize(1600, 900);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Establecer el tamaño mínimo permitido para la ventana
+        this.setMinimumSize(new Dimension(800, 600));
 
         // Crear e inicializar el panel principal
         PanelPrincipal panelPrincipal = new PanelPrincipal();
