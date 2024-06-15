@@ -19,17 +19,8 @@ public class PanelActual {
     }
 
     public static JPanel crearPanelHorarios(PanelPrincipal panelPrincipal) {
-        JPanel panel = new PanelHorarios();
-        panel.setLayout(new BorderLayout());
-
-        JPanel inferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton botonSiguiente = new JButton("Siguiente a Asientos");
-        botonSiguiente.addActionListener(e -> panelPrincipal.mostrarPanelAsientos());
-        inferior.add(botonSiguiente);
-
-        panel.add(new JLabel("Horarios Disponibles"), BorderLayout.NORTH);
-        panel.add(inferior, BorderLayout.SOUTH);
-        return panel;
+        PanelHorarios panelHorarios = new PanelHorarios();
+        return panelHorarios;
     }
 
     public static JPanel crearPanelAsientos(PanelPrincipal panelPrincipal) {
