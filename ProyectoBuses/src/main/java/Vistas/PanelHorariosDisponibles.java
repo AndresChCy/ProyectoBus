@@ -10,10 +10,12 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
     private String[] tipoAsientoAuxiliar;
     private PanelInfoBus[] panelesInfoBus;
     private int desplazamiento = 0;
+    private PanelPrincipal panelPrincipal;
 
-    public PanelHorariosDisponibles(String[] arrayAuxiliar, String[] tipoAsientoAuxiliar) {
+    public PanelHorariosDisponibles(String[] arrayAuxiliar, String[] tipoAsientoAuxiliar, PanelPrincipal panelPrincipal) {
         this.arrayAuxiliar = arrayAuxiliar;
         this.tipoAsientoAuxiliar = tipoAsientoAuxiliar;
+        this.panelPrincipal = panelPrincipal;
         this.panelesInfoBus = new PanelInfoBus[arrayAuxiliar.length];
         this.setLayout(null);
         this.setBackground(Color.BLACK);
@@ -27,7 +29,7 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
         int altoPanelInfoBus = (int) (altoPanel * 0.1);
 
         for (int i = 0; i < arrayAuxiliar.length; i++) {
-            panelesInfoBus[i] = new PanelInfoBus(arrayAuxiliar[i], tipoAsientoAuxiliar[i % tipoAsientoAuxiliar.length]);
+            panelesInfoBus[i] = new PanelInfoBus(arrayAuxiliar[i], tipoAsientoAuxiliar[i % tipoAsientoAuxiliar.length], panelPrincipal);
             panelesInfoBus[i].setBounds(0, i * altoPanelInfoBus, anchoPanel, altoPanelInfoBus);
             this.add(panelesInfoBus[i]);
         }

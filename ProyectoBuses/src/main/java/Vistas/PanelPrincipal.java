@@ -32,8 +32,6 @@ public class PanelPrincipal extends JPanel {
         panelActual.add(panelAsientos, "Asientos");
         panelActual.add(panelInformacionPasajero, "Información del pasajero");
 
-        add(panelActual);
-
         // Agregar el panelActual al centro del PanelPrincipal
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -41,6 +39,10 @@ public class PanelPrincipal extends JPanel {
     }
 
     // Métodos para cambiar las tarjetas
+    public void mostrarPanelSelectorRuta() {
+        paneles.show(panelActual, "Selector de Ruta");
+    }
+
     public void mostrarPanelHorarios() {
         paneles.show(panelActual, "Horarios de Salida");
     }

@@ -8,15 +8,29 @@ public class PanelInfoBus extends JPanel {
     private String horario;
     private String tipoAsiento;
     private final String comprar = "COMPRAR";
+    private final FuentesPersonalizadas mensajeHora;
+    private final FuentesPersonalizadas mensajeAsiento;
+    private final String fuente = "Roboto";
+    private JButton botonComprar;
+    private PanelPrincipal panelPrincipal;
 
-    public PanelInfoBus(String horario, String tipoAsiento) {
+    public PanelInfoBus(String horario, String tipoAsiento, PanelPrincipal panelPrincipal) {
         this.horario = horario;
         this.tipoAsiento = tipoAsiento;
+        this.panelPrincipal = panelPrincipal;
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        mensajeHora = new FuentesPersonalizadas("Salida: " + horario, fuente);
+        mensajeAsiento = new FuentesPersonalizadas(tipoAsiento, fuente);
+
+        // Crear el botón "Comprar"
+        botonComprar = new JButton(comprar);
+        botonComprar.addActionListener(e -> panelPrincipal.mostrarPanelAsientos());
+        this.setLayout(null);
+        this.add(botonComprar);
 
         //*****************
         //Solo para probar
-        //*****************
+        // ****************
 
         Random rand = new Random();
         float r = rand.nextFloat();
@@ -29,16 +43,30 @@ public class PanelInfoBus extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 14));
 
         int anchoPanel = getWidth();
         int altoPanel = getHeight();
-        int padding = 10;
 
-        // Dibujar los textos de prueba
-        g.drawString("Salida: " + horario, padding, altoPanel / 2);
-        g.drawString(tipoAsiento, anchoPanel / 2 - padding, altoPanel / 2);
-        g.drawString(comprar, anchoPanel - g.getFontMetrics().stringWidth(comprar) - padding, altoPanel / 2);
+        int anchoInfo = (int) (anchoPanel * 0.35);
+        int anchoMaxMensaje = (int) (anchoInfo * 0.90);
+        int margenMensaje = (int) (altoPanel * 0.05);
+        int altoMensaje = (int) (altoPanel * 0.9);
+
+        // Dibujar el mensaje de hora
+        int tamanoTextoHora = mensajeHora.calcularTamanoLetras(10, anchoMaxMensaje, altoMensaje, g);
+        g.setFont(new Font(fuente, Font.BOLD, tamanoTextoHora));
+        FontMetrics fm1 = g.getFontMetrics();
+        g.drawString("Salida: " + horario, margenMensaje * 2, margenMensaje + fm1.getAscent());
+
+        // Dibujar el mensaje de tipo de asiento
+        int tamanoMensajeAsiento = mensajeAsiento.calcularTamanoLetras(10, anchoMaxMensaje, altoMensaje, g);
+        g.setFont(new Font(fuente, Font.BOLD, tamanoMensajeAsiento));
+        FontMetrics fm2 = g.getFontMetrics();
+        g.drawString(tipoAsiento, margenMensaje * 2 + anchoInfo, margenMensaje + fm2.getAscent());
+
+        // Configurar el botón "Comprar"
+        int anchoBotonComprar = (int) (anchoPanel * 0.3);
+        botonComprar.setBounds(2 * anchoInfo, 0, anchoBotonComprar, altoPanel);
+        botonComprar.setFont(new Font(fuente, Font.BOLD, tamanoTextoHora));
     }
 }

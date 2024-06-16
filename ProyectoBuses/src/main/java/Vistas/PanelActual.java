@@ -19,7 +19,7 @@ public class PanelActual {
     }
 
     public static JPanel crearPanelHorarios(PanelPrincipal panelPrincipal) {
-        PanelHorarios panelHorarios = new PanelHorarios();
+        PanelHorarios panelHorarios = new PanelHorarios(panelPrincipal);
         return panelHorarios;
     }
 

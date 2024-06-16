@@ -8,9 +8,11 @@ public class PanelHorarios extends JPanel {
     private String[] tipoAsientoAuxiliar;
     private FuentesPersonalizadas fuentesPersonalizadas;
     private final String mensaje = "Horarios Disponibles";
-    private final String fuente = "Arial";
+    private final String fuente = "Kristen ITC";
+    private PanelPrincipal panelPrincipal;
 
-    public PanelHorarios() {
+    public PanelHorarios(PanelPrincipal panelPrincipal) {
+        this.panelPrincipal = panelPrincipal;
         this.setLayout(null);
         this.setBackground(Color.BLACK);
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
@@ -38,7 +40,7 @@ public class PanelHorarios extends JPanel {
         panelTitulo.setBounds(0, 0, getWidth(), (int) (getHeight() * 0.3));
         panelTitulo.setBackground(Color.BLACK);
 
-        PanelHorariosDisponibles panelHorariosDisponibles = new PanelHorariosDisponibles(arrayAuxiliar, tipoAsientoAuxiliar);
+        PanelHorariosDisponibles panelHorariosDisponibles = new PanelHorariosDisponibles(arrayAuxiliar, tipoAsientoAuxiliar, panelPrincipal);
         panelHorariosDisponibles.setBounds(0, (int) (getHeight() * 0.3), getWidth(), (int) (getHeight() * 0.7));
 
         this.add(panelTitulo);
