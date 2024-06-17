@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelSelectorRuta extends JPanel {
-    private final MenúSuperiorPanelInicial menúSuperiorPanelInicial;
+    private final MenuSuperiorPanelInicial menuSuperiorPanelInicial;
     private final SelectorOrigen selectorOrigen;
     private final SelectorDestino selectorDestino;
     private final FechaViaje fechaViaje;
     public PanelSelectorRuta() {
-        menúSuperiorPanelInicial = new MenúSuperiorPanelInicial();
+        menuSuperiorPanelInicial = new MenuSuperiorPanelInicial();
         selectorOrigen = new SelectorOrigen();
         selectorDestino = new SelectorDestino();
         fechaViaje = new FechaViaje();
@@ -20,7 +20,7 @@ public class PanelSelectorRuta extends JPanel {
         this.add(selectorOrigen);
         this.add(selectorDestino);
         this.add(fechaViaje);
-        this.add(menúSuperiorPanelInicial);
+        this.add(menuSuperiorPanelInicial);
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -30,7 +30,7 @@ public class PanelSelectorRuta extends JPanel {
         int anchoPanel = getWidth();
 
         int altoMenúSuperior = (int) (altoPanel * 0.1);
-        menúSuperiorPanelInicial.setBounds(0, 0, anchoPanel, altoMenúSuperior);
+        menuSuperiorPanelInicial.setBounds(0, 0, anchoPanel, altoMenúSuperior);
 
         int margenSuperior = altoMenúSuperior + (int) (altoPanel * 0.25);
         int altoSelector = (int) (altoPanel * 0.1);

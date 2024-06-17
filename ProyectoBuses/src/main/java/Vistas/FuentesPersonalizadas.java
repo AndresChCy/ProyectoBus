@@ -14,7 +14,9 @@ public class FuentesPersonalizadas {
         this.fuente = fuente;
     }
 
-    public int calcularTamanoLetras(int tamanoInicial, int ancho, int largo, Graphics g) {
+    public int calcularTamanoLetras(int ancho, int largo, Graphics g) {
+        int tamanoInicial = 10;
+
         if (g == null) {
             return tamanoInicial;
         }

@@ -28,7 +28,7 @@ public class PanelHorarios extends JPanel {
                 super.paintComponent(g);
                 int anchoPanel = getWidth();
                 int altoPanel = getHeight();
-                int tamanoFuente = fuentesPersonalizadas.calcularTamanoLetras(1, anchoPanel, altoPanel, g);
+                int tamanoFuente = fuentesPersonalizadas.calcularTamanoLetras(anchoPanel, altoPanel, g);
                 g.setFont(new Font(fuente, Font.BOLD, tamanoFuente));
                 FontMetrics fm = g.getFontMetrics();
                 int anchoMensaje = fm.stringWidth(mensaje) / 2;

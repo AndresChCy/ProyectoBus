@@ -3,12 +3,12 @@ package Vistas;
 import javax.swing.*;
 import java.awt.*;
 
-public class MenúSuperiorPanelInicial extends JPanel {
+public class MenuSuperiorPanelInicial extends JPanel {
     private BotonConfiguraciones botonConfiguraciones;
     private FuentesPersonalizadas fuentesPersonalizadas;
     private final String mensaje = "Planea tu Próximo Viaje con Nosotros";
     private final String fuente = "Kristen ITC";
-    public MenúSuperiorPanelInicial() {
+    public MenuSuperiorPanelInicial() {
         this.setBackground(Color.RED);
 
         botonConfiguraciones = new BotonConfiguraciones();
@@ -32,7 +32,7 @@ public class MenúSuperiorPanelInicial extends JPanel {
         int altoMensaje = (int) (altoPanel * 0.8);
         int anchoMaxMensaje = (int) (anchoPanel * 0.75);
 
-        int tamanoTexto = fuentesPersonalizadas.calcularTamanoLetras(10, anchoMaxMensaje, altoMensaje, g);
+        int tamanoTexto = fuentesPersonalizadas.calcularTamanoLetras(anchoMaxMensaje, altoMensaje, g);
         g.setFont(new Font(fuente, Font.BOLD, tamanoTexto));
         FontMetrics fm = g.getFontMetrics();
 

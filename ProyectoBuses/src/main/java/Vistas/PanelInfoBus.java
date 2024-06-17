@@ -53,13 +53,13 @@ public class PanelInfoBus extends JPanel {
         int altoMensaje = (int) (altoPanel * 0.9);
 
         // Dibujar el mensaje de hora
-        int tamanoTextoHora = mensajeHora.calcularTamanoLetras(10, anchoMaxMensaje, altoMensaje, g);
+        int tamanoTextoHora = mensajeHora.calcularTamanoLetras(anchoMaxMensaje, altoMensaje, g);
         g.setFont(new Font(fuente, Font.BOLD, tamanoTextoHora));
         FontMetrics fm1 = g.getFontMetrics();
         g.drawString("Salida: " + horario, margenMensaje * 2, margenMensaje + fm1.getAscent());
 
         // Dibujar el mensaje de tipo de asiento
-        int tamanoMensajeAsiento = mensajeAsiento.calcularTamanoLetras(10, anchoMaxMensaje, altoMensaje, g);
+        int tamanoMensajeAsiento = mensajeAsiento.calcularTamanoLetras(anchoMaxMensaje, altoMensaje, g);
         g.setFont(new Font(fuente, Font.BOLD, tamanoMensajeAsiento));
         FontMetrics fm2 = g.getFontMetrics();
         g.drawString(tipoAsiento, margenMensaje * 2 + anchoInfo, margenMensaje + fm2.getAscent());
