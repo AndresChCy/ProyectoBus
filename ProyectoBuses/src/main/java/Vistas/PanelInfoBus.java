@@ -6,7 +6,7 @@ import java.util.Random; //Solo para probar
 
 public class PanelInfoBus extends JPanel {
     private String horario;
-    private String tipoAsiento;
+    private int precioDesde;
     private final String comprar = "COMPRAR";
     private final FuentesPersonalizadas mensajeHora;
     private final FuentesPersonalizadas mensajeAsiento;
@@ -14,13 +14,13 @@ public class PanelInfoBus extends JPanel {
     private JButton botonComprar;
     private PanelPrincipal panelPrincipal;
 
-    public PanelInfoBus(String horario, String tipoAsiento, PanelPrincipal panelPrincipal) {
+    public PanelInfoBus(String horario, int precioMin, PanelPrincipal panelPrincipal) {
         this.horario = horario;
-        this.tipoAsiento = tipoAsiento;
+        this.precioDesde = precioMin;
         this.panelPrincipal = panelPrincipal;
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         mensajeHora = new FuentesPersonalizadas("Salida: " + horario, fuente);
-        mensajeAsiento = new FuentesPersonalizadas(tipoAsiento, fuente);
+        mensajeAsiento = new FuentesPersonalizadas("Desde: $" + precioMin, fuente);
 
         // Crear el botón "Comprar"
         botonComprar = new JButton(comprar);
@@ -58,11 +58,11 @@ public class PanelInfoBus extends JPanel {
         FontMetrics fm1 = g.getFontMetrics();
         g.drawString("Salida: " + horario, margenMensaje * 2, margenMensaje + fm1.getAscent());
 
-        // Dibujar el mensaje de tipo de asiento
+        // Dibujar el mensaje del precio mínimo
         int tamanoMensajeAsiento = mensajeAsiento.calcularTamanoLetras(anchoMaxMensaje, altoMensaje, g);
         g.setFont(new Font(fuente, Font.BOLD, tamanoMensajeAsiento));
         FontMetrics fm2 = g.getFontMetrics();
-        g.drawString(tipoAsiento, margenMensaje * 2 + anchoInfo, margenMensaje + fm2.getAscent());
+        g.drawString("Desde: $" + precioDesde, margenMensaje * 2 + anchoInfo, margenMensaje + fm2.getAscent());
 
         // Configurar el botón "Comprar"
         int anchoBotonComprar = (int) (anchoPanel * 0.3);

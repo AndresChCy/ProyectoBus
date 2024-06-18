@@ -2,12 +2,15 @@ package Vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class PanelIntroducirInformacion extends JPanel {
     FuentesPersonalizadas fuentesPersonalizadas;
     String fuente = "Kristen ITC";
     String mensaje;
     JTextField campoTexto;
+
     public PanelIntroducirInformacion(String mensaje) {
         this.setBackground(Color.GRAY);
         this.mensaje = mensaje;
@@ -15,8 +18,25 @@ public class PanelIntroducirInformacion extends JPanel {
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
 
         campoTexto = new JTextField("Escriba aquí", 8);
+        campoTexto.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (campoTexto.getText().equals("Escriba aquí")) {
+                    campoTexto.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (campoTexto.getText().isEmpty()) {
+                    campoTexto.setText("Escriba aquí");
+                }
+            }
+        });
+
         this.add(campoTexto);
     }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
