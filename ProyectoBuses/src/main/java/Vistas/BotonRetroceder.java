@@ -7,24 +7,29 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class BotonRetroceder extends JButton {
-    private BufferedImage imagenOriginal;
-    private BufferedImage imagenRedimensionada;
-    private Timer timer;
-    private final int ANCHO_INICIAL;
-    private final int ALTO_INICIAL;
-    private int ANCHO_MINIMO;
-    private int ANCHO_MAXIMO;
+    private final BufferedImage imagenOriginal; // Imagen original cargada desde un archivo
+    private BufferedImage imagenRedimensionada; // Imagen redimensionada para ajustarse al botón
+    private Timer timer; // Timer para controlar la animación de agrandar/achicar
+    private final int ANCHO_INICIAL; // Ancho inicial de la imagen original
+    private final int ALTO_INICIAL; // Alto inicial de la imagen original
+    private int ANCHO_MINIMO; // Ancho mínimo al que puede achicarse el botón
+    private int ANCHO_MAXIMO; // Ancho máximo al que puede agrandarse el botón
 
+    /**
+     * Constructor de la clase BotonRetroceder.
+     * @param panelPrincipal PanelPrincipal al que se le notificará cuando se haga clic en el botón.
+     */
     public BotonRetroceder(PanelPrincipal panelPrincipal) {
         super();
 
-        // Cargar la imagen original
+        // Cargar la imagen original desde un archivo en el recurso del proyecto
         try {
-            imagenOriginal = ImageIO.read(getClass().getResource("/retroceso.png"));
+            imagenOriginal = ImageIO.read(Objects.requireNonNull(getClass().getResource("/retroceso.png")));
             ANCHO_INICIAL = imagenOriginal.getWidth();
             ALTO_INICIAL = imagenOriginal.getHeight();
             imagenRedimensionada = resizeImage(imagenOriginal, ANCHO_INICIAL, ALTO_INICIAL); // Redimensionar la imagen inicialmente
@@ -32,10 +37,10 @@ public class BotonRetroceder extends JButton {
             throw new RuntimeException(e);
         }
 
-        setOpaque(false);
-        setBorderPainted(false);
-        setContentAreaFilled(false);
-        addActionListener(e -> panelPrincipal.mostrarPanelSelectorRuta());
+        setOpaque(false); // Hacer que el botón no sea opaco para mostrar el fondo del panel
+        setBorderPainted(false); // No dibujar borde alrededor del botón
+        setContentAreaFilled(false); // No dibujar el área de contenido del botón
+        addActionListener(e -> panelPrincipal.mostrarPanelSelectorRuta()); // Agregar acción al hacer clic en el botón
 
         // Agregar un listener para escalar la imagen cuando el botón tenga tamaño válido
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -45,6 +50,7 @@ public class BotonRetroceder extends JButton {
             }
         });
 
+        // Agregar listeners para iniciar y detener la animación al entrar y salir del botón
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -58,11 +64,15 @@ public class BotonRetroceder extends JButton {
         });
     }
 
+    /**
+     * Método para dibujar la imagen redimensionada en el botón.
+     * @param g Objeto Graphics para dibujar en el botón.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Dibujar la imagen escalada
+        // Dibujar la imagen escalada en el centro del botón
         if (imagenRedimensionada != null) {
             int x = (getWidth() - imagenRedimensionada.getWidth()) / 2;
             int y = (getHeight() - imagenRedimensionada.getHeight()) / 2;
@@ -70,15 +80,23 @@ public class BotonRetroceder extends JButton {
         }
     }
 
+    /**
+     * Método para ajustar los tamaños mínimo y máximo del botón.
+     * Se llama cuando el botón cambia de tamaño.
+     */
     private void ajustarTamanos() {
         int anchoBoton = getWidth();
         int altoBoton = getHeight();
         if (anchoBoton > 0 && altoBoton > 0) {
-            ANCHO_MINIMO = anchoBoton / 2;
-            ANCHO_MAXIMO = anchoBoton;
+            ANCHO_MINIMO = anchoBoton / 2; // El ancho mínimo será la mitad del ancho del botón
+            ANCHO_MAXIMO = anchoBoton; // El ancho máximo será el ancho completo del botón
         }
     }
 
+    /**
+     * Método para redimensionar la imagen del icono al tamaño actual del botón.
+     * Se llama cuando el botón cambia de tamaño.
+     */
     private void redimensionarIcono() {
         if (imagenOriginal != null) {
             int anchoBoton = getWidth();
@@ -91,6 +109,13 @@ public class BotonRetroceder extends JButton {
         }
     }
 
+    /**
+     * Método para redimensionar una imagen dada a un tamaño específico.
+     * @param originalImage Imagen original que se va a redimensionar.
+     * @param targetWidth Ancho deseado para la imagen redimensionada.
+     * @param targetHeight Alto deseado para la imagen redimensionada.
+     * @return Imagen redimensionada al tamaño especificado.
+     */
     private BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
         if (targetWidth <= 0 || targetHeight <= 0) {
             return originalImage;
@@ -103,6 +128,10 @@ public class BotonRetroceder extends JButton {
         return resizedImage;
     }
 
+    /**
+     * Método para iniciar la animación de agrandar/achicar el botón.
+     * Se llama cuando el cursor entra en el área del botón.
+     */
     private void iniciarAnimacion() {
         // Detener cualquier animación previa si existe
         detenerAnimacion();
@@ -134,7 +163,7 @@ public class BotonRetroceder extends JButton {
                 }
 
                 // Verificar que el tamaño no sea 0
-                if (nuevoAncho > 0 && nuevoAlto > 0) {
+                if (nuevoAncho > 0) {
                     // Aplicar el nuevo tamaño a la imagen redimensionada
                     imagenRedimensionada = resizeImage(imagenOriginal, nuevoAncho, nuevoAlto);
                     repaint();
@@ -149,16 +178,24 @@ public class BotonRetroceder extends JButton {
         }, 0, 20); // Ejecutar cada 20 ms
     }
 
+    /**
+     * Método para detener la animación de agrandar/achicar el botón.
+     * Se llama cuando el cursor sale del área del botón.
+     */
     private void detenerAnimacion() {
         if (timer != null) {
-            timer.cancel();
+            timer.cancel(); // Cancelar el Timer si está en ejecución
             timer = null;
             // Restaurar tamaño original al detener la animación
             imagenRedimensionada = resizeImage(imagenOriginal, getWidth(), getHeight());
-            repaint();
+            repaint(); // Volver a pintar para actualizar el cambio
         }
     }
 
+    /**
+     * Método para obtener el tamaño preferido del botón basado en la imagen original.
+     * @return Dimension con el tamaño preferido del botón.
+     */
     @Override
     public Dimension getPreferredSize() {
         // Devolver un tamaño preferido basado en la imagen original si está cargada

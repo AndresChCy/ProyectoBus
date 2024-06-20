@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Temas {
@@ -24,15 +25,20 @@ public class Temas {
         }
     }
 
-    private List<Tema> temas;
-    private Random random;
+    private final List<Tema> temas;
+    private final Random random;
 
+    /**
+     * Constructor de la clase Temas.
+     * Carga una lista predefinida de temas al inicializar.
+     */
     public Temas() {
         temas = new ArrayList<>();
         long semilla = System.currentTimeMillis();
         random = new Random(semilla);
 
         try {
+            // Cargar temas predefinidos con imágenes y colores
             cargarTema("/temas/tema_1.png", new Color(41, 48, 60), new Color(127, 105, 79), new Color(136, 167, 185));
             cargarTema("/temas/tema_2.png", new Color(16, 57, 90), new Color(62, 145, 220), new Color(117, 204, 249));
             cargarTema("/temas/tema_3.png", new Color(50, 55, 70), new Color(99, 124, 155), new Color(220, 222, 230));
@@ -58,18 +64,38 @@ public class Temas {
         }
     }
 
+    /**
+     * Carga un tema con la imagen y los colores especificados.
+     *
+     * @param rutaImagen      Ruta de la imagen del tema.
+     * @param colorPrimario   Color primario del tema.
+     * @param colorSecundario Color secundario del tema.
+     * @param colorTerciario  Color terciario del tema.
+     * @throws IOException Si ocurre un error al cargar la imagen.
+     */
     private void cargarTema(String rutaImagen, Color colorPrimario, Color colorSecundario, Color colorTerciario) throws IOException {
-        BufferedImage imagenTema = ImageIO.read(getClass().getResource(rutaImagen));
+        BufferedImage imagenTema = ImageIO.read(Objects.requireNonNull(getClass().getResource(rutaImagen)));
         temas.add(new Tema(imagenTema, colorPrimario, colorSecundario, colorTerciario));
     }
 
-    // Método para seleccionar un tema aleatorio y devolver sus atributos
+    /**
+     * Selecciona un tema aleatorio de la lista de temas cargados.
+     *
+     * @return El tema seleccionado aleatoriamente.
+     */
     public Tema seleccionarTemaAleatorio() {
         int index = random.nextInt(temas.size());
         return temas.get(index);
     }
 
-    // Método para agregar un nuevo tema
+    /**
+     * Agrega un nuevo tema a la lista de temas.
+     *
+     * @param imagen           Imagen del tema.
+     * @param colorPrimario    Color primario del tema.
+     * @param colorSecundario  Color secundario del tema.
+     * @param colorTerciario   Color terciario del tema.
+     */
     public void agregarTema(BufferedImage imagen, Color colorPrimario, Color colorSecundario, Color colorTerciario) {
         temas.add(new Tema(imagen, colorPrimario, colorSecundario, colorTerciario));
     }

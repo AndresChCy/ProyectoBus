@@ -8,9 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random; // Solo para probar
+import java.util.Objects;
+import java.util.Random;
 
+/**
+ * Clase que representa un botón personalizado para un asiento en un transporte.
+ */
 public class BotonAsiento extends JButton {
+    // Mapa estático para mapear tipos de asiento a sus respectivas rutas de imágenes
     private static final Map<String, String> RUTAS_IMAGENES = new HashMap<>();
     static {
         RUTAS_IMAGENES.put("Estándar", "/estándar.png");
@@ -20,28 +25,36 @@ public class BotonAsiento extends JButton {
         RUTAS_IMAGENES.put("Vacío", "/vacío.png");
     }
 
-    private static final Color COLOR_NORMAL = Color.WHITE;
-    private static final Color COLOR_MOUSE_OVER = Color.LIGHT_GRAY;
-    private static final Color COLOR_CLICKED = Color.YELLOW;
-    private static final Color COLOR_COMPRADO = Color.RED;
-    private static final Color COLOR_PREFERENCIAL = Color.BLUE;
+    // Colores estáticos para diferentes estados del botón
+    private static final Color COLOR_NORMAL = Color.WHITE; // Color normal del botón
+    private static final Color COLOR_MOUSE_OVER = Color.LIGHT_GRAY; // Color al pasar el mouse
+    private static final Color COLOR_CLICKED = Color.YELLOW; // Color al hacer clic
+    private static final Color COLOR_COMPRADO = Color.RED; // Color cuando el asiento está comprado
+    private static final Color COLOR_PREFERENCIAL = Color.BLUE; // Color cuando el asiento es preferencial
 
-    private String tipoAsiento;
-    private BufferedImage imagenBoton;
-    private Color backgroundColor;
+    // Propiedades del botón y estado de control
+    private final String tipoAsiento; // Tipo de asiento asociado al botón
+    private BufferedImage imagenBoton; // Imagen del botón cargada desde archivo
+    private Color backgroundColor; // Color de fondo actual del botón
 
-    private boolean clicked = false;
-    private boolean comprado = false;
-    private boolean preferencial = false;
+    private boolean clicked = false; // Indica si el botón ha sido clickeado
+    private boolean comprado = false; // Indica si el asiento está comprado
+    private boolean preferencial = false; // Indica si el asiento es preferencial
 
+    /**
+     * Constructor de la clase BotonAsiento.
+     * @param tipoAsiento Tipo de asiento que determina la imagen asociada y el comportamiento del botón.
+     */
     public BotonAsiento(String tipoAsiento) {
         this.tipoAsiento = tipoAsiento;
-        cargarIcono();
-        initComponent();
+        cargarIcono(); // Cargar la imagen asociada al tipo de asiento
+        initComponent(); // Inicializar componentes y configurar listeners
 
+        // Configurar listeners para eventos de ratón
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                // Cambiar color de fondo al pasar el mouse si no está en estado especial
                 if (!clicked && !comprado && !preferencial) {
                     setBackground(COLOR_MOUSE_OVER);
                 }
@@ -49,6 +62,7 @@ public class BotonAsiento extends JButton {
 
             @Override
             public void mouseExited(MouseEvent e) {
+                // Restaurar color de fondo al salir del mouse si no está en estado especial
                 if (!clicked && !comprado && !preferencial) {
                     setBackground(COLOR_NORMAL);
                 }
@@ -56,6 +70,7 @@ public class BotonAsiento extends JButton {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                // Alternar el estado "clickeado" y cambiar el color de fondo
                 if (!comprado && !preferencial) {
                     clicked = !clicked;
                     if (clicked) {
@@ -67,10 +82,13 @@ public class BotonAsiento extends JButton {
             }
         });
 
-        // Simular estado comprado aleatorio
-        simularEstadoCompradoAleatorio(); // Solo para probar
+        // Simular estado comprado aleatorio (solo para pruebas)
+        simularEstadoCompradoAleatorio();
     }
 
+    /**
+     * Inicializa los componentes del botón.
+     */
     private void initComponent() {
         setBorderPainted(false);
         setContentAreaFilled(false);
@@ -78,6 +96,7 @@ public class BotonAsiento extends JButton {
         setBackground(COLOR_NORMAL);
         this.backgroundColor = COLOR_NORMAL;
 
+        // Listener para redimensionar la imagen cuando el componente cambia de tamaño
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 redimensionarIconos();
@@ -85,11 +104,14 @@ public class BotonAsiento extends JButton {
         });
     }
 
+    /**
+     * Carga la imagen asociada al tipo de asiento desde el mapa estático de rutas de imágenes.
+     */
     private void cargarIcono() {
         String rutaImagen = RUTAS_IMAGENES.get(tipoAsiento);
         if (rutaImagen != null) {
             try {
-                imagenBoton = javax.imageio.ImageIO.read(getClass().getResource(rutaImagen));
+                imagenBoton = javax.imageio.ImageIO.read(Objects.requireNonNull(getClass().getResource(rutaImagen)));
             } catch (IOException ex) {
                 System.out.println("Error al cargar imagen: " + ex.getMessage());
             }
@@ -98,6 +120,9 @@ public class BotonAsiento extends JButton {
         }
     }
 
+    /**
+     * Redimensiona la imagen del botón al tamaño actual del botón.
+     */
     public void redimensionarIconos() {
         if (imagenBoton != null) {
             int anchoBoton = this.getWidth();
@@ -110,12 +135,10 @@ public class BotonAsiento extends JButton {
         }
     }
 
-    @Override
-    public void setBackground(Color bg) {
-        super.setBackground(bg);
-        this.backgroundColor = bg;
-    }
-
+    /**
+     * Establece el color de fondo del botón y actualiza el estado "comprado".
+     * @param comprado true si el asiento está comprado, false si no lo está.
+     */
     public void setComprado(boolean comprado) {
         this.comprado = comprado;
         if (comprado) {
@@ -129,6 +152,10 @@ public class BotonAsiento extends JButton {
         }
     }
 
+    /**
+     * Establece el color de fondo del botón y actualiza el estado "preferencial".
+     * @param preferencial true si el asiento es preferencial, false si no lo es.
+     */
     public void setPreferencial(boolean preferencial) {
         this.preferencial = preferencial;
         if (preferencial) {
@@ -145,6 +172,10 @@ public class BotonAsiento extends JButton {
         setComprado(estadoAleatorio);
     }
 
+    /**
+     * Obtiene el tipo de asiento asociado al botón.
+     * @return String con el tipo de asiento.
+     */
     public String getTipoAsiento() {
         return tipoAsiento;
     }

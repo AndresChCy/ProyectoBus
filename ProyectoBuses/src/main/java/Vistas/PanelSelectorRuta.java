@@ -12,24 +12,37 @@ public class PanelSelectorRuta extends JPanel {
     private final BufferedImage imagenFondo;
     public static Temas.Tema temaSeleccionado;
 
+    /**
+     * Constructor de la clase PanelSelectorRuta.
+     * Configura los componentes y carga el tema aleatorio.
+     */
     public PanelSelectorRuta() {
+        // Seleccionar un tema aleatorio y obtener su imagen de fondo
         Temas temas = new Temas();
         temaSeleccionado = temas.seleccionarTemaAleatorio();
-
         imagenFondo = temaSeleccionado.imagen;
+
+        // Inicializar componentes
         menuSuperiorPanelInicial = new MenuSuperiorPanelInicial();
         selectorOrigen = new SelectorOrigen();
         selectorDestino = new SelectorDestino();
         fechaViaje = new FechaViaje();
 
+        // Configuración de layout nulo para posicionamiento absoluto
         this.setLayout(null);
 
+        // Añadir componentes al panel
         this.add(selectorOrigen);
         this.add(selectorDestino);
         this.add(fechaViaje);
         this.add(menuSuperiorPanelInicial);
     }
 
+    /**
+     * Método sobrecargado para dibujar el componente.
+     * Dibuja la imagen de fondo con ajuste de opacidad y posiciona los componentes.
+     * @param g Objeto Graphics para dibujar en el panel.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -37,10 +50,11 @@ public class PanelSelectorRuta extends JPanel {
         int altoPanel = getHeight();
         int anchoPanel = getWidth();
 
-        int altoMenúSuperior = (int) (altoPanel * 0.1);
+        int altoMenuSuperior = (int) (altoPanel * 0.1);
 
+        // Dibujar la imagen de fondo con ajuste de opacidad
         if (imagenFondo != null) {
-            BufferedImage imagenAjustada = ajustarOpacidad(imagenFondo, 0.85f); // Reducción de la opacidad al 85%
+            BufferedImage imagenAjustada = ajustarOpacidad(imagenFondo); // Reducción de la opacidad al 80%
 
             int anchoImagen = imagenAjustada.getWidth();
             int altoImagen = imagenAjustada.getHeight();
@@ -64,45 +78,51 @@ public class PanelSelectorRuta extends JPanel {
             g.drawImage(imagenAjustada, x, y, anchoDibujo, altoDibujo, this);
         }
 
-        menuSuperiorPanelInicial.setBounds(0, 0, anchoPanel, altoMenúSuperior);
+        // Posicionar el menú superior
+        menuSuperiorPanelInicial.setBounds(0, 0, anchoPanel, altoMenuSuperior);
 
-        int margenSuperior = altoMenúSuperior + (int) (altoPanel * 0.25);
+        // Calcular posiciones y dimensiones para los selectores y la fecha de viaje
+        int margenSuperior = altoMenuSuperior + (int) (altoPanel * 0.25);
         int altoSelector = (int) (altoPanel * 0.1);
         int anchoSelector = (int) (anchoPanel * 0.3);
 
         int posXOrigen = (int) (anchoPanel * 0.2);
-        int posYOrigen = margenSuperior;
-        selectorOrigen.setBounds(posXOrigen, posYOrigen, anchoSelector, altoSelector);
+        selectorOrigen.setBounds(posXOrigen, margenSuperior, anchoSelector, altoSelector);
 
         int posXDestino = posXOrigen + anchoSelector;
-        int posYDestino = margenSuperior;
-        selectorDestino.setBounds(posXDestino, posYDestino, anchoSelector, altoSelector);
+        selectorDestino.setBounds(posXDestino, margenSuperior, anchoSelector, altoSelector);
 
         int posXFecha = (int) (anchoPanel * 0.35);
-        int posYFecha = posYOrigen + altoSelector + (int) (altoPanel * 0.2);
+        int posYFecha = margenSuperior + altoSelector + (int) (altoPanel * 0.2);
         fechaViaje.setBounds(posXFecha, posYFecha, anchoSelector, altoSelector);
     }
 
-    private BufferedImage ajustarOpacidad(BufferedImage imagenOriginal, float opacidad) {
+    /**
+     * Método para ajustar la opacidad de una imagen.
+     *
+     * @param imagenOriginal Imagen original.
+     * @return Imagen con la opacidad ajustada.
+     */
+    private BufferedImage ajustarOpacidad(BufferedImage imagenOriginal) {
         if (imagenOriginal == null) {
             return null;
         }
 
-        // Creamos una imagen compatible para la nueva imagen con la opacidad deseada
+        // Crear una imagen compatible para la nueva imagen con la opacidad deseada
         BufferedImage imagenAjustada = new BufferedImage(
                 imagenOriginal.getWidth(), imagenOriginal.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        // Obtenemos el contexto gráfico de la nueva imagen
+        // Obtener el contexto gráfico de la nueva imagen
         Graphics2D g2d = imagenAjustada.createGraphics();
 
-        // Aplicamos el composite para ajustar la opacidad
-        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacidad);
+        // Aplicar el composite para ajustar la opacidad (80%)
+        AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
         g2d.setComposite(alphaComposite);
 
-        // Dibujamos la imagen original en la nueva imagen
+        // Dibujar la imagen original en la nueva imagen
         g2d.drawImage(imagenOriginal, 0, 0, null);
 
-        // Liberamos recursos del contexto gráfico
+        // Liberar recursos del contexto gráfico
         g2d.dispose();
 
         return imagenAjustada;

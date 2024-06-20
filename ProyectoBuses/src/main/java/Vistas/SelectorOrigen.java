@@ -7,13 +7,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SelectorOrigen extends JPanel {
-    private List<String> ciudades;
-    private SeleccionadorCiudad seleccionadorCiudad;
-    private FuentesPersonalizadas fp;
-    private String fuente = "Broadway";
-    private String mensaje = "Origen";
-    private JPanel panelTitulo;
+    private final SeleccionadorCiudad seleccionadorCiudad;
+    private final FuentesPersonalizadas fp;
+    private final String fuente = "Broadway";
+    private final String mensaje = "Origen";
+    private final JPanel panelTitulo;
 
+    /**
+     * Constructor de la clase SelectorOrigen.
+     * Inicializa el componente con una lista de ciudades y un selector de ciudad.
+     */
     public SelectorOrigen() {
         // Configurar el layout del panel principal como BorderLayout
         setLayout(new BorderLayout());
@@ -21,28 +24,13 @@ public class SelectorOrigen extends JPanel {
         // Establecer el fondo del panel como transparente
         setOpaque(false);
 
+        // Inicializar fuentes personalizadas
         fp = new FuentesPersonalizadas(mensaje, fuente);
 
-        ciudades = new ArrayList<>();
-        String[] ciudadesChile = {
-                "Santiago", "Viña del Mar", "Valparaíso", "Concepción", "Antofagasta", "Puerto Montt",
-                "Arica", "La Serena", "Iquique", "Rancagua", "Talca", "Temuco", "Chillán", "Los Ángeles",
-                "Valdivia", "Copiapó", "Quillota", "Osorno", "Calama", "Punta Arenas", "Curicó", "Quilpué",
-                "Ovalle", "San Felipe", "Los Andes", "Linares", "San Antonio", "Melipilla", "San Fernando",
-                "Pucón", "Villarrica", "La Ligua", "Cauquenes", "Puerto Varas", "Castro", "Ancud",
-                "Talcahuano", "La Calera", "Tocopilla", "Coquimbo", "Angol", "Loncoche", "La Unión",
-                "Limache", "Puerto Natales", "Lota", "Victoria", "Collipulli", "Coronel", "Lebu", "Coelemu",
-                "Curanilahue", "Santa Cruz", "Paine", "Puerto Aysén", "Panguipulli", "Pitrufquén",
-                "Vallenar", "Vicuña", "Salamanca", "Illapel", "Coyhaique", "Chaitén", "Puerto Cisnes",
-                "Futrono", "Chonchi", "Hualpén", "Quellón", "Quirihue", "Puerto Octay", "Frutillar",
-                "Llanquihue", "Puerto Williams", "San Carlos", "Curaco de Vélez", "Dalcahue", "Quemchi",
-                "Puerto Quellón", "Puerto Ingeniero Ibáñez", "San José de la Mariquina", "Puerto Saavedra",
-                "Pichilemu", "Lanco", "San Vicente de Tagua Tagua", "Lonquimay", "Pitrufquén", "Puerto Natales",
-                "Cochrane", "Tolhuin", "Timaukel", "Coyhaique", "Alto Hospicio", "El Bosque", "Huechuraba",
-                "Cerrillos", "Pudahuel", "Recoleta", "Quilicura", "Colina", "Lampa", "Padre Hurtado",
-                "Peñaflor", "Talagante", "Melipilla", "Buin", "Calera de Tango", "Paine", "San Bernardo"
-        };
-        ciudades.addAll(Arrays.asList(ciudadesChile));
+        // Inicializar la lista de ciudades con ciudades de Chile
+        List<String> ciudades = getStrings();
+
+        // Crear el selector de ciudad con la lista de ciudades
         seleccionadorCiudad = new SeleccionadorCiudad(ciudades);
 
         // Crear y configurar el panel para el título
@@ -53,10 +41,12 @@ public class SelectorOrigen extends JPanel {
                 int anchoPanel = getWidth();
                 int altoPanel = getHeight();
 
+                // Calcular tamaño de fuente basado en el tamaño del panel
                 int tamanoFuente = fp.calcularTamanoLetras(anchoPanel, altoPanel, g);
                 g.setFont(new Font(fuente, Font.BOLD, tamanoFuente));
                 FontMetrics fm = g.getFontMetrics();
 
+                // Centrar el mensaje verticalmente en el panel
                 int anchoMensaje = fm.stringWidth(mensaje);
                 int posXMensaje = (anchoPanel - anchoMensaje) / 2;
                 int posYMensaje = (altoPanel + fm.getAscent()) / 2; // Centrar verticalmente
@@ -77,6 +67,32 @@ public class SelectorOrigen extends JPanel {
         add(seleccionadorCiudad, BorderLayout.SOUTH);
     }
 
+    private static List<String> getStrings() {
+        String[] ciudadesChile = {
+                "Santiago", "Viña del Mar", "Valparaíso", "Concepción", "Antofagasta", "Puerto Montt",
+                "Arica", "La Serena", "Iquique", "Rancagua", "Talca", "Temuco", "Chillán", "Los Ángeles",
+                "Valdivia", "Copiapó", "Quillota", "Osorno", "Calama", "Punta Arenas", "Curicó", "Quilpué",
+                "Ovalle", "San Felipe", "Los Andes", "Linares", "San Antonio", "Melipilla", "San Fernando",
+                "Pucón", "Villarrica", "La Ligua", "Cauquenes", "Puerto Varas", "Castro", "Ancud",
+                "Talcahuano", "La Calera", "Tocopilla", "Coquimbo", "Angol", "Loncoche", "La Unión",
+                "Limache", "Puerto Natales", "Lota", "Victoria", "Collipulli", "Coronel", "Lebu", "Coelemu",
+                "Curanilahue", "Santa Cruz", "Paine", "Puerto Aysén", "Panguipulli", "Pitrufquén",
+                "Vallenar", "Vicuña", "Salamanca", "Illapel", "Coyhaique", "Chaitén", "Puerto Cisnes",
+                "Futrono", "Chonchi", "Hualpén", "Quellón", "Quirihue", "Puerto Octay", "Frutillar",
+                "Llanquihue", "Puerto Williams", "San Carlos", "Curaco de Vélez", "Dalcahue", "Quemchi",
+                "Puerto Quellón", "Puerto Ingeniero Ibáñez", "San José de la Mariquina", "Puerto Saavedra",
+                "Pichilemu", "Lanco", "San Vicente de Tagua Tagua", "Lonquimay", "Pitrufquén", "Puerto Natales",
+                "Cochrane", "Tolhuin", "Timaukel", "Coyhaique", "Alto Hospicio", "El Bosque", "Huechuraba",
+                "Cerrillos", "Pudahuel", "Recoleta", "Quilicura", "Colina", "Lampa", "Padre Hurtado",
+                "Peñaflor", "Talagante", "Melipilla", "Buin", "Calera de Tango", "Paine", "San Bernardo"
+        };
+        return new ArrayList<>(Arrays.asList(ciudadesChile));
+    }
+
+    /**
+     * Método sobrescrito para dibujar el componente.
+     * Ajusta la posición y tamaño del panel de título y del selector de ciudad.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
