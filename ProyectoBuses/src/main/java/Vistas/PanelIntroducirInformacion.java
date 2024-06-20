@@ -7,12 +7,12 @@ import java.awt.event.FocusListener;
 
 public class PanelIntroducirInformacion extends JPanel {
     FuentesPersonalizadas fuentesPersonalizadas;
-    String fuente = "Kristen ITC";
+    String fuente = "Roboto";
     String mensaje;
     JTextField campoTexto;
 
     public PanelIntroducirInformacion(String mensaje) {
-        this.setBackground(Color.GRAY);
+        this.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
         this.mensaje = mensaje;
 
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
@@ -50,12 +50,18 @@ public class PanelIntroducirInformacion extends JPanel {
 
         int posXMensaje = (int) (anchoPanel * 0.05);
         int posYMensaje = (int) (altoPanel * 0.05);
-        g.setColor(Color.WHITE);
+
+        g.setColor(Color.BLACK);
+        g.drawString(mensaje, posXMensaje + 2, posYMensaje + fm.getAscent() + 2);
+
+        g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario);
         g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent());
 
         int posXCampoTexto = (int) (0.3 * anchoPanel);
         int anchoCampoTexto = (int) (0.7 * anchoPanel);
         campoTexto.setFont(g.getFont());
+        campoTexto.setForeground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
+        campoTexto.setBackground(PanelSelectorRuta.temaSeleccionado.colorTerciario);
         campoTexto.setBounds(posXCampoTexto, 0, anchoCampoTexto, altoPanel);
     }
 }

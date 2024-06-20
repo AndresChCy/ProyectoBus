@@ -7,20 +7,18 @@ import java.awt.event.MouseWheelListener;
 import java.util.Random; // Solo para probar
 
 public class PanelHorariosDisponibles extends JPanel implements MouseWheelListener {
-    private String[] arrayAuxiliar;
-    private String[] tipoAsientoAuxiliar;
-    private PanelInfoBus[] panelesInfoBus;
+    private final String[] arrayAuxiliar;
+    private final PanelInfoBus[] panelesInfoBus;
     private int desplazamiento = 0;
-    private PanelPrincipal panelPrincipal;
-    private Random random; // Solo para probar
+    private final PanelPrincipal panelPrincipal;
+    private final Color[] colores = new Color[] {Color.WHITE, PanelSelectorRuta.temaSeleccionado.colorTerciario};
+    private final Random random; // Solo para probar
 
-    public PanelHorariosDisponibles(String[] arrayAuxiliar, String[] tipoAsientoAuxiliar, PanelPrincipal panelPrincipal) {
+    public PanelHorariosDisponibles(String[] arrayAuxiliar, PanelPrincipal panelPrincipal) {
         this.arrayAuxiliar = arrayAuxiliar;
-        this.tipoAsientoAuxiliar = tipoAsientoAuxiliar;
         this.panelPrincipal = panelPrincipal;
         this.panelesInfoBus = new PanelInfoBus[arrayAuxiliar.length];
         this.setLayout(null);
-        this.setBackground(Color.BLACK);
         this.addMouseWheelListener(this);
         this.random = new Random(); // Solo para probar
         this.inicializarPaneles();
@@ -32,9 +30,10 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
         int altoPanelInfoBus = (int) (altoPanel * 0.1);
 
         for (int i = 0; i < arrayAuxiliar.length; i++) {
-            int numeroRandom = random.nextInt(45001) + 5000;; // Solo para probar
+            int numeroRandom = random.nextInt(45001) + 5000; // Solo para probar
 
-            panelesInfoBus[i] = new PanelInfoBus(arrayAuxiliar[i], numeroRandom, panelPrincipal);
+            Color color = colores[i % 2];
+            panelesInfoBus[i] = new PanelInfoBus(arrayAuxiliar[i], numeroRandom, panelPrincipal, color);
             panelesInfoBus[i].setBounds(0, i * altoPanelInfoBus, anchoPanel, altoPanelInfoBus);
             this.add(panelesInfoBus[i]);
         }

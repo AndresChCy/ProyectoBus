@@ -66,7 +66,7 @@ public class SeleccionadorCiudad extends JPanel {
         setLayout(new BorderLayout());
         add(comboBox, BorderLayout.CENTER);
 
-        Font fuente = new Font("Roboto", Font.BOLD, 20);
+        Font fuente = new Font("Consolas", Font.BOLD, 20);
         campoTexto.setFont(fuente);
         comboBox.setFont(fuente);
 

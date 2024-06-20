@@ -7,7 +7,7 @@ public class FechaViaje extends JPanel {
     PanelIntroducirInformacion piiDia;
     PanelIntroducirInformacion piiMes;
     public FechaViaje() {
-        this.setBackground(Color.MAGENTA);
+        this.setOpaque(false);
         piiDia = new PanelIntroducirInformacion("Día: ");
         piiMes = new PanelIntroducirInformacion("Mes: ");
         this.add(piiDia);

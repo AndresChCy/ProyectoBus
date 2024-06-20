@@ -18,7 +18,7 @@ public class PanelBus extends JPanel {
     List<FilaBus> filaBuses;
 
     public PanelBus() {
-        this.setBackground(Color.RED);
+        this.setOpaque(false);
         this.setLayout(null);
         filaBuses = new ArrayList<>();
 

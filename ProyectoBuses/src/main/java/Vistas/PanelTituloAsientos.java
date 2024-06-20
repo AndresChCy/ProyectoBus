@@ -5,11 +5,11 @@ import java.awt.*;
 
 public class PanelTituloAsientos extends JPanel {
     FuentesPersonalizadas fuentesPersonalizadas;
-    String fuente = "Kristen ITC";
+    String fuente = "Broadway";
     String mensaje = "Seleccione Asiento";
 
     public PanelTituloAsientos() {
-        this.setBackground(Color.ORANGE);
+        this.setBackground(PanelSelectorRuta.temaSeleccionado.colorPrimario);
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
     }
 
@@ -23,7 +23,9 @@ public class PanelTituloAsientos extends JPanel {
         int anchoMensaje = fm.stringWidth(mensaje) / 2;
         int posXMensaje = (anchoPanel / 2) - anchoMensaje;
         int posYMensaje = (int) (altoPanel * 0.05);
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
+        g.drawString(mensaje, posXMensaje + 5, posYMensaje + fm.getAscent() + 5);
+        g.setColor(PanelSelectorRuta.temaSeleccionado.colorSecundario);
         g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent());
     }
 }

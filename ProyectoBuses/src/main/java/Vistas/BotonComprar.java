@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 
 public class BotonComprar extends JButton {
     FuentesPersonalizadas fuentesPersonalizadas;
-    String fuente = "Kristen ITC";
+    String fuente = "Roboto";
     String mensaje = "COMPRAR";
     public BotonComprar() {
-        this.setBackground(Color.CYAN);
+        this.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
 
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
 
@@ -33,7 +33,9 @@ public class BotonComprar extends JButton {
         int anchoMensaje = fm.stringWidth(mensaje) / 2;
         int posXMensaje = (anchoPanel / 2) - anchoMensaje;
         int posYMensaje = (altoPanel + fm.getAscent()) / 2;
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
+        g.drawString(mensaje, posXMensaje + 2, posYMensaje + 2);
+        g.setColor(new Color(27, 101, 64));
         g.drawString(mensaje, posXMensaje, posYMensaje);
 
         this.setFont(g.getFont());

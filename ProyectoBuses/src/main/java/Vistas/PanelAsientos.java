@@ -12,7 +12,7 @@ public class PanelAsientos extends JPanel {
     PanelCambioPiso panelCambioPiso;
     PanelTituloAsientos panelTituloAsientos;
     public PanelAsientos() {
-        this.setBackground(Color.BLUE);
+        this.setBackground(Color.DARK_GRAY);
         panelBus = new PanelBus();
         panelCodigoColor = new PanelCodigoColor();
         panelCambioPiso = new PanelCambioPiso();

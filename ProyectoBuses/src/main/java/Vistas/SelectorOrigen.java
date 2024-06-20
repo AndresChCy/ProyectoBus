@@ -10,7 +10,7 @@ public class SelectorOrigen extends JPanel {
     private List<String> ciudades;
     private SeleccionadorCiudad seleccionadorCiudad;
     private FuentesPersonalizadas fp;
-    private String fuente = "Kristen ITC";
+    private String fuente = "Broadway";
     private String mensaje = "Origen";
     private JPanel panelTitulo;
 
@@ -24,12 +24,24 @@ public class SelectorOrigen extends JPanel {
         fp = new FuentesPersonalizadas(mensaje, fuente);
 
         ciudades = new ArrayList<>();
-        String[] ciudadesChile = {"Santiago", "Valparaíso", "Concepción", "Viña del Mar", "Antofagasta", "Valdivia",
-                "Arica", "Puerto Montt", "La Serena", "Iquique", "Temuco", "Talca", "Rancagua", "Copiapó", "Coquimbo",
-                "Osorno", "Chillán", "Quillota", "Punta Arenas", "Curicó", "Los Ángeles", "Puerto Varas", "Calama", "Vallenar",
-                "San Felipe", "Los Andes", "La Calera", "Angol", "Linares", "San Antonio", "Ovalle", "Cauquenes", "Tocopilla",
-                "San Fernando", "Pucón", "Santa Cruz", "Lota", "Puerto Natales", "San Vicente de Tagua Tagua", "Melipilla",
-                "Coronel", "Puerto Aysén", "Coyhaique", "Villarrica", "Ancud", "Loncoche", "Castro", "Illapel", "Puerto Williams"};
+        String[] ciudadesChile = {
+                "Santiago", "Viña del Mar", "Valparaíso", "Concepción", "Antofagasta", "Puerto Montt",
+                "Arica", "La Serena", "Iquique", "Rancagua", "Talca", "Temuco", "Chillán", "Los Ángeles",
+                "Valdivia", "Copiapó", "Quillota", "Osorno", "Calama", "Punta Arenas", "Curicó", "Quilpué",
+                "Ovalle", "San Felipe", "Los Andes", "Linares", "San Antonio", "Melipilla", "San Fernando",
+                "Pucón", "Villarrica", "La Ligua", "Cauquenes", "Puerto Varas", "Castro", "Ancud",
+                "Talcahuano", "La Calera", "Tocopilla", "Coquimbo", "Angol", "Loncoche", "La Unión",
+                "Limache", "Puerto Natales", "Lota", "Victoria", "Collipulli", "Coronel", "Lebu", "Coelemu",
+                "Curanilahue", "Santa Cruz", "Paine", "Puerto Aysén", "Panguipulli", "Pitrufquén",
+                "Vallenar", "Vicuña", "Salamanca", "Illapel", "Coyhaique", "Chaitén", "Puerto Cisnes",
+                "Futrono", "Chonchi", "Hualpén", "Quellón", "Quirihue", "Puerto Octay", "Frutillar",
+                "Llanquihue", "Puerto Williams", "San Carlos", "Curaco de Vélez", "Dalcahue", "Quemchi",
+                "Puerto Quellón", "Puerto Ingeniero Ibáñez", "San José de la Mariquina", "Puerto Saavedra",
+                "Pichilemu", "Lanco", "San Vicente de Tagua Tagua", "Lonquimay", "Pitrufquén", "Puerto Natales",
+                "Cochrane", "Tolhuin", "Timaukel", "Coyhaique", "Alto Hospicio", "El Bosque", "Huechuraba",
+                "Cerrillos", "Pudahuel", "Recoleta", "Quilicura", "Colina", "Lampa", "Padre Hurtado",
+                "Peñaflor", "Talagante", "Melipilla", "Buin", "Calera de Tango", "Paine", "San Bernardo"
+        };
         ciudades.addAll(Arrays.asList(ciudadesChile));
         seleccionadorCiudad = new SeleccionadorCiudad(ciudades);
 
@@ -48,7 +60,9 @@ public class SelectorOrigen extends JPanel {
                 int anchoMensaje = fm.stringWidth(mensaje);
                 int posXMensaje = (anchoPanel - anchoMensaje) / 2;
                 int posYMensaje = (altoPanel + fm.getAscent()) / 2; // Centrar verticalmente
-                g.setColor(Color.WHITE);
+                g.setColor(PanelSelectorRuta.temaSeleccionado.colorPrimario);
+                g.drawString(mensaje, posXMensaje + 2, posYMensaje + 2);
+                g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario);
                 g.drawString(mensaje, posXMensaje, posYMensaje);
             }
         };

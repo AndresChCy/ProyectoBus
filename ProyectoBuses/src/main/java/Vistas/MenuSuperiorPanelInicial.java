@@ -7,9 +7,11 @@ public class MenuSuperiorPanelInicial extends JPanel {
     private BotonConfiguraciones botonConfiguraciones;
     private FuentesPersonalizadas fuentesPersonalizadas;
     private final String mensaje = "Planea tu Próximo Viaje con Nosotros";
-    private final String fuente = "Kristen ITC";
+    private final String fuente = "Century Gothic";
+    Temas.Tema temaSeleccionado;
     public MenuSuperiorPanelInicial() {
-        this.setBackground(Color.RED);
+        this.temaSeleccionado = PanelSelectorRuta.temaSeleccionado;
+        this.setBackground(temaSeleccionado.colorPrimario);
 
         botonConfiguraciones = new BotonConfiguraciones();
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
@@ -36,6 +38,10 @@ public class MenuSuperiorPanelInicial extends JPanel {
         g.setFont(new Font(fuente, Font.BOLD, tamanoTexto));
         FontMetrics fm = g.getFontMetrics();
 
+        g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario);
+        g.drawString(mensaje, margenMensaje * 2 + 2, margenMensaje + fm.getAscent() + 2);
+
+        g.setColor(temaSeleccionado.colorSecundario);
         g.drawString(mensaje, margenMensaje * 2, margenMensaje + fm.getAscent());
 
         botonConfiguraciones.setBounds(posXBotonConfiguraciones, posYBotonConfiguraciones, tamanoBotonConfiguraciones, tamanoBotonConfiguraciones);
