@@ -1,7 +1,16 @@
 package Modelo;
 
 public class SalonCama extends Asiento {
-    public SalonCama(int piso, int numero) {
-        super(piso, numero);
+    public SalonCama() {
+        super();
+    }
+
+    public String getCategoria() {
+        return "SalonCama";
+    }
+
+    @Override
+    public float getMultiplicador() {
+        return 1.8F;
     }
 }
