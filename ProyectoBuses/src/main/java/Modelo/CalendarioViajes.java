@@ -2,6 +2,8 @@ package Modelo;
 
 import java.util.ArrayList;
 import java.time.*;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -18,6 +20,13 @@ public class CalendarioViajes {
     private CalendarioViajes(){
         int numCiudades = Ciudades.values().length;
         calendario = new ArrayList[numCiudades][numCiudades][14];
+        for(int i = 0 ;i<numCiudades;i++){
+            for(int j = 0;j<numCiudades;j++){
+                for(int k = 0;k<14;k++){
+                    calendario[i][j][k] = new ArrayList<>();
+                }
+            }
+        }
     }
     public static CalendarioViajes getInstance(){
         if(fechas == null){
@@ -26,6 +35,11 @@ public class CalendarioViajes {
         return fechas;
     }
     public void añadirViaje(ViajeBus viaje ){
+        Ciudades orig = viaje.getOrigen();
+        Ciudades est = viaje.getDestino();
+        LocalDateTime fecha = viaje.getFecha();
+        Period diff = LocalDate.now().until(fecha.toLocalDate());
+        calendario[orig.ordinal()][est.ordinal()][diff.getDays()].add(viaje);
     }
     public void quitarViaje(ViajeBus viaje){}
     //Falta exceptions y completar metodos
@@ -46,10 +60,23 @@ public class CalendarioViajes {
             calendario[origen.ordinal()][destino.ordinal()][diff.getDays()].add(viaje);
         }
     }
-    public void ordenarViajes(Ciudades origen,Ciudades destino,LocalDate dia){}
+    public void ordenarViajes(Ciudades origen,Ciudades destino,LocalDate dia){
+        int fecha = LocalDate.now().until(dia).getDays();
+        Collections.sort(calendario[origen.ordinal()][destino.ordinal()][fecha],
+                (v1,v2) -> v1.getFecha().compareTo(v2.getFecha()));
+    }
     public void actualizarDia(Ciudades origen,Ciudades destino){
-        int numViajes = calendario[origen.ordinal()][destino.ordinal()][0].size();
+        ArrayList<ViajeBus> dia1 = calendario[origen.ordinal()][destino.ordinal()][0];
+        int numViajes = dia1.size();
         for (int i = 0;i < numViajes ;i++){
+            if(LocalDateTime.now().isAfter(dia1.get(i).getFecha())){
+                dia1.remove(i);
+            }
+            break;
         }
+    }
+    public void actualizarCalendario(){}
+    public ArrayList<ViajeBus>[][][] getCalendario(){
+        return calendario;
     }
 }

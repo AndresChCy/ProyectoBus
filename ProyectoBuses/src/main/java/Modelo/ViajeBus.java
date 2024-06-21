@@ -33,4 +33,7 @@ public class ViajeBus {
     public Ciudades getDestino() {
         return destino;
     }
+    public LocalDateTime getFecha(){
+        return fecha;
+    }
 }
