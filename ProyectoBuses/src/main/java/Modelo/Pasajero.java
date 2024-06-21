@@ -8,5 +8,13 @@ public class Pasajero {
         this.nombre = nombre;
         this.Correo = correo;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCorreo() {
+        return Correo;
+    }
 }
 

@@ -35,12 +35,14 @@ public class CalendarioViajes {
         LocalTime horario;
         ViajeBus viaje;
         Period diff = LocalDate.now().until(dia);
+        Bus bus;
         int numViajes = (int) (Math.floor(Math.random()*(7)+4)); //Numeros entre 10 y 4
         for (int i = 0;i<=numViajes;i++ ){
             hora = (int) (Math.floor(Math.random()*(25)));
             minutos = 5 * (int) (Math.floor(Math.random()*(12)));
             horario = LocalTime.of(hora,minutos);
-            viaje = new ViajeBus(LocalDateTime.of(dia,horario),origen,destino );
+            bus = new Bus();
+            viaje = new ViajeBus(bus,origen,destino,LocalDateTime.of(dia,horario),1 );
             calendario[origen.ordinal()][destino.ordinal()][diff.getDays()].add(viaje);
         }
     }

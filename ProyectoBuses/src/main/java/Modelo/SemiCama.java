@@ -1,7 +1,16 @@
 package Modelo;
 
 public class SemiCama extends Asiento {
-    public SemiCama(int piso, int numero) {
-        super(piso, numero);
+    public SemiCama() {
+        super();
+    }
+
+    public String getCategoria() {
+        return "SemiCama";
+    }
+
+    @Override
+    public float getMultiplicador() {
+        return 1.4F;
     }
 }

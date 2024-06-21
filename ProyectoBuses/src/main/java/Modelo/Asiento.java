@@ -1,30 +1,25 @@
 package Modelo;
 
-public class Asiento {
-    private int Numero;
-    private int Precio;
-    private int Piso;
-    private boolean reservado;
+import java.util.ArrayList;
 
-    public Asiento(int piso, int numero) {
-        this.Piso = piso;
-        this.Numero = numero;
-        this.reservado = false;
+public abstract class Asiento {
+    private int Numero;
+    private ArrayList<Boolean> reservas;
+
+    public Asiento() {}
+
+    public void setNumero(int numero) {
+        Numero = numero;
     }
 
     public int getNumero() {
         return Numero;
     }
 
-    public int getPiso() {
-        return Piso;
+    public boolean isReservado(ViajeBus viaje) {
+        return reservas.contains(viaje);
     }
 
-    public boolean isReservado() {
-        return reservado;
-    }
-
-    public void setStateReserva(boolean reservado) {
-        this.reservado = reservado;
-    }
+    public abstract String getCategoria();
+    public abstract float getMultiplicador();
 }
