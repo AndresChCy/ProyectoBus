@@ -3,14 +3,26 @@ import java.util.ArrayList;
 
 public class Bus {
     private String ID;
-    private ArrayList<Asiento> Asientos;
-    private int NumAsientosPiso;
-    private int NumPisos;
+    private ArrayList<PisoBus> pisosBus;
 
-    public Bus(String id, int numAsientosPorPiso, int numPisos) {
+    public Bus() {
+        this.ID = null;
+        pisosBus = null;
+    }
+
+    public void setPisosBus(PisoBus piso) {
+        pisosBus.add(piso);
+    }
+
+    public void setID(String id) {
         this.ID = id;
-        this.Asientos = new ArrayList<Asiento>();
-        this.NumAsientosPiso = numAsientosPorPiso;
-        this.NumPisos = numPisos;
+    }
+
+    public int getNumeroTotalAsientos() {
+        int totalAsientos = 0;
+        for (PisoBus piso : pisosBus) {
+            totalAsientos += piso.getNumAsientos();
+        }
+        return totalAsientos;
     }
 }
