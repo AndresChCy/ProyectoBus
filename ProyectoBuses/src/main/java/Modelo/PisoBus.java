@@ -13,6 +13,11 @@ public class PisoBus {
         asientos[fila][columna] = asiento;
     }
 
+    public Asiento getAsiento(int fila, int columna) {
+        return asientos[fila][columna];
+    }
+
+
     public int getNumFilas() {
         return numFilas;
     }

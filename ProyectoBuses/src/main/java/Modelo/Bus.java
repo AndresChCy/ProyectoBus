@@ -2,20 +2,25 @@ package Modelo;
 import java.util.ArrayList;
 
 public class Bus {
-    private String ID;
+    private int ID;
     private ArrayList<PisoBus> pisosBus;
 
-    public Bus() {
-        this.ID = null;
-        pisosBus = null;
+    public Bus(int ID) {
+        this.ID = ID;
+        pisosBus = new ArrayList<>();
     }
 
-    public void setPisosBus(PisoBus piso) {
-        pisosBus.add(piso);
+    public void addPisoBus(int NumFilas) {
+        pisosBus.add(new PisoBus(NumFilas));
     }
 
-    public void setID(String id) {
-        this.ID = id;
+    public void addAsientoBus(Asiento asiento, PisoBus piso, int Columna, int Fila) {
+        if (pisosBus.contains(piso)) {
+            piso.addAsiento(Fila, Columna, asiento);
+            //Añadir verificacion "PisoNoEstáLleno"
+        } else {
+            //tirar excepcion "PisoNoPerteneceAlBus".
+        }
     }
 
     public int getNumeroTotalAsientos() {

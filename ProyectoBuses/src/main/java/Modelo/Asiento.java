@@ -1,12 +1,13 @@
 package Modelo;
-
 import java.util.ArrayList;
 
 public abstract class Asiento {
     private int Numero;
-    private ArrayList<Boolean> reservas;
+    private ArrayList<ViajeBus> reservas;
 
-    public Asiento() {}
+    public Asiento() {
+        reservas = new ArrayList<>();
+    }
 
     public void setNumero(int numero) {
         Numero = numero;
