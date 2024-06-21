@@ -41,8 +41,16 @@ public class CalendarioViajes {
         Period diff = LocalDate.now().until(fecha.toLocalDate());
         calendario[orig.ordinal()][est.ordinal()][diff.getDays()].add(viaje);
     }
-    public void quitarViaje(ViajeBus viaje){}
+    public void quitarViaje(ViajeBus viaje){
+        Ciudades orig = viaje.getOrigen();
+        Ciudades est = viaje.getDestino();
+        LocalDateTime fecha = viaje.getFecha();
+        Period diff = LocalDate.now().until(fecha.toLocalDate());
+        calendario[orig.ordinal()][est.ordinal()][diff.getDays()].remove(viaje);
+    }
     //Falta exceptions y completar metodos
+    //Falta exception para evitar que origen = destino
+    // Evitar que el dia sea mas tarde de 14 dias de hoy
     public void llenarDatos(Ciudades origen,Ciudades destino,LocalDate dia ){
         int hora;
         int minutos;
@@ -59,6 +67,7 @@ public class CalendarioViajes {
             viaje = new ViajeBus(bus,origen,destino,LocalDateTime.of(dia,horario),1 );
             calendario[origen.ordinal()][destino.ordinal()][diff.getDays()].add(viaje);
         }
+        ordenarViajes(origen,destino,dia);
     }
     public void ordenarViajes(Ciudades origen,Ciudades destino,LocalDate dia){
         int fecha = LocalDate.now().until(dia).getDays();
@@ -68,6 +77,7 @@ public class CalendarioViajes {
     public void actualizarDia(Ciudades origen,Ciudades destino){
         ArrayList<ViajeBus> dia1 = calendario[origen.ordinal()][destino.ordinal()][0];
         int numViajes = dia1.size();
+        ordenarViajes(origen, destino, LocalDate.now());
         for (int i = 0;i < numViajes ;i++){
             if(LocalDateTime.now().isAfter(dia1.get(i).getFecha())){
                 dia1.remove(i);
