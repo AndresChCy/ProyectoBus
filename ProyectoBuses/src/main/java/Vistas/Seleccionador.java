@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class SeleccionadorCiudad extends JPanel {
+public class Seleccionador extends JPanel {
 
     private final List<String> ciudades;
     private final JComboBox<String> comboBox;
@@ -21,7 +21,7 @@ public class SeleccionadorCiudad extends JPanel {
      * Inicializa el componente con una lista de ciudades.
      * @param ciudades Lista de ciudades disponibles para la selección.
      */
-    public SeleccionadorCiudad(List<String> ciudades) {
+    public Seleccionador(List<String> ciudades) {
         this.ciudades = ciudades;
         this.setOpaque(false); // Hacer el fondo transparente
 

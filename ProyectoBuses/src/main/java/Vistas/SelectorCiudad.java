@@ -6,18 +6,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SelectorOrigen extends JPanel {
-    private final SeleccionadorCiudad seleccionadorCiudad;
+public class SelectorCiudad extends JPanel {
+    private final Seleccionador seleccionador;
     private final FuentesPersonalizadas fp;
     private final String fuente = "Broadway";
-    private final String mensaje = "Origen";
+    private final String mensaje ;
     private final JPanel panelTitulo;
 
     /**
-     * Constructor de la clase SelectorOrigen.
+     * Constructor de la clase SelectorDestino.
      * Inicializa el componente con una lista de ciudades y un selector de ciudad.
      */
-    public SelectorOrigen() {
+    public SelectorCiudad(String titulo) {
+        this.mensaje = titulo;
         // Configurar el layout del panel principal como BorderLayout
         setLayout(new BorderLayout());
 
@@ -31,7 +32,7 @@ public class SelectorOrigen extends JPanel {
         List<String> ciudades = getStrings();
 
         // Crear el selector de ciudad con la lista de ciudades
-        seleccionadorCiudad = new SeleccionadorCiudad(ciudades);
+        seleccionador = new Seleccionador(ciudades);
 
         // Crear y configurar el panel para el título
         panelTitulo = new JPanel() {
@@ -64,7 +65,7 @@ public class SelectorOrigen extends JPanel {
         add(panelTitulo, BorderLayout.CENTER);
 
         // Agregar el selector de ciudad al sur del BorderLayout
-        add(seleccionadorCiudad, BorderLayout.SOUTH);
+        add(seleccionador, BorderLayout.SOUTH);
     }
 
     private static List<String> getStrings() {
@@ -103,6 +104,6 @@ public class SelectorOrigen extends JPanel {
         // Ajustar posición y tamaño del panel de título y del selector de ciudad
         int altoSelCiudad = (int) (altoPanel * 0.5);
         panelTitulo.setBounds(0, 0, anchoPanel, altoSelCiudad);
-        seleccionadorCiudad.setBounds(0, altoSelCiudad, anchoPanel, altoSelCiudad);
+        seleccionador.setBounds(0, altoSelCiudad, anchoPanel, altoSelCiudad);
     }
 }

@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 
 public class PanelSelectorRuta extends JPanel {
     private final MenuSuperiorPanelInicial menuSuperiorPanelInicial;
-    private final SelectorOrigen selectorOrigen;
-    private final SelectorDestino selectorDestino;
+    private final SelectorCiudad selectorOrigen;
+    private final SelectorCiudad selectorDestino;
     private final FechaViaje fechaViaje;
     private final BufferedImage imagenFondo;
     public static Temas.Tema temaSeleccionado;
@@ -24,8 +24,8 @@ public class PanelSelectorRuta extends JPanel {
 
         // Inicializar componentes
         menuSuperiorPanelInicial = new MenuSuperiorPanelInicial();
-        selectorOrigen = new SelectorOrigen();
-        selectorDestino = new SelectorDestino();
+        selectorOrigen = new SelectorCiudad("Origen");
+        selectorDestino = new SelectorCiudad("Destino");
         fechaViaje = new FechaViaje();
 
         // Configuración de layout nulo para posicionamiento absoluto
