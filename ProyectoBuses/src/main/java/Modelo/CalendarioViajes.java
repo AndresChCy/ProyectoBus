@@ -48,11 +48,13 @@ public class CalendarioViajes {
         Period diff = LocalDate.now().until(fecha.toLocalDate());
         calendario[orig.ordinal()][est.ordinal()][diff.getDays()].remove(viaje);
     }
-    //Falta exceptions y completar metodos
-    //Falta exception para evitar que origen = destino (Puedes hacerlo en todas o solo en getdia y actualizardia)
-    // Evitar que el dia sea mas tarde de 14 dias de hoy (Esto solo revisalo en el metodo getdia
+
     public void llenarDatos(Ciudades origen,Ciudades destino,LocalDate dia ){
         ArrayList<ViajeBus> aux = getDia(origen,destino,dia);
+        if (origen==destino) {
+            throw new RuntimeException("El origen no puede ser el destino.");
+        }
+
         if(aux.isEmpty()) {
             int hora;
             int minutos;
@@ -76,7 +78,11 @@ public class CalendarioViajes {
         Collections.sort(getDia(origen,destino,dia),
                 (v1,v2) -> v1.getFecha().compareTo(v2.getFecha()));
     }
-    public void actualizarDia(Ciudades origen,Ciudades destino){
+    public void actualizarDia(Ciudades origen,Ciudades destino) {
+        if (origen==destino) {
+            throw new RuntimeException("El origen no puede ser el destino.");
+        }
+
         ArrayList<ViajeBus> dia1 = calendario[origen.ordinal()][destino.ordinal()][0];
         int numViajes = dia1.size();
         ordenarViajes(origen, destino, LocalDate.now());
@@ -91,10 +97,15 @@ public class CalendarioViajes {
     public ArrayList<ViajeBus>[][][] getCalendario(){
         return calendario;
     }
-    public ArrayList<ViajeBus> getDia(Ciudades origen,Ciudades destino,LocalDate dia){
+
+    public ArrayList<ViajeBus> getDia(Ciudades origen,Ciudades destino,LocalDate dia) {
+        if (origen==destino) {
+            throw new RuntimeException("El origen no puede ser el destino.");
+        }
+
         int diff = LocalDate.now().until(dia).getDays();
         if(diff>=14){
-            //Exception
+            throw new RuntimeException("El dia sobrepasa el rango permitido.");
         }
         return calendario[origen.ordinal()][destino.ordinal()][diff];
     }

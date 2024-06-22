@@ -35,4 +35,31 @@ class CalendarioViajesTest {
         [0].get(0));
     }
 
+    @Test
+    @DisplayName("Test de excepción cuando origen y destino son iguales en llenarDatos")
+    void testOrigenIgualDestinoLlenarDatos() {
+        RuntimeException exception = assertThrows(RuntimeException.class, ()-> viajes.llenarDatos(Ciudades.TEMUCO, Ciudades.TEMUCO, LocalDate.now()));
+        assertEquals("El origen no puede ser el destino.", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Test de excepción cuando origen y destino son iguales en actualizarDia")
+    void testOrigenIgualDestinoActualizarDia() {
+        RuntimeException exception = assertThrows(RuntimeException.class, ()-> viajes.actualizarDia(Ciudades.TEMUCO, Ciudades.TEMUCO));
+        assertEquals("El origen no puede ser el destino.", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Test de excepción cuando origen y destino son iguales en getDia")
+    void testOrigenIgualDestinoGetDia() {
+        RuntimeException exception = assertThrows(RuntimeException.class, ()-> viajes.getDia(Ciudades.TEMUCO, Ciudades.TEMUCO, LocalDate.now()));
+        assertEquals("El origen no puede ser el destino.", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Test de excepción cuando el día sobrepasa el rango permitido en getDia")
+    void testDiaSobrepasaRango() {
+        RuntimeException exception = assertThrows(RuntimeException.class, ()-> viajes.getDia(Ciudades.TEMUCO, Ciudades.CHILLAN, LocalDate.now().plusDays(14)));
+        assertEquals("El dia sobrepasa el rango permitido.", exception.getMessage());
+    }
 }
