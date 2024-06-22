@@ -49,29 +49,31 @@ public class CalendarioViajes {
         calendario[orig.ordinal()][est.ordinal()][diff.getDays()].remove(viaje);
     }
     //Falta exceptions y completar metodos
-    //Falta exception para evitar que origen = destino
-    // Evitar que el dia sea mas tarde de 14 dias de hoy
+    //Falta exception para evitar que origen = destino (Puedes hacerlo en todas o solo en getdia y actualizardia)
+    // Evitar que el dia sea mas tarde de 14 dias de hoy (Esto solo revisalo en el metodo getdia
     public void llenarDatos(Ciudades origen,Ciudades destino,LocalDate dia ){
-        int hora;
-        int minutos;
-        LocalTime horario;
-        ViajeBus viaje;
-        Period diff = LocalDate.now().until(dia);
-        Bus bus;
-        int numViajes = (int) (Math.floor(Math.random()*(7)+4)); //Numeros entre 10 y 4
-        for (int i = 0;i<=numViajes;i++ ){
-            hora = (int) (Math.floor(Math.random()*(25)));
-            minutos = 5 * (int) (Math.floor(Math.random()*(12)));
-            horario = LocalTime.of(hora,minutos);
-            bus = new Bus();
-            viaje = new ViajeBus(bus,origen,destino,LocalDateTime.of(dia,horario),1 );
-            calendario[origen.ordinal()][destino.ordinal()][diff.getDays()].add(viaje);
+        ArrayList<ViajeBus> aux = getDia(origen,destino,dia);
+        if(aux.isEmpty()) {
+            int hora;
+            int minutos;
+            LocalTime horario;
+            ViajeBus viaje;
+            Bus bus;
+            int numViajes = (int) (Math.floor(Math.random() * (7) + 4)); //Numeros entre 10 y 4
+            for (int i = 0; i <= numViajes; i++) {
+                hora = (int) (Math.floor(Math.random() * (25)));
+                minutos = 5 * (int) (Math.floor(Math.random() * (12)));
+                horario = LocalTime.of(hora, minutos);
+                bus = new Bus();
+                viaje = new ViajeBus(bus, origen, destino, LocalDateTime.of(dia, horario), 1);
+                aux.add(viaje);
+            }
+            ordenarViajes(origen, destino, dia);
         }
-        ordenarViajes(origen,destino,dia);
     }
     public void ordenarViajes(Ciudades origen,Ciudades destino,LocalDate dia){
         int fecha = LocalDate.now().until(dia).getDays();
-        Collections.sort(calendario[origen.ordinal()][destino.ordinal()][fecha],
+        Collections.sort(getDia(origen,destino,dia),
                 (v1,v2) -> v1.getFecha().compareTo(v2.getFecha()));
     }
     public void actualizarDia(Ciudades origen,Ciudades destino){
@@ -88,5 +90,12 @@ public class CalendarioViajes {
     public void actualizarCalendario(){}
     public ArrayList<ViajeBus>[][][] getCalendario(){
         return calendario;
+    }
+    public ArrayList<ViajeBus> getDia(Ciudades origen,Ciudades destino,LocalDate dia){
+        int diff = LocalDate.now().until(dia).getDays();
+        if(diff>=14){
+            //Exception
+        }
+        return calendario[origen.ordinal()][destino.ordinal()][diff];
     }
 }
