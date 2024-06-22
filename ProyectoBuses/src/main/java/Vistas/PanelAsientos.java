@@ -12,13 +12,13 @@ public class PanelAsientos extends JPanel {
     PanelBus panelBus;
     PanelCodigoColor panelCodigoColor;
     PanelCambioPiso panelCambioPiso;
-    PanelTituloAsientos panelTituloAsientos;
+    PanelTitulo panelTituloAsientos;
 
     /**
      * Constructor de PanelAsientos.
      * Inicializa los subpaneles y los añade al panel principal.
      */
-    public PanelAsientos() {
+    public PanelAsientos(PanelPrincipal panelPrincipal) {
         // Establece el color de fondo del panel principal
         this.setBackground(Color.DARK_GRAY);
 
@@ -26,7 +26,7 @@ public class PanelAsientos extends JPanel {
         panelBus = new PanelBus();
         panelCodigoColor = new PanelCodigoColor();
         panelCambioPiso = new PanelCambioPiso();
-        panelTituloAsientos = new PanelTituloAsientos();
+        panelTituloAsientos = new PanelTitulo("Seleccione Asiento",panelPrincipal);
 
         // Añade los subpaneles al panel principal
         this.add(panelTituloAsientos);

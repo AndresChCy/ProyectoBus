@@ -11,7 +11,7 @@ import java.util.List;
  * incluyendo nombre, apellido, correo, y un panel para mostrar el precio a pagar.
  */
 public class PanelInformacionPasajero extends JPanel {
-    private final PanelTituloInfoPasajero panelTituloInfoPasajero; // Panel para el título de la información del pasajero
+    private final PanelTitulo panelTituloInfoPasajero; // Panel para el título de la información del pasajero
     private final List<PanelIntroducirInformacion> panelesInformacion; // Lista de paneles para introducir información
     private final PanelPrecioPagar panelPrecioPagar; // Panel para mostrar el precio a pagar
     private final BufferedImage imagenFondo; // Imagen de fondo del panel
@@ -22,13 +22,13 @@ public class PanelInformacionPasajero extends JPanel {
      * Configura el color de fondo y carga la imagen de fondo desde el tema seleccionado.
      * Inicializa y agrega los componentes necesarios al panel.
      */
-    public PanelInformacionPasajero() {
+    public PanelInformacionPasajero(PanelPrincipal panelPrincipal) {
         setLayout(null); // Usar layout nulo para posicionar componentes manualmente
         setBackground(Color.WHITE); // Establecer color de fondo del panel
 
         imagenFondo = PanelSelectorRuta.temaSeleccionado.imagen; // Obtener la imagen de fondo del tema seleccionado
 
-        panelTituloInfoPasajero = new PanelTituloInfoPasajero(); // Crear el panel de título de información de pasajero
+        panelTituloInfoPasajero = new PanelTitulo("Información del Pasajero:",panelPrincipal); // Crear el panel de título de información de pasajero
         panelesInformacion = new ArrayList<>(); // Inicializar la lista para los paneles de introducción de información
 
         // Crear paneles de introducción de información para cada etiqueta

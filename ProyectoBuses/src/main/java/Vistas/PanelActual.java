@@ -47,7 +47,7 @@ public class PanelActual {
      * @return JPanel para seleccionar asientos.
      */
     public static JPanel crearPanelAsientos(PanelPrincipal panelPrincipal) {
-        JPanel panel = new PanelAsientos();
+        JPanel panel = new PanelAsientos(panelPrincipal);
         panel.setLayout(new BorderLayout());
 
         // Panel inferior con botón "Siguiente a Información del Pasajero"
@@ -67,8 +67,8 @@ public class PanelActual {
      *
      * @return JPanel para ingresar información del pasajero.
      */
-    public static JPanel crearPanelInformacionPasajero() {
-        JPanel panel = new PanelInformacionPasajero();
+    public static JPanel crearPanelInformacionPasajero(PanelPrincipal panelPrincipal) {
+        JPanel panel = new PanelInformacionPasajero(panelPrincipal);
         panel.setLayout(new BorderLayout());
 
         // Añade etiqueta y panel inferior al panel principal

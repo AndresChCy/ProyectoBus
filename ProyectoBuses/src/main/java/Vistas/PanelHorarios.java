@@ -12,7 +12,8 @@ public class PanelHorarios extends JPanel {
     private final FuentesPersonalizadas fuentesPersonalizadas;
     private final String mensaje = "Horarios Disponibles";
     private final String fuente = "Broadway";
-    private final BotonRetroceder botonRetroceder;
+    private final PanelTitulo panelTitulo;
+   // private final BotonRetroceder botonRetroceder;
     private final PanelHorariosDisponibles panelHorariosDisponibles;
 
     /**
@@ -28,11 +29,11 @@ public class PanelHorarios extends JPanel {
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
 
         // Creación del panel de título
-        JPanel panelTitulo = crearPanelTitulo();
+        panelTitulo = new PanelTitulo("Horarios Disponibles",panelPrincipal);
 
         // Creación del botón para retroceder
-        botonRetroceder = new BotonRetroceder(panelPrincipal);
-        botonRetroceder.setBounds(10, 10, 30, 30);
+       // botonRetroceder = new BotonRetroceder(panelPrincipal);
+        //botonRetroceder.setBounds(10, 10, 30, 30);
 
         // Creación del panel de horarios disponibles
         panelHorariosDisponibles = createPanelHorariosDisponibles(panelPrincipal);
@@ -41,7 +42,7 @@ public class PanelHorarios extends JPanel {
         // Agregar componentes al panel principal
         add(panelTitulo);
         add(panelHorariosDisponibles);
-        add(botonRetroceder);
+        //add(botonRetroceder);
     }
 
     /**
@@ -110,8 +111,8 @@ public class PanelHorarios extends JPanel {
         int margenTitulo = 2 * margenBoton + medidaBoton;
 
         // Obtener y ajustar el panel de título y el botón para retroceder
-        JPanel panelTitulo = (JPanel) getComponent(0);
+        //JPanel panelTitulo = (JPanel) getComponent(0);
         panelTitulo.setBounds(margenTitulo, 0, anchoPanel - 2 * margenTitulo, (int) (altoPanel * 0.3));
-        botonRetroceder.setBounds(margenBoton, margenBoton, medidaBoton, medidaBoton);
+        //botonRetroceder.setBounds(margenBoton, margenBoton, medidaBoton, medidaBoton);
     }
 }

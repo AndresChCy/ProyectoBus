@@ -3,16 +3,21 @@ package Vistas;
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelTituloInfoPasajero extends JPanel {
+public class PanelTitulo extends JPanel {
     private final FuentesPersonalizadas fuentesPersonalizadas;
     private final String fuente = "Broadway";
-    private final String mensaje = "Información del Pasajero:";
+    private final String mensaje ;
+    private final BotonRetroceder botonRetroceder;
 
     /**
      * Constructor de la clase PanelTituloInfoPasajero.
      * Configura el fondo y las fuentes personalizadas.
      */
-    public PanelTituloInfoPasajero() {
+    public PanelTitulo(String mensaje, PanelPrincipal panelPrincipal) {
+        botonRetroceder = new BotonRetroceder(panelPrincipal);
+        botonRetroceder.setBounds(0, 0, 30, 30);
+        add(botonRetroceder);
+        this.mensaje = mensaje ;
         this.setBackground(PanelSelectorRuta.temaSeleccionado.colorPrimario); // Color de fondo según el tema seleccionado
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente); // Inicializar las fuentes personalizadas
     }
@@ -46,5 +51,9 @@ public class PanelTituloInfoPasajero extends JPanel {
         // Dibujar el mensaje en el color terciario del tema seleccionado
         g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario);
         g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent());
+
+        int margenBoton = (int) (altoPanel * 0.5 );
+        int medidaBoton = (int) (altoPanel * 0.8 );
+        botonRetroceder.setBounds(10, 10, medidaBoton, medidaBoton);
     }
 }

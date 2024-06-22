@@ -30,7 +30,7 @@ public class PanelPrincipal extends JPanel {
         JPanel panelSelectorRuta = PanelActual.crearPanelSelectorRuta(this);
         JPanel panelHorarios = PanelActual.crearPanelHorarios(this);
         JPanel panelAsientos = PanelActual.crearPanelAsientos(this);
-        JPanel panelInformacionPasajero = PanelActual.crearPanelInformacionPasajero();
+        JPanel panelInformacionPasajero = PanelActual.crearPanelInformacionPasajero(this);
 
         // Agregar los paneles al panelActual con sus respectivos nombres
         panelActual.add(panelSelectorRuta, "Selector de Ruta");
