@@ -1,8 +1,8 @@
 package Modelo;
 
 public class SemiCama extends Asiento {
-    public SemiCama() {
-        super();
+    public SemiCama(int num) {
+        super(num);
     }
 
     public String getCategoria() {

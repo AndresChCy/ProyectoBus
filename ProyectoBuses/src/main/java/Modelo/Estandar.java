@@ -1,8 +1,8 @@
 package Modelo;
 
 public class Estandar extends Asiento {
-    public Estandar() {
-        super();
+    public Estandar(int num) {
+        super(num);
     }
 
     public String getCategoria() {
