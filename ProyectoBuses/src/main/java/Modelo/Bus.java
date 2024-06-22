@@ -14,9 +14,9 @@ public class Bus {
         pisosBus.add(new PisoBus(NumFilas));
     }
 
-    public void addAsientoBus(Asiento asiento, PisoBus piso, int Columna, int Fila) {
-        if (pisosBus.contains(piso)) {
-            piso.addAsiento(Fila, Columna, asiento);
+    public void addAsientoBus(Asiento asiento, int numPiso, int Columna, int Fila) {
+        if (pisosBus.size()<numPiso) {
+            pisosBus.get(numPiso-1).addAsiento(Fila, Columna, asiento);
             //Añadir verificacion "PisoNoEstáLleno"
         } else {
             //tirar excepcion "PisoNoPerteneceAlBus".

@@ -1,8 +1,8 @@
 package Modelo;
 
 public class SalonCama extends Asiento {
-    public SalonCama() {
-        super();
+    public SalonCama(int num) {
+        super(num);
     }
 
     public String getCategoria() {

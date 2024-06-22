@@ -2,19 +2,16 @@ package Modelo;
 import java.util.ArrayList;
 
 public abstract class Asiento {
-    private int Numero;
+    private int numero;
     private ArrayList<ViajeBus> reservas;
 
-    public Asiento() {
+    public Asiento(int numero) {
         reservas = new ArrayList<>();
-    }
-
-    public void setNumero(int numero) {
-        Numero = numero;
+        this.numero = numero;
     }
 
     public int getNumero() {
-        return Numero;
+        return numero;
     }
 
     public boolean isReservado(ViajeBus viaje) {

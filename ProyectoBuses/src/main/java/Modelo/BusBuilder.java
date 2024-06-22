@@ -3,15 +3,17 @@ package Modelo;
 public class BusBuilder implements Builder {
     private Bus bus;
     private static int number = 1;
+    private int numAsiento;
 
     public BusBuilder() {
-        Reset();
+        reset();
     }
 
     @Override
-    public void Reset() {
+    public void reset() {
         bus = new Bus(number);
         number++;
+        numAsiento = 1;
     }
 
     @Override
@@ -20,25 +22,28 @@ public class BusBuilder implements Builder {
     }
 
     @Override
-    public void addAsientoEstandar(PisoBus piso, int Columna, int Fila) {
-        Asiento aux = new Estandar();
+    public void addAsientoEstandar(int piso, int Columna, int Fila) {
+        Asiento aux = new Estandar(numAsiento);
         bus.addAsientoBus(aux, piso, Columna, Fila);
+        numAsiento++;
     }
 
     @Override
-    public void addAsientoSemiCama(PisoBus piso, int Columna, int Fila) {
-        Asiento aux = new SemiCama();
+    public void addAsientoSemiCama(int piso, int Columna, int Fila) {
+        Asiento aux = new SemiCama(numAsiento);
         bus.addAsientoBus(aux, piso, Columna, Fila);
+        numAsiento++;
     }
 
     @Override
-    public void addAsientoSalonCama(PisoBus piso, int Columna, int Fila) {
-        Asiento aux = new SalonCama();
+    public void addAsientoSalonCama(int piso, int Columna, int Fila) {
+        Asiento aux = new SalonCama(numAsiento);
         bus.addAsientoBus(aux, piso, Columna, Fila);
+        numAsiento++;
     }
 
     @Override
-    public Bus Finalizar() {
+    public Bus finalizar() {
         return bus;
     }
 }
