@@ -18,10 +18,18 @@ public class ViajeBus {
 
         double dHorizontal = lugarSalida.getX() - lugarDestino.getX();
         double dVertical = lugarSalida.getY() - lugarDestino.getY();
-        this.precioViaje = Math.sqrt(dHorizontal*dHorizontal + dVertical*dVertical);
+        this.precioViaje = Math.sqrt(dHorizontal*dHorizontal + dVertical*dVertical)*1000;
     }
 
-    public void ComprarPasaje(Pasajero pasajero, Asiento asiento) {}
+    public Pasaje ComprarPasaje(Pasajero pasajero, Asiento asiento) {
+        precioViaje = precioViaje*asiento.getMultiplicador();
+        Pasaje aux = new Pasaje(pasajero, asiento, origen, destino, fecha, precioViaje);
+        return aux;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
 
     public Ciudades getOrigen() {
         return origen;
