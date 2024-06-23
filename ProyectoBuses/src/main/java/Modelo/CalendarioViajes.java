@@ -54,10 +54,11 @@ public class CalendarioViajes {
         if (origen==destino) {
             throw new RuntimeException("El origen no puede ser el destino.");
         }
-
         if(aux.isEmpty()) {
+            SintetizadorBuses creator = new SintetizadorBuses(new BusBuilder());
             int hora;
             int minutos;
+            int cualBus;
             LocalTime horario;
             ViajeBus viaje;
             Bus bus;
@@ -66,7 +67,9 @@ public class CalendarioViajes {
                 hora = (int) (Math.floor(Math.random() * (25)));
                 minutos = 5 * (int) (Math.floor(Math.random() * (12)));
                 horario = LocalTime.of(hora, minutos);
-                bus = new Bus(1);
+                cualBus = (int) (Math.floor(Math.random() * (7)));
+                creator.make(ModelosBus.values()[cualBus]);
+                bus = creator.getBus();
                 viaje = new ViajeBus(bus, origen, destino, LocalDateTime.of(dia, horario), 1);
                 aux.add(viaje);
             }

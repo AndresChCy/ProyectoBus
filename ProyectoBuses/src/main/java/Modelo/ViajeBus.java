@@ -38,12 +38,12 @@ public class ViajeBus {
     /**
      * Método que compra un pasaje del respectivo viaje.
      * @param pasajero  Pasajero que compra el pasaje.
-     * @param asiento   Asiento que reservó el pasajero.
+     * @param numAsiento  Asiento que reservó el pasajero.
      * @return          Pasaje comprado.
      */
-    public Pasaje ComprarPasaje(Pasajero pasajero, Asiento asiento) {
-        precioViaje = precioViaje*asiento.getMultiplicador();
-        Pasaje aux = new Pasaje(pasajero, asiento, origen, destino, fecha, precioViaje);
+    public Pasaje ComprarPasaje(Pasajero pasajero, int numAsiento) {
+        precioViaje = precioViaje*bus.getAsiento(numAsiento).getMultiplicador();
+        Pasaje aux = new Pasaje(pasajero,bus.getAsiento(numAsiento), origen, destino, fecha, precioViaje);
         return aux;
     }
 
@@ -68,5 +68,8 @@ public class ViajeBus {
      */
     public LocalDateTime getFecha(){
         return fecha;
+    }
+    public Bus getBus(){
+        return bus;
     }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Bus {
     private int ID;
     private ArrayList<PisoBus> pisosBus;
+    private ArrayList<Asiento> asientos;
 
     /**
      * Constructor de la clase Bus.
@@ -36,6 +37,7 @@ public class Bus {
         if (pisosBus.size()<numPiso) {
             if (pisosBus.get(numPiso-1).getNumAsientos()>pisosBus.get(numPiso-1).getNumAsientosActivos()) {
                 pisosBus.get(numPiso-1).addAsiento(Fila, Columna, asiento);
+                asientos.add(asiento);
             } else {
                 throw new RuntimeException("El piso ya no admite más asientos.");
             }
@@ -54,5 +56,11 @@ public class Bus {
             totalAsientos += piso.getNumAsientos();
         }
         return totalAsientos;
+    }
+    public Asiento getAsiento(int numAsiento){
+        return asientos.get(numAsiento-1);
+    }
+    public ArrayList<PisoBus> getPisosBus(){
+        return pisosBus;
     }
 }
