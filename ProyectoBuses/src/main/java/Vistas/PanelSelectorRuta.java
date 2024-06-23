@@ -10,13 +10,15 @@ public class PanelSelectorRuta extends JPanel {
     private final SelectorCiudad selectorDestino;
     private final FechaViaje fechaViaje;
     private final BufferedImage imagenFondo;
+    private final BotonAvanzar botonAvanzar;
     public static Temas.Tema temaSeleccionado;
+
 
     /**
      * Constructor de la clase PanelSelectorRuta.
      * Configura los componentes y carga el tema aleatorio.
      */
-    public PanelSelectorRuta() {
+    public PanelSelectorRuta(OperadorComandos avanzar) {
         // Seleccionar un tema aleatorio y obtener su imagen de fondo
         Temas temas = new Temas();
         temaSeleccionado = temas.seleccionarTemaAleatorio();
@@ -27,11 +29,13 @@ public class PanelSelectorRuta extends JPanel {
         selectorOrigen = new SelectorCiudad("Origen");
         selectorDestino = new SelectorCiudad("Destino");
         fechaViaje = new FechaViaje();
+        botonAvanzar = new BotonAvanzar(avanzar);
 
         // Configuración de layout nulo para posicionamiento absoluto
         this.setLayout(null);
 
         // Añadir componentes al panel
+        this.add(botonAvanzar);
         this.add(selectorOrigen);
         this.add(selectorDestino);
         this.add(fechaViaje);
@@ -95,6 +99,7 @@ public class PanelSelectorRuta extends JPanel {
         int posXFecha = (int) (anchoPanel * 0.35);
         int posYFecha = margenSuperior + altoSelector + (int) (altoPanel * 0.2);
         fechaViaje.setBounds(posXFecha, posYFecha, anchoSelector, altoSelector);
+        botonAvanzar.setBounds(posXOrigen, (int)margenSuperior*2 ,anchoSelector,altoSelector);
     }
 
     /**

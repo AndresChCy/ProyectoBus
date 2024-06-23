@@ -26,11 +26,15 @@ public class PanelPrincipal extends JPanel {
         // Establecer el color de fondo del panel principal como negro
         this.setBackground(Color.BLACK);
 
+        //Crear los comandos necesarios
+        OperadorComandos avanzar = new OperadorComandos(new ComandoAvanzar(panelActual,paneles));
+        OperadorComandos retroceder = new OperadorComandos(new ComandoRetroceder(panelActual,paneles));
+
         // Crear los paneles individuales
-        JPanel panelSelectorRuta = PanelActual.crearPanelSelectorRuta(this);
-        JPanel panelHorarios = PanelActual.crearPanelHorarios(this);
-        JPanel panelAsientos = PanelActual.crearPanelAsientos(this);
-        JPanel panelInformacionPasajero = PanelActual.crearPanelInformacionPasajero(this);
+        JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar);
+        JPanel panelHorarios = new PanelHorarios(retroceder,avanzar);
+        JPanel panelAsientos = new PanelAsientos(avanzar,retroceder);
+        JPanel panelInformacionPasajero = new PanelInformacionPasajero(retroceder);
 
         // Agregar los paneles al panelActual con sus respectivos nombres
         panelActual.add(panelSelectorRuta, "Selector de Ruta");
@@ -43,6 +47,7 @@ public class PanelPrincipal extends JPanel {
         gbc.gridy = 0;
         add(panelActual, gbc);
     }
+
 
     /**
      * Método para mostrar el panel "Selector de Ruta".

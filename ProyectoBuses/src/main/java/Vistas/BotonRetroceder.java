@@ -22,9 +22,9 @@ public class BotonRetroceder extends JButton {
 
     /**
      * Constructor de la clase BotonRetroceder.
-     * @param panelPrincipal PanelPrincipal al que se le notificará cuando se haga clic en el botón.
+     * @param retroceder PanelPrincipal al que se le notificará cuando se haga clic en el botón.
      */
-    public BotonRetroceder(PanelPrincipal panelPrincipal) {
+    public BotonRetroceder(OperadorComandos retroceder) {
         super();
 
         // Cargar la imagen original desde un archivo en el recurso del proyecto
@@ -40,7 +40,7 @@ public class BotonRetroceder extends JButton {
         setOpaque(false); // Hacer que el botón no sea opaco para mostrar el fondo del panel
         setBorderPainted(false); // No dibujar borde alrededor del botón
         setContentAreaFilled(false); // No dibujar el área de contenido del botón
-        addActionListener(e -> panelPrincipal.mostrarPanelSelectorRuta()); // Agregar acción al hacer clic en el botón
+        addActionListener(e -> retroceder.execute()); // Agregar acción al hacer clic en el botón
 
         // Agregar un listener para escalar la imagen cuando el botón tenga tamaño válido
         addComponentListener(new java.awt.event.ComponentAdapter() {

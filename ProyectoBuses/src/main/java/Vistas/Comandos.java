@@ -9,5 +9,5 @@ public interface Comandos {
      * Método execute() que representa la acción a ejecutar.
      * Implementadores de esta interfaz deben definir la lógica específica de la acción.
      */
-    void execute();
+    public void execute();
 }

@@ -14,7 +14,7 @@ public class PanelActual {
      * @param panelPrincipal Instancia del panel principal que contiene este panel.
      * @return JPanel para seleccionar ruta y fecha.
      */
-    public static JPanel crearPanelSelectorRuta(PanelPrincipal panelPrincipal) {
+   /* public static JPanel crearPanelSelectorRuta(PanelPrincipal panelPrincipal) {
         JPanel panel = new PanelSelectorRuta();
         panel.setLayout(new BorderLayout());
 
@@ -36,7 +36,7 @@ public class PanelActual {
      * @param panelPrincipal Instancia del panel principal que contiene este panel.
      * @return JPanel para mostrar los horarios.
      */
-    public static JPanel crearPanelHorarios(PanelPrincipal panelPrincipal) {
+  /*  public static JPanel crearPanelHorarios(PanelPrincipal panelPrincipal) {
         return new PanelHorarios(panelPrincipal);
     }
 
@@ -46,9 +46,9 @@ public class PanelActual {
      * @param panelPrincipal Instancia del panel principal que contiene este panel.
      * @return JPanel para seleccionar asientos.
      */
-    public static JPanel crearPanelAsientos(PanelPrincipal panelPrincipal) {
+   /* public static JPanel crearPanelAsientos(PanelPrincipal panelPrincipal) {
         JPanel panel = new PanelAsientos(panelPrincipal);
-        panel.setLayout(new BorderLayout());
+        //panel.setLayout(new BorderLayout());
 
         // Panel inferior con botón "Siguiente a Información del Pasajero"
         JPanel inferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -67,12 +67,12 @@ public class PanelActual {
      *
      * @return JPanel para ingresar información del pasajero.
      */
-    public static JPanel crearPanelInformacionPasajero(PanelPrincipal panelPrincipal) {
+ /*   public static JPanel crearPanelInformacionPasajero(PanelPrincipal panelPrincipal) {
         JPanel panel = new PanelInformacionPasajero(panelPrincipal);
         panel.setLayout(new BorderLayout());
 
         // Añade etiqueta y panel inferior al panel principal
         panel.add(new JLabel("Ingrese Información del Pasajero"), BorderLayout.NORTH);
         return panel;
-    }
+    }*/
 }

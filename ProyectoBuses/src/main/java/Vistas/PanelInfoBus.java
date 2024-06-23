@@ -20,10 +20,10 @@ public class PanelInfoBus extends JPanel {
      *
      * @param horario       Horario de salida del bus
      * @param precioMin     Precio mínimo desde donde comienza
-     * @param panelPrincipal Instancia del PanelPrincipal para realizar acciones
+     * @param avanzar Instancia del PanelPrincipal para realizar acciones
      * @param color         Color de fondo del panel
      */
-    public PanelInfoBus(String horario, int precioMin, PanelPrincipal panelPrincipal, Color color) {
+    public PanelInfoBus(String horario, int precioMin, OperadorComandos avanzar, Color color) {
         this.horario = horario;
         this.precioDesde = precioMin;
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Borde blanco para separación visual
@@ -32,7 +32,7 @@ public class PanelInfoBus extends JPanel {
 
         String comprar = "COMPRAR";
         botonComprar = new JButton(comprar); // Crear el botón de compra
-        botonComprar.addActionListener(e -> panelPrincipal.mostrarPanelAsientos()); // Asociar acción de mostrar asientos al hacer clic
+        botonComprar.addActionListener(e -> avanzar.execute()); // Asociar acción de mostrar asientos al hacer clic
         botonComprar.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario); // Color de fondo del botón
         botonComprar.setForeground(Color.BLACK); // Color del texto del botón
         this.setLayout(null); // Usar layout nulo para posicionar componentes manualmente

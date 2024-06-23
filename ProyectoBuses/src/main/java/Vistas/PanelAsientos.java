@@ -18,17 +18,19 @@ public class PanelAsientos extends JPanel {
      * Constructor de PanelAsientos.
      * Inicializa los subpaneles y los añade al panel principal.
      */
-    public PanelAsientos(PanelPrincipal panelPrincipal) {
+    public PanelAsientos(OperadorComandos avanzar,OperadorComandos retroceder) {
         // Establece el color de fondo del panel principal
         this.setBackground(Color.DARK_GRAY);
 
         // Inicializa los subpaneles
+        BotonAvanzar botonAvanzar = new BotonAvanzar(avanzar);
         panelBus = new PanelBus();
         panelCodigoColor = new PanelCodigoColor();
         panelCambioPiso = new PanelCambioPiso();
-        panelTituloAsientos = new PanelTitulo("Seleccione Asiento",panelPrincipal);
+        panelTituloAsientos = new PanelTitulo("Seleccione Asiento",retroceder);
 
         // Añade los subpaneles al panel principal
+        this.add(botonAvanzar);
         this.add(panelTituloAsientos);
         this.add(panelBus);
         this.add(panelCodigoColor);

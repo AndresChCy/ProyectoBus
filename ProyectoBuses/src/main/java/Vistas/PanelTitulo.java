@@ -13,8 +13,8 @@ public class PanelTitulo extends JPanel {
      * Constructor de la clase PanelTituloInfoPasajero.
      * Configura el fondo y las fuentes personalizadas.
      */
-    public PanelTitulo(String mensaje, PanelPrincipal panelPrincipal) {
-        botonRetroceder = new BotonRetroceder(panelPrincipal);
+    public PanelTitulo(String mensaje, OperadorComandos retroceder) {
+        botonRetroceder = new BotonRetroceder(retroceder);
         botonRetroceder.setBounds(0, 0, 30, 30);
         add(botonRetroceder);
         this.mensaje = mensaje ;

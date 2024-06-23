@@ -13,29 +13,29 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
     private final String[] arrayAuxiliar; // Array de datos auxiliares
     private final PanelInfoBus[] panelesInfoBus; // Array de paneles de información de buses
     private int desplazamiento = 0; // Desplazamiento vertical
-    private final PanelPrincipal panelPrincipal; // Referencia al panel principal
+    //private final PanelPrincipal panelPrincipal; // Referencia al panel principal
     private final Color[] colores = new Color[] {Color.WHITE, PanelSelectorRuta.temaSeleccionado.colorTerciario}; // Colores alternados para los paneles
     private final Random random; // Objeto Random para generar números aleatorios
 
     /**
      * Constructor de PanelHorariosDisponibles.
      * @param arrayAuxiliar Array de datos auxiliares para inicializar los paneles PanelInfoBus
-     * @param panelPrincipal Referencia al panel principal
+     *  Referencia al panel principal
      */
-    public PanelHorariosDisponibles(String[] arrayAuxiliar, PanelPrincipal panelPrincipal) {
+    public PanelHorariosDisponibles(String[] arrayAuxiliar,OperadorComandos avanzar) {
         this.arrayAuxiliar = arrayAuxiliar;
-        this.panelPrincipal = panelPrincipal;
+       // this.panelPrincipal = panelPrincipal;
         this.panelesInfoBus = new PanelInfoBus[arrayAuxiliar.length];
         this.setLayout(null); // Layout nulo para posicionar los paneles manualmente
         this.addMouseWheelListener(this); // Agregar listener para la rueda del mouse
         this.random = new Random(); // Inicializar objeto Random (solo para pruebas)
-        this.inicializarPaneles(); // Método para inicializar los paneles PanelInfoBus
+        this.inicializarPaneles(avanzar); // Método para inicializar los paneles PanelInfoBus
     }
 
     /**
      * Método privado para inicializar los paneles PanelInfoBus.
      */
-    private void inicializarPaneles() {
+    private void inicializarPaneles(OperadorComandos avanzar) {
         int anchoPanel = getWidth(); // Obtener el ancho del panel
         int altoPanel = getHeight(); // Obtener el alto del panel
         int altoPanelInfoBus = (int) (altoPanel * 0.1); // Altura de cada panel PanelInfoBus
@@ -44,7 +44,7 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
             int numeroRandom = random.nextInt(45001) + 5000; // Generar número aleatorio para el precio (solo para pruebas)
 
             Color color = colores[i % 2]; // Alternar colores entre blanco y el color terciario del tema
-            panelesInfoBus[i] = new PanelInfoBus(arrayAuxiliar[i], numeroRandom, panelPrincipal, color); // Crear nuevo panel PanelInfoBus
+            panelesInfoBus[i] = new PanelInfoBus(arrayAuxiliar[i], numeroRandom, avanzar, color); // Crear nuevo panel PanelInfoBus
             panelesInfoBus[i].setBounds(0, i * altoPanelInfoBus, anchoPanel, altoPanelInfoBus); // Establecer posición y tamaño del panel
             this.add(panelesInfoBus[i]); // Agregar el panel al PanelHorariosDisponibles
         }
