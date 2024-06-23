@@ -1,5 +1,5 @@
 package Modelo;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Clase que representa un Pasaje.
@@ -11,7 +11,7 @@ public class Pasaje {
     private Ciudades origen;
     private int numAsiento;
     private double viajePrecio;
-    private Date fecha;
+    private LocalDateTime fecha;
 
     /**
      * Constructor de Pasaje que inicializa las variables.
@@ -22,7 +22,7 @@ public class Pasaje {
      * @param Fecha     Fecha del viaje.
      * @param Precio    Precio del viaje.
      */
-    public Pasaje(Pasajero Pasajero, Asiento Asiento, Ciudades Origen, Ciudades Destino, Date Fecha, double Precio) {
+    public Pasaje(Pasajero Pasajero, Asiento Asiento, Ciudades Origen, Ciudades Destino, LocalDateTime Fecha, double Precio) {
         this.pasajero = Pasajero;
         this.asiento = Asiento;
         this.numAsiento = asiento.getNumero();

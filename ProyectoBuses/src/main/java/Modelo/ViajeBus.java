@@ -1,14 +1,16 @@
 package Modelo;
-import java.util.Date;
+import java.time.*;
 
 /**
  * Clase que representa el viaje de un bus.
  */
+
 public class ViajeBus {
+
     private Bus bus;
     private Ciudades origen;
     private Ciudades destino;
-    private Date fecha;
+    private LocalDateTime fecha;
     private int ViajeID;
     private double precioViaje;
 
@@ -20,7 +22,8 @@ public class ViajeBus {
      * @param fechaSalida   Fecha en la que se realizará el viaje.
      * @param viajeID       ID del viaje para aspectos tecnicos.
      */
-    public ViajeBus(Bus bus, Ciudades lugarSalida, Ciudades lugarDestino, Date fechaSalida, int viajeID) {
+
+    public ViajeBus(Bus bus, Ciudades lugarSalida, Ciudades lugarDestino, LocalDateTime fechaSalida, int viajeID) {
         this.bus = bus;
         this.origen = lugarSalida;
         this.destino = lugarDestino;
@@ -45,14 +48,6 @@ public class ViajeBus {
     }
 
     /**
-     * Método get para obtener la fecha del viaje.
-     * @return  Fecha del viaje.
-     */
-    public Date getFecha() {
-        return fecha;
-    }
-
-    /**
      * Método get para obtener la ciudad de salida del viaje.
      * @return  Ciudad de origen.
      */
@@ -66,5 +61,12 @@ public class ViajeBus {
      */
     public Ciudades getDestino() {
         return destino;
+    }
+    /**
+     * Método get para obtener la fecha del viaje.
+     * @return  Fecha del viaje.
+     */
+    public LocalDateTime getFecha(){
+        return fecha;
     }
 }
