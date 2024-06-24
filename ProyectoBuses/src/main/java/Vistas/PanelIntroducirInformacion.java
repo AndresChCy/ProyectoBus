@@ -81,4 +81,7 @@ public class PanelIntroducirInformacion extends JPanel {
         campoTexto.setBackground(PanelSelectorRuta.temaSeleccionado.colorTerciario); // Color de fondo del campo
         campoTexto.setBounds(posXCampoTexto, 0, anchoCampoTexto, altoPanel); // Establecer límites del campo de texto
     }
+    public JTextField getCampoTexto(){
+        return campoTexto;
+    }
 }

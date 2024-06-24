@@ -1,14 +1,19 @@
 package Vistas;
 
+import Modelo.CalendarioObserver;
+import Modelo.CalendarioViajes;
+import Modelo.ViajeBus;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * PanelHorarios es un JPanel personalizado que muestra horarios disponibles,
  * un título y un botón para retroceder. Utiliza fuentes personalizadas y colores
  * del tema seleccionado.
  */
-public class PanelHorarios extends JPanel {
+public class PanelHorarios extends JPanel implements CalendarioObserver {
     private final PanelTitulo panelTitulo;
    // private final BotonRetroceder botonRetroceder;
     private final PanelHorariosDisponibles panelHorariosDisponibles;
@@ -18,19 +23,20 @@ public class PanelHorarios extends JPanel {
      *
      * @ Referencia al panel principal que contiene este panel.
      */
-    public PanelHorarios(OperadorComandos retroceder,OperadorComandos avanzar) {
+    public PanelHorarios(Comandos retroceder,Comandos avanzar) {
         setLayout(null); // Establece el layout a nulo para poder posicionar los componentes manualmente
         setBackground(PanelSelectorRuta.temaSeleccionado.colorPrimario); // Establece el color de fondo del panel
-
+        OperadorComandos comandoAtras = new OperadorComandos(retroceder);
+        OperadorComandos comandosAvanzar = new OperadorComandos(avanzar);
         // Creación del panel de título
-        panelTitulo = new PanelTitulo("Horarios Disponibles",retroceder);
+        panelTitulo = new PanelTitulo("Horarios Disponibles",comandoAtras);
 
         // Creación del botón para retroceder
        // botonRetroceder = new BotonRetroceder(panelPrincipal);
         //botonRetroceder.setBounds(10, 10, 30, 30);
 
         // Creación del panel de horarios disponibles
-        panelHorariosDisponibles = createPanelHorariosDisponibles(avanzar);
+        panelHorariosDisponibles = new PanelHorariosDisponibles(avanzar);
         panelHorariosDisponibles.setBounds(0, (int) (getHeight() * 0.3), getWidth(), (int) (getHeight() * 0.7));
 
         // Agregar componentes al panel principal
@@ -45,21 +51,11 @@ public class PanelHorarios extends JPanel {
      * Referencia al panel principal que contiene este panel.
      * @return El panel de horarios disponibles configurado.
      */
-    private PanelHorariosDisponibles createPanelHorariosDisponibles(OperadorComandos avanzar) {
-        String[] arrayHorarios = {
-                "12:00 A.M", "12:30 A.M", "1:00 A.M", "2:00 A.M", "3:00 A.M", "4:00 A.M", "5:00 A.M", "6:00 A.M",
-                "7:00 A.M", "8:00 A.M", "9:00 A.M", "10:00 A.M", "10:30 A.M", "11:00 A.M", "12:00 P.M", "1:00 P.M",
-                "2:00 P.M", "3:00 P.M", "4:00 P.M", "5:00 P.M", "6:00 P.M", "7:00 P.M", "8:00 P.M", "9:00 P.M",
-                "10:00 P.M", "11:00 P.M"
-        };
-        // Crear el panel de horarios disponibles con los horarios y el panel principal como parámetro
-        return new PanelHorariosDisponibles(arrayHorarios,avanzar);
-    }
-
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         int anchoPanel = getWidth();
         int altoPanel = getHeight();
 
@@ -80,5 +76,8 @@ public class PanelHorarios extends JPanel {
         // Posiciona y dimensiona el panel de título de asientos
         panelTitulo.setBounds(0, 0, anchoPanel, altoTitulo);
         //botonRetroceder.setBounds(margenBoton, margenBoton, medidaBoton, medidaBoton);
+    }
+    public void update(){
+        panelHorariosDisponibles.update();
     }
 }

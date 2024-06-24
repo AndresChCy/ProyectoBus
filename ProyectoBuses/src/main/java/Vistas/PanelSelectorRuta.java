@@ -1,8 +1,14 @@
 package Vistas;
 
+import Modelo.Ciudades;
+import Modelo.ViajeBus;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class PanelSelectorRuta extends JPanel {
     private final MenuSuperiorPanelInicial menuSuperiorPanelInicial;
@@ -18,18 +24,40 @@ public class PanelSelectorRuta extends JPanel {
      * Constructor de la clase PanelSelectorRuta.
      * Configura los componentes y carga el tema aleatorio.
      */
-    public PanelSelectorRuta(OperadorComandos avanzar) {
+    public PanelSelectorRuta(Comandos avanzar, ArrayList<ViajeBus> viajes) {
         // Seleccionar un tema aleatorio y obtener su imagen de fondo
         Temas temas = new Temas();
         temaSeleccionado = temas.seleccionarTemaAleatorio();
         imagenFondo = temaSeleccionado.imagen;
+        OperadorComandos command = new OperadorComandos(avanzar);
+        ComandoAsignarRuta asignarRuta = new ComandoAsignarRuta();
+        command.addComando(asignarRuta);
 
         // Inicializar componentes
         menuSuperiorPanelInicial = new MenuSuperiorPanelInicial();
         selectorOrigen = new SelectorCiudad("Origen");
         selectorDestino = new SelectorCiudad("Destino");
-        fechaViaje = new FechaViaje();
-        botonAvanzar = new BotonAvanzar(avanzar);
+        fechaViaje = new FechaViaje(asignarRuta);
+        botonAvanzar = new BotonAvanzar(command);
+
+        selectorOrigen.getComboBox().addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    Ciudades origen = (Ciudades)e.getItem();
+                    asignarRuta.setOrigen(origen);
+                }
+            }
+        });
+        selectorDestino.getComboBox().addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    Ciudades fin = (Ciudades)e.getItem();
+                    asignarRuta.setDestino(fin);
+                }
+            }
+        });
 
         // Configuración de layout nulo para posicionamiento absoluto
         this.setLayout(null);

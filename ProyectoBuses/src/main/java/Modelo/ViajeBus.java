@@ -72,4 +72,5 @@ public class ViajeBus {
     public Bus getBus(){
         return bus;
     }
+    public int getPrecio(){return (int) precioViaje;}
 }

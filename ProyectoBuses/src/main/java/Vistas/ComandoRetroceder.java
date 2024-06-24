@@ -12,5 +12,6 @@ public class ComandoRetroceder implements Comandos{
     }
     public void execute(){
         layout.previous(panel);
+        panel.repaint();
     }
 }

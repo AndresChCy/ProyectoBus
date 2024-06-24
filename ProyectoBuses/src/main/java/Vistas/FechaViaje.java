@@ -1,7 +1,11 @@
 package Vistas;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 /**
  * FechaViaje es un JPanel que contiene dos subpaneles para introducir el día y el mes de un viaje.
@@ -14,12 +18,25 @@ public class FechaViaje extends JPanel {
      * Constructor de FechaViaje.
      * Inicializa los subpaneles y los añade al panel principal.
      */
-    public FechaViaje() {
+    public FechaViaje(ComandoAsignarRuta command) {
         this.setOpaque(false); // Establece el panel como no opaco para permitir la transparencia
         piiDia = new PanelIntroducirInformacion("Día: "); // Crea el panel para introducir el día
         piiMes = new PanelIntroducirInformacion("Mes: "); // Crea el panel para introducir el mes
 
-        // Añade los subpaneles al panel principal
+        piiMes.getCampoTexto().getDocument().addDocumentListener(new EscuchaTextos() {
+            @Override
+            public void update(DocumentEvent e) {
+                command.setMes(piiMes.getCampoTexto().getText());
+            }
+        });
+        piiDia.getCampoTexto().getDocument().addDocumentListener(new EscuchaTextos() {
+            @Override
+            public void update(DocumentEvent e) {
+                command.setDia(piiDia.getCampoTexto().getText());
+            }
+        });
+
+                // Añade los subpaneles al panel principal
         this.add(piiDia);
         this.add(piiMes);
     }

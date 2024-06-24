@@ -1,7 +1,13 @@
 package Vistas;
 
+import Modelo.CalendarioObserver;
+import Modelo.CalendarioViajes;
+import Modelo.ViajeBus;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+
 
 public class PanelPrincipal extends JPanel {
     private final CardLayout paneles;
@@ -25,16 +31,19 @@ public class PanelPrincipal extends JPanel {
 
         // Establecer el color de fondo del panel principal como negro
         this.setBackground(Color.BLACK);
+        ArrayList<ViajeBus> viajes = new ArrayList<>();
 
         //Crear los comandos necesarios
-        OperadorComandos avanzar = new OperadorComandos(new ComandoAvanzar(panelActual,paneles));
-        OperadorComandos retroceder = new OperadorComandos(new ComandoRetroceder(panelActual,paneles));
+        Comandos avanzar = new ComandoAvanzar(panelActual,paneles);
+        Comandos retroceder = new ComandoRetroceder(panelActual,paneles);
 
         // Crear los paneles individuales
-        JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar);
+        JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar, viajes);
         JPanel panelHorarios = new PanelHorarios(retroceder,avanzar);
         JPanel panelAsientos = new PanelAsientos(avanzar,retroceder);
         JPanel panelInformacionPasajero = new PanelInformacionPasajero(retroceder);
+
+        CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelHorarios);
 
         // Agregar los paneles al panelActual con sus respectivos nombres
         panelActual.add(panelSelectorRuta, "Selector de Ruta");

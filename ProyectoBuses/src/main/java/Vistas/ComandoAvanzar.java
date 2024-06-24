@@ -12,5 +12,6 @@ public class ComandoAvanzar implements Comandos{
     }
     public void execute(){
         layout.next(panel);
+        panel.repaint();
     }
 }

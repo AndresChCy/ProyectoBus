@@ -1,12 +1,14 @@
 package Vistas;
 
+import Modelo.CalendarioObserver;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * PanelAsientos es un JPanel que contiene varios subpaneles relacionados con la visualización de asientos de buses.
  */
-public class PanelAsientos extends JPanel {
+public class PanelAsientos extends JPanel implements CalendarioObserver {
 
     // Paneles relacionados con la visualización de asientos
     PanelBus panelBus;
@@ -18,16 +20,17 @@ public class PanelAsientos extends JPanel {
      * Constructor de PanelAsientos.
      * Inicializa los subpaneles y los añade al panel principal.
      */
-    public PanelAsientos(OperadorComandos avanzar,OperadorComandos retroceder) {
+    public PanelAsientos(Comandos avanzar,Comandos retroceder) {
         // Establece el color de fondo del panel principal
         this.setBackground(Color.DARK_GRAY);
-
+        OperadorComandos comandoAtras = new OperadorComandos(retroceder);
+        OperadorComandos comandosAvanzar = new OperadorComandos(avanzar);
         // Inicializa los subpaneles
-        BotonAvanzar botonAvanzar = new BotonAvanzar(avanzar);
+        BotonAvanzar botonAvanzar = new BotonAvanzar(comandosAvanzar);
         panelBus = new PanelBus();
         panelCodigoColor = new PanelCodigoColor();
         panelCambioPiso = new PanelCambioPiso();
-        panelTituloAsientos = new PanelTitulo("Seleccione Asiento",retroceder);
+        panelTituloAsientos = new PanelTitulo("Seleccione Asiento",comandoAtras);
 
         // Añade los subpaneles al panel principal
         this.add(botonAvanzar);
@@ -82,5 +85,7 @@ public class PanelAsientos extends JPanel {
 
         // Posiciona y dimensiona el panel de cambio de piso dentro del panel principal
         panelCambioPiso.setBounds(posXCodigoColor, posYCambioPiso, anchoCambioPiso, altoCambioPiso);
+    }
+    public void update(){
     }
 }

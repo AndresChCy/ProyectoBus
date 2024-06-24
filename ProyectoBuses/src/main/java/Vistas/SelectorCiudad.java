@@ -1,5 +1,7 @@
 package Vistas;
 
+import Modelo.Ciudades;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -105,5 +107,8 @@ public class SelectorCiudad extends JPanel {
         int altoSelCiudad = (int) (altoPanel * 0.5);
         panelTitulo.setBounds(0, 0, anchoPanel, altoSelCiudad);
         seleccionador.setBounds(0, altoSelCiudad, anchoPanel, altoSelCiudad);
+    }
+    public JComboBox<Ciudades> getComboBox(){
+        return seleccionador.getComboBox();
     }
 }

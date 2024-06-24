@@ -1,18 +1,22 @@
 package Vistas;
 
+import Modelo.Ciudades;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.List;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class Seleccionador extends JPanel {
 
-    private final List<String> ciudades;
-    private final JComboBox<String> comboBox;
-    private final DefaultComboBoxModel<String> comboBoxModel;
+    //private final List<String> ciudades;
+    private final JComboBox<Ciudades> comboBox;
+    private final DefaultComboBoxModel<Ciudades> comboBoxModel;
     private final JTextField campoTexto;
     private boolean isAdjusting = false;
 
@@ -22,19 +26,20 @@ public class Seleccionador extends JPanel {
      * @param ciudades Lista de ciudades disponibles para la selección.
      */
     public Seleccionador(List<String> ciudades) {
-        this.ciudades = ciudades;
+        //this.ciudades = ciudades;
         this.setOpaque(false); // Hacer el fondo transparente
 
         // Modelo del ComboBox con la lista de ciudades
-        comboBoxModel = new DefaultComboBoxModel<>(ciudades.toArray(new String[0]));
+        comboBoxModel = new DefaultComboBoxModel<>(Ciudades.values());
         comboBox = new JComboBox<>(comboBoxModel);
         comboBox.setEditable(true); // Permitir edición del texto en el ComboBox
 
         // Obtener el campo de texto interno del ComboBox
         campoTexto = (JTextField) comboBox.getEditor().getEditorComponent();
 
+
         // Agregar un listener al documento para actualizar las sugerencias al editar
-        campoTexto.getDocument().addDocumentListener(new DocumentListener() {
+       /*campoTexto.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 actualizarSugerencias();
@@ -50,7 +55,7 @@ public class Seleccionador extends JPanel {
                 actualizarSugerencias();
             }
 
-            private void actualizarSugerencias() {
+           private void actualizarSugerencias() {
                 if (isAdjusting) {
                     return;
                 }
@@ -70,7 +75,7 @@ public class Seleccionador extends JPanel {
                     isAdjusting = false;
                 });
             }
-        });
+        });*/
 
         // Configurar el layout del panel y añadir el ComboBox al centro
         setLayout(new BorderLayout());
@@ -109,17 +114,20 @@ public class Seleccionador extends JPanel {
     public String getCiudadSeleccionada() {
         return (String) comboBox.getSelectedItem();
     }
+    public JComboBox<Ciudades> getComboBox(){
+        return comboBox;
+    }
 
     /**
      * Método para cambiar la lista de ciudades disponibles en el ComboBox.
      * @param nuevasCiudades Nueva lista de ciudades.
      */
-    public void setCambiarCiudades(List<String> nuevasCiudades) {
+  /*  public void setCambiarCiudades(List<String> nuevasCiudades) {
         ciudades.clear();
         ciudades.addAll(nuevasCiudades);
         comboBoxModel.removeAllElements();
         for (String ciudad : ciudades) {
             comboBoxModel.addElement(ciudad);
         }
-    }
+    }*/
 }

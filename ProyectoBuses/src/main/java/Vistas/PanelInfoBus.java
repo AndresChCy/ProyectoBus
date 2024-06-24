@@ -1,5 +1,7 @@
 package Vistas;
 
+import Modelo.ViajeBus;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +10,7 @@ import java.awt.*;
  * incluyendo el horario de salida y el precio mínimo, junto con un botón para comprar.
  */
 public class PanelInfoBus extends JPanel {
-    private final String horario; // Horario de salida del bus
+    private final ViajeBus viaje; // viaje de salida del bus
     private final int precioDesde; // Precio mínimo desde donde comienza
     private final FuentesPersonalizadas mensajeHora; // Mensaje personalizado para el horario
     private final FuentesPersonalizadas mensajeAsiento; // Mensaje personalizado para el precio
@@ -18,17 +20,16 @@ public class PanelInfoBus extends JPanel {
     /**
      * Constructor del PanelInfoBus.
      *
-     * @param horario       Horario de salida del bus
-     * @param precioMin     Precio mínimo desde donde comienza
+     * @param viaje       Horario de salida del bus
      * @param avanzar Instancia del PanelPrincipal para realizar acciones
      * @param color         Color de fondo del panel
      */
-    public PanelInfoBus(String horario, int precioMin, OperadorComandos avanzar, Color color) {
-        this.horario = horario;
-        this.precioDesde = precioMin;
+    public PanelInfoBus(ViajeBus viaje, OperadorComandos avanzar, Color color) {
+        this.viaje = viaje;
+        this.precioDesde = viaje.getPrecio();
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Borde blanco para separación visual
-        mensajeHora = new FuentesPersonalizadas("Salida: " + horario, fuente); // Crear mensaje personalizado para el horario
-        mensajeAsiento = new FuentesPersonalizadas("Desde: $" + precioMin, fuente); // Crear mensaje personalizado para el precio
+        mensajeHora = new FuentesPersonalizadas("Salida: " + viaje.getFecha(), fuente); // Crear mensaje personalizado para el horario
+        mensajeAsiento = new FuentesPersonalizadas("Desde: $" + viaje.getPrecio(), fuente); // Crear mensaje personalizado para el precio
 
         String comprar = "COMPRAR";
         botonComprar = new JButton(comprar); // Crear el botón de compra
@@ -50,6 +51,12 @@ public class PanelInfoBus extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Llamar al método paintComponent de la superclase JPanel
 
+        this.setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Borde blanco para separación visual
+        String comprar = "COMPRAR";
+        botonComprar.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario); // Color de fondo del botón
+        botonComprar.setForeground(Color.BLACK); // Color del texto del botón
+        this.setLayout(null); // Usar layout nulo para posicionar componentes manualmente
+
         int anchoPanel = getWidth(); // Obtener el ancho del panel
         int altoPanel = getHeight(); // Obtener el alto del panel
 
@@ -64,9 +71,9 @@ public class PanelInfoBus extends JPanel {
         FontMetrics fm1 = g.getFontMetrics();
         g.setFont(new Font(fuente, Font.BOLD, tamanoTextoHora));
         g.setColor(Color.BLACK);
-        g.drawString("Salida: " + horario, margenMensaje * 2 + 2, margenMensaje + fm1.getAscent() + 2);
+        g.drawString("Salida: " + viaje.getFecha(), margenMensaje * 2 + 2, margenMensaje + fm1.getAscent() + 2);
         g.setColor(PanelSelectorRuta.temaSeleccionado.colorSecundario);
-        g.drawString("Salida: " + horario, margenMensaje * 2, margenMensaje + fm1.getAscent());
+        g.drawString("Salida: " + viaje.getFecha(), margenMensaje * 2, margenMensaje + fm1.getAscent());
 
         // Dibujar separador vertical
         int xSeparador = margenMensaje + anchoInfo;
