@@ -49,8 +49,8 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
         OperadorComandos comandoAvanzar ;
         panelesInfoBus = new PanelInfoBus[viajes.size()];
         for (int i = 0; i < viajes.size(); i++) {
-            comandoAvanzar = new OperadorComandos(avanzar);
-            comandoAvanzar.addComando(new ComandoAsignarViaje(i));
+            comandoAvanzar = new OperadorComandos(new ComandoAsignarViaje(i));
+            comandoAvanzar.addComando(avanzar);
             Color color = colores[i % 2]; // Alternar colores entre blanco y el color terciario del tema
             panelesInfoBus[i] = new PanelInfoBus(viajes.get(i),comandoAvanzar, color); // Crear nuevo panel PanelInfoBus
             panelesInfoBus[i].setBounds(0, i * altoPanelInfoBus, anchoPanel, altoPanelInfoBus); // Establecer posición y tamaño del panel

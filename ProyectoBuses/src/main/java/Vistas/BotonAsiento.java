@@ -19,7 +19,7 @@ public class BotonAsiento extends JButton {
     private static final Map<String, String> RUTAS_IMAGENES = new HashMap<>();
     static {
         RUTAS_IMAGENES.put("Estándar", "/estándar.png");
-        RUTAS_IMAGENES.put("Semi Cama", "/semicama.png");
+        RUTAS_IMAGENES.put("SemiCama", "/semicama.png");
         RUTAS_IMAGENES.put("Salón Cama", "/salóncama.png");
         RUTAS_IMAGENES.put("Premium", "/premium.png");
         RUTAS_IMAGENES.put("Vacío", "/vacío.png");

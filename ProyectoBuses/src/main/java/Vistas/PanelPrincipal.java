@@ -1,8 +1,6 @@
 package Vistas;
 
-import Modelo.CalendarioObserver;
-import Modelo.CalendarioViajes;
-import Modelo.ViajeBus;
+import Modelo.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,30 +29,35 @@ public class PanelPrincipal extends JPanel {
 
         // Establecer el color de fondo del panel principal como negro
         this.setBackground(Color.BLACK);
-        ArrayList<ViajeBus> viajes = new ArrayList<>();
 
         //Crear los comandos necesarios
         Comandos avanzar = new ComandoAvanzar(panelActual,paneles);
         Comandos retroceder = new ComandoRetroceder(panelActual,paneles);
 
         // Crear los paneles individuales
-        JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar, viajes);
+        JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar);
         JPanel panelHorarios = new PanelHorarios(retroceder,avanzar);
         JPanel panelAsientos = new PanelAsientos(avanzar,retroceder);
         JPanel panelInformacionPasajero = new PanelInformacionPasajero(retroceder);
 
         CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelHorarios);
+        CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelAsientos);
+
+        PisoBus piso = new PisoBus(6);
+        piso.addAsiento(1,1,new Estandar(1));
 
         // Agregar los paneles al panelActual con sus respectivos nombres
         panelActual.add(panelSelectorRuta, "Selector de Ruta");
+        //panelActual.add(new PanelBus(piso),"prueba");
         panelActual.add(panelHorarios, "Horarios de Salida");
         panelActual.add(panelAsientos, "Asientos");
         panelActual.add(panelInformacionPasajero, "Información del pasajero");
-
+        panelActual.setBackground(Color.BLACK);
         // Agregar el panelActual al centro del PanelPrincipal usando GridBagConstraints
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(panelActual, gbc);
+
     }
 
 

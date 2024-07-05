@@ -1,7 +1,7 @@
 package Vistas;
 
 import Modelo.Ciudades;
-import Modelo.ViajeBus;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +24,7 @@ public class PanelSelectorRuta extends JPanel {
      * Constructor de la clase PanelSelectorRuta.
      * Configura los componentes y carga el tema aleatorio.
      */
-    public PanelSelectorRuta(Comandos avanzar, ArrayList<ViajeBus> viajes) {
+    public PanelSelectorRuta(Comandos avanzar) {
         // Seleccionar un tema aleatorio y obtener su imagen de fondo
         Temas temas = new Temas();
         temaSeleccionado = temas.seleccionarTemaAleatorio();

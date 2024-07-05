@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.time.*;
 import java.util.Collections;
@@ -33,7 +34,7 @@ public class CalendarioViajes {
         }
         diaApuntado = calendario[0][1][0];
         seguidores = new ArrayList<>();
-        viajeApuntado = diaApuntado.get(0);
+        //viajeApuntado = diaApuntado.get(0);
     }
     public static CalendarioViajes getInstance(){
         if(fechas == null){
@@ -69,7 +70,7 @@ public class CalendarioViajes {
             LocalTime horario;
             ViajeBus viaje;
             Bus bus;
-            int numViajes = (int) (Math.floor(Math.random() * (7) + 4)); //Numeros entre 10 y 4
+            int numViajes = (int) (Math.floor(Math.random() * (0) + 4)); //Numeros entre 10 y 4
             for (int i = 0; i <= numViajes; i++) {
                 hora = (int) (Math.floor(Math.random() * (24)));
                 minutos = 5 * (int) (Math.floor(Math.random() * (12)));
@@ -82,10 +83,12 @@ public class CalendarioViajes {
                 aux.add(viaje);
             }
             ordenarViajes(origen, destino, dia);
+            if(dia.getDayOfYear() == LocalDate.now().getDayOfYear()){
+                actualizarDia(origen, destino);
+            }
         }
     }
     public void ordenarViajes(Ciudades origen,Ciudades destino,LocalDate dia){
-        int fecha = LocalDate.now().until(dia).getDays();
         Collections.sort(getDia(origen,destino,dia),
                 (v1,v2) -> v1.getFecha().compareTo(v2.getFecha()));
     }
@@ -99,9 +102,9 @@ public class CalendarioViajes {
         ordenarViajes(origen, destino, LocalDate.now());
         for (int i = 0;i < numViajes ;i++){
             if(LocalDateTime.now().isAfter(dia1.get(i).getFecha())){
-                dia1.remove(i);
+                calendario[origen.ordinal()][destino.ordinal()][0].remove(i);
             }
-            break;
+            else break;
         }
     }
     public void actualizarCalendario(){}
@@ -114,7 +117,8 @@ public class CalendarioViajes {
             throw new RuntimeException("El origen no puede ser el destino.");
         }
 
-        int diff = LocalDate.now().until(dia).getDays();
+        int diff = (int)ChronoUnit.DAYS.between(LocalDate.now(),dia);
+        System.out.println(diff);
         if(diff>=14){
             throw new RuntimeException("El dia sobrepasa el rango permitido.");
         }

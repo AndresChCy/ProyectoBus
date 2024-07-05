@@ -29,12 +29,14 @@ public class PanelCambioPiso extends JPanel {
 
     // Logger para la clase PanelCambioPiso
     private static final Logger logger = Logger.getLogger(PanelCambioPiso.class.getName());
+    private PanelAsientos panelAsientos;
 
     /**
      * Constructor de PanelCambioPiso.
      * Configura el fondo, la fuente y los componentes iniciales del panel.
      */
-    public PanelCambioPiso() {
+    public PanelCambioPiso(PanelAsientos panelAsientos) {
+        this.panelAsientos = panelAsientos;
         try {
             // Carga los iconos de las flechas desde archivos de imagen
             iconoArriba = new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResource("/arriba.png"))));
@@ -90,14 +92,20 @@ public class PanelCambioPiso extends JPanel {
      */
     private void cambiarPiso(int cambio) {
         int nuevoPiso = pisoActual + cambio;
-        // Verifica que el nuevo piso esté dentro del rango permitido
-        int PISO_MIN = 1;
-        int PISO_MAX = 9;
-        if (nuevoPiso >= PISO_MIN && nuevoPiso <= PISO_MAX) {
-            pisoActual = nuevoPiso; // Actualiza el piso actual
-            etiquetaMensaje.setText(mensaje + pisoActual); // Actualiza el texto de la etiqueta
-            repaint(); // Vuelve a pintar el panel para reflejar los cambios visuales
-        }
+        try {
+            System.out.println("xb");
+            panelAsientos.setPanelBus(nuevoPiso - 1);
+            panelAsientos.repaint();
+
+            // Verifica que el nuevo piso esté dentro del rango permitido
+            int PISO_MIN = 1;
+            int PISO_MAX = 9;
+            if (nuevoPiso >= PISO_MIN && nuevoPiso <= PISO_MAX) {
+                pisoActual = nuevoPiso; // Actualiza el piso actual
+                etiquetaMensaje.setText(mensaje + pisoActual); // Actualiza el texto de la etiqueta
+                repaint(); // Vuelve a pintar el panel para reflejar los cambios visuales
+            }
+        }catch (Exception e){System.out.println("error captao");}
     }
 
     /**

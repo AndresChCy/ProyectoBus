@@ -18,7 +18,7 @@ public class Estandar extends Asiento {
      */
     @Override
     public String getCategoria() {
-        return "Estandar";
+        return "Estándar";
     }
 
     /**

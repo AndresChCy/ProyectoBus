@@ -1,9 +1,12 @@
 package Vistas;
 
 import Modelo.CalendarioObserver;
+import Modelo.CalendarioViajes;
+import Modelo.PisoBus;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * PanelAsientos es un JPanel que contiene varios subpaneles relacionados con la visualización de asientos de buses.
@@ -12,6 +15,7 @@ public class PanelAsientos extends JPanel implements CalendarioObserver {
 
     // Paneles relacionados con la visualización de asientos
     PanelBus panelBus;
+    ArrayList<PanelBus> paneles;
     PanelCodigoColor panelCodigoColor;
     PanelCambioPiso panelCambioPiso;
     PanelTitulo panelTituloAsientos;
@@ -22,22 +26,21 @@ public class PanelAsientos extends JPanel implements CalendarioObserver {
      */
     public PanelAsientos(Comandos avanzar,Comandos retroceder) {
         // Establece el color de fondo del panel principal
+        setLayout(new GridBagLayout());
         this.setBackground(Color.DARK_GRAY);
         OperadorComandos comandoAtras = new OperadorComandos(retroceder);
         OperadorComandos comandosAvanzar = new OperadorComandos(avanzar);
         // Inicializa los subpaneles
         BotonAvanzar botonAvanzar = new BotonAvanzar(comandosAvanzar);
-        panelBus = new PanelBus();
         panelCodigoColor = new PanelCodigoColor();
-        panelCambioPiso = new PanelCambioPiso();
         panelTituloAsientos = new PanelTitulo("Seleccione Asiento",comandoAtras);
+        paneles = new ArrayList<>();
 
         // Añade los subpaneles al panel principal
         this.add(botonAvanzar);
         this.add(panelTituloAsientos);
-        this.add(panelBus);
         this.add(panelCodigoColor);
-        this.add(panelCambioPiso);
+        //update();
     }
 
     /**
@@ -68,6 +71,8 @@ public class PanelAsientos extends JPanel implements CalendarioObserver {
 
         // Posiciona y dimensiona el panel de buses dentro del panel principal
         panelBus.setBounds(margenX, margenY + altoTitulo, anchoPanelBus, altoPanelBus);
+       // panelBus.setPreferredSize(new Dimension(anchoPanelBus, altoPanelBus));
+        panelBus.repaint();
 
         // Posición y dimensiones del panel de código de color
         int posXCodigoColor = (int) (1.5 * margenX) + anchoPanelBus;
@@ -87,5 +92,55 @@ public class PanelAsientos extends JPanel implements CalendarioObserver {
         panelCambioPiso.setBounds(posXCodigoColor, posYCambioPiso, anchoCambioPiso, altoCambioPiso);
     }
     public void update(){
+        try{
+            this.remove(panelBus);
+            this.remove(panelCambioPiso);
+        }catch(Exception e){}
+        try{
+            //CardLayout asientos = new CardLayout();
+            //panelBus = new JPanel(new GridBagLayout());
+
+            ArrayList<PisoBus> pisos = CalendarioViajes.getInstance().getViaje().getBus().getPisosBus();
+            paneles.clear();
+            //asientos.addLayoutComponent(new PanelInformacionPasajero(new ComandoRetroceder(panelBus,asientos)),"prueba");
+            for (PisoBus piso : pisos){
+                System.out.println("AAAA");
+                //asientos.addLayoutComponent(new PanelBus(piso),"Piso"+pisos.indexOf(piso));
+                //panelBus = new PanelBus(piso);
+                paneles.add(new PanelBus(piso));
+            }
+            //JPanel panelPisos = new JPanel(asientos);
+            //panelBus = new JPanel(new GridBagLayout());
+            //asientos.first(panelPisos);
+            //Comandos subirPiso = new ComandoAvanzar(panelPisos,asientos);
+            //Comandos bajarPiso = new ComandoRetroceder(panelPisos,asientos);
+            //panelCambioPiso = new PanelCambioPiso(subirPiso,bajarPiso);
+            panelBus = paneles.get(0);
+            panelCambioPiso = new PanelCambioPiso(this);
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.BOTH; // Permitir que los componentes se expandan
+            gbc.weightx = 1.0; // Permitir expansión horizontal
+            gbc.weighty = 1.0; // Permitir expansión vertical
+
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+
+            //panelBus.add(panelPisos, gbc);
+            //this.setLayout(new GridBagLayout());
+            this.add(panelBus);
+            this.add(panelCambioPiso);
+            repaint();
+        }catch(NullPointerException e){
+            System.out.println("No se encontro el bus" + e.getMessage());
+        }
+    }
+    public ArrayList<PanelBus> getPaneles(){
+        return paneles;
+    }
+    public void setPanelBus(int i){
+        this.panelBus = paneles.get(i);
+        remove(panelBus);
+        add(panelBus);
+
     }
 }

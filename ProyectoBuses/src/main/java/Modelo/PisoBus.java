@@ -62,4 +62,5 @@ public class PisoBus {
     public int getNumAsientos() {
         return numFilas*4;
     }
+    public Asiento[][] getAsientos(){return this.asientos;}
 }
