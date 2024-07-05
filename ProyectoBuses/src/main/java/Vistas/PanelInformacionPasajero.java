@@ -22,14 +22,13 @@ public class PanelInformacionPasajero extends JPanel {
      * Configura el color de fondo y carga la imagen de fondo desde el tema seleccionado.
      * Inicializa y agrega los componentes necesarios al panel.
      */
-    public PanelInformacionPasajero(Comandos retroceder) {
+    public PanelInformacionPasajero(OperadorComandos retroceder,Comandos avanzar) {
         setLayout(null); // Usar layout nulo para posicionar componentes manualmente
         setBackground(Color.WHITE); // Establecer color de fondo del panel
 
         imagenFondo = PanelSelectorRuta.temaSeleccionado.imagen; // Obtener la imagen de fondo del tema seleccionado
-        OperadorComandos comandoAtras = new OperadorComandos(retroceder);
 
-        panelTituloInfoPasajero = new PanelTitulo("Información del Pasajero:",comandoAtras); // Crear el panel de título de información de pasajero
+        panelTituloInfoPasajero = new PanelTitulo("Información del Pasajero:",retroceder); // Crear el panel de título de información de pasajero
         panelesInformacion = new ArrayList<>(); // Inicializar la lista para los paneles de introducción de información
 
         // Crear paneles de introducción de información para cada etiqueta
@@ -37,9 +36,8 @@ public class PanelInformacionPasajero extends JPanel {
         for (String etiqueta : etiquetas) {
             panelesInformacion.add(new PanelIntroducirInformacion(etiqueta));
         }
-
-        panelPrecioPagar = new PanelPrecioPagar(24990); // Crear panel para mostrar el precio a pagar (ejemplo: 24990)
-
+        OperadorComandos oc = new OperadorComandos(avanzar);
+        panelPrecioPagar = new PanelPrecioPagar(24990,oc); // Crear panel para mostrar el precio a pagar (ejemplo: 24990)
         // Agregar componentes al panel principal
         add(panelTituloInfoPasajero);
         for (PanelIntroducirInformacion panel : panelesInformacion) {

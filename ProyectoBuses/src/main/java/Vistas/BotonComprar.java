@@ -15,7 +15,7 @@ public class BotonComprar extends JButton {
      * Constructor de la clase BotonComprar.
      * Configura el color de fondo y fuente del botón, y añade un ActionListener para imprimir un mensaje al hacer clic.
      */
-    public BotonComprar() {
+    public BotonComprar(OperadorComandos oc) {
         // Establecer el color de fondo del botón usando el color secundario del tema seleccionado
         this.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
 
@@ -23,7 +23,7 @@ public class BotonComprar extends JButton {
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
 
         // Agregar ActionListener para manejar el evento de clic
-        this.addActionListener(e -> System.out.println("Comprado"));
+        this.addActionListener(e -> oc.execute());
     }
 
     /**

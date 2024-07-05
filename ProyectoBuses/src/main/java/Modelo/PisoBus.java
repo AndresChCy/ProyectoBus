@@ -13,7 +13,7 @@ public class PisoBus {
      * @param numFilas  Numero de filas que tendrá la matriz de asientos.
      */
     public PisoBus(int numFilas) {
-        asientos = new Asiento[numFilas][4];
+        asientos = new Asiento[4][numFilas];
         this.numFilas = numFilas;
         this.numAsientosActivos = 0;
     }

@@ -19,17 +19,21 @@ public class PanelAsientos extends JPanel implements CalendarioObserver {
     PanelCodigoColor panelCodigoColor;
     PanelCambioPiso panelCambioPiso;
     PanelTitulo panelTituloAsientos;
+    ComandoCrearComprador informar ;
 
     /**
      * Constructor de PanelAsientos.
      * Inicializa los subpaneles y los añade al panel principal.
      */
-    public PanelAsientos(Comandos avanzar,Comandos retroceder) {
+    public PanelAsientos(Comandos avanzar,Comandos retroceder,ComandoCrearComprador compradores) {
         // Establece el color de fondo del panel principal
         setLayout(new GridBagLayout());
         this.setBackground(Color.DARK_GRAY);
+        this.informar = compradores;
         OperadorComandos comandoAtras = new OperadorComandos(retroceder);
-        OperadorComandos comandosAvanzar = new OperadorComandos(avanzar);
+        comandoAtras.addComando(new ComandoResetear(informar.getList()));
+        OperadorComandos comandosAvanzar = new OperadorComandos(informar);
+        comandosAvanzar.addComando(avanzar);
         // Inicializa los subpaneles
         BotonAvanzar botonAvanzar = new BotonAvanzar(comandosAvanzar);
         panelCodigoColor = new PanelCodigoColor();
@@ -107,7 +111,7 @@ public class PanelAsientos extends JPanel implements CalendarioObserver {
                 System.out.println("AAAA");
                 //asientos.addLayoutComponent(new PanelBus(piso),"Piso"+pisos.indexOf(piso));
                 //panelBus = new PanelBus(piso);
-                paneles.add(new PanelBus(piso));
+                paneles.add(new PanelBus(piso,informar));
             }
             //JPanel panelPisos = new JPanel(asientos);
             //panelBus = new JPanel(new GridBagLayout());

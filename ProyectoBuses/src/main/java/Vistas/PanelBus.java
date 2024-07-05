@@ -29,15 +29,15 @@ public class PanelBus extends JPanel {
      * Constructor de PanelBus.
      * Inicializa el panel y configura las filas de asientos.
      */
-    public PanelBus(PisoBus piso) {
+    public PanelBus(PisoBus piso,ComandoCrearComprador informar) {
         this.setOpaque(false); // Panel transparente
         this.setLayout(null); // Layout nulo para posicionar manualmente los componentes
         filaBuses = new ArrayList<>(); // Inicializa la lista de filas de buses
 
         // Ejemplo de tipos de asientos en un arreglo para probar
         calcularSumaAsientos(piso); // Calcula la suma total de asientos
-        int totalFilas = 5; // Número total de filas
-        int filaPasillo = totalFilas / 2; // Fila que contendrá solo "Vacío" como pasillo
+        int totalFilas = 4; // Número total de filas
+        int filaPasillo = totalFilas / 2 ; // Fila que contendrá solo "Vacío" como pasillo
 
         // Creación de las filas de buses
         for (int i = 0; i < totalFilas; i++) {
@@ -47,11 +47,14 @@ public class PanelBus extends JPanel {
                 Asiento[] filaBusPasillo = new Asiento[columnas];
                 Arrays.fill(filaBusPasillo, null);
                 filaAsientos = Arrays.asList(filaBusPasillo);
-            } else {
-                // Filas normales con tipos de asientos
-                filaAsientos = Arrays.asList(piso.getAsientos()[i]);
+                FilaBus filaBus = new FilaBus(filaAsientos,informar); // Crea una nueva fila de bus con los asientos correspondientes
+                filaBuses.add(filaBus); // Agrega la fila de bus a la lista
+                this.add(filaBus); // Agrega la fila de bus al panel
             }
-            FilaBus filaBus = new FilaBus(filaAsientos); // Crea una nueva fila de bus con los asientos correspondientes
+            // Filas normales con tipos de asientos
+            filaAsientos = Arrays.asList(piso.getAsientos()[i]);
+
+            FilaBus filaBus = new FilaBus(filaAsientos,informar); // Crea una nueva fila de bus con los asientos correspondientes
             filaBuses.add(filaBus); // Agrega la fila de bus a la lista
             this.add(filaBus); // Agrega la fila de bus al panel
         }
@@ -72,20 +75,20 @@ public class PanelBus extends JPanel {
      */
     private void calcularSumaAsientos(PisoBus piso) {
         sumaAsientos = 0;
-        try {
+
             Asiento[] asientos = piso.getAsientos()[0];
             for (Asiento asiento : asientos) {
-                String tipAsiento = asiento.getCategoria();
-                if (Objects.equals(tipAsiento, "Estándar") || Objects.equals(tipAsiento, "SemiCama") || asiento == null) {
-                    sumaAsientos++;
-                } else if (Objects.equals(tipAsiento, "Salón Cama") || Objects.equals(tipAsiento, "Premium")) {
-                    sumaAsientos += 2;
-                }
+                try {
+                    String tipAsiento = asiento.getCategoria();
+                    if (Objects.equals(tipAsiento, "Estándar") || Objects.equals(tipAsiento, "SemiCama") || asiento == null) {
+                        sumaAsientos++;
+                    } else if (Objects.equals(tipAsiento, "Salón Cama") || Objects.equals(tipAsiento, "Premium")) {
+                        sumaAsientos += 2;
+                    }
+                }catch (Exception e){sumaAsientos++;}
             }
             columnas = Math.min(MAX_COLUMNAS, Math.max(MIN_COLUMNAS, sumaAsientos)); // Limita las columnas entre MIN_COLUMNAS y MAX_COLUMNAS
-        }catch(Exception e){
-            columnas = 1;
-        }
+
     }
 
     /**

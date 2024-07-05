@@ -37,8 +37,8 @@ public class SintetizadorBuses {
     public void makeEstandar(){
         builder.reset();
         builder.addPisoBus(10);
-        for (int i=0; i<4;i++){
-            for( int j=0; j<10;j++){
+        for (int i=0; i<10;i++){
+            for( int j=0; j<4;j++){
                 builder.addAsientoEstandar(1,i,j);
             }
         }
@@ -47,13 +47,13 @@ public class SintetizadorBuses {
         builder.reset();
         builder.addPisoBus(11);
         builder.addPisoBus(10);
-        for (int i=0; i<4;i++){
-            for( int j=0; j<11;j++){
+        for (int i=0; i<11;i++){
+            for( int j=0; j<4;j++){
                 builder.addAsientoEstandar(1,i,j);
             }
         }
-        for (int i=0; i<4;i++){
-            for( int j=0; j<10;j++){
+        for (int i=0; i<10;i++){
+            for( int j=0; j<4;j++){
                 builder.addAsientoEstandar(2,i,j);
             }
         }
@@ -63,21 +63,21 @@ public class SintetizadorBuses {
         builder.addPisoBus(13);
         builder.addPisoBus(13);
         builder.addPisoBus(6);
-        for (int i=0; i<4;i++){
-            for( int j=0; j<13;j++){
-                if(j<4) {
+        for (int i=0; i<13;i++){
+            for( int j=0; j<4;j++){
+                if(i<4) {
                     builder.addAsientoSemiCama(1, i, j);
                 }
                 else builder.addAsientoEstandar(1, i, j);
             }
         }
-        for (int i=0; i<4;i++){
-            for( int j=0; j<13;j++){
+        for (int i=0; i<13;i++){
+            for( int j=0; j<4;j++){
                 builder.addAsientoEstandar(2, i, j);
             }
         }
-        for (int i=0; i<4;i++){
-            for( int j=0; j<6;j++){
+        for (int i=0; i<6;i++){
+            for( int j=0; j<4;j++){
                 builder.addAsientoSalonCama(3, i, j);
             }
         }
@@ -85,9 +85,9 @@ public class SintetizadorBuses {
     public void makeVip(){
         builder.reset();
         builder.addPisoBus(8);
-        for (int i=0; i<4;i++) {
-            for (int j = 0; j < 8; j++) {
-                if(i != 1){
+        for (int i=0; i<8;i++) {
+            for (int j = 0; j < 4; j++) {
+                if(j != 1){
                     builder.addAsientoSalonCama(1, i, j);
                 }
             }
@@ -97,16 +97,16 @@ public class SintetizadorBuses {
         builder.reset();
         builder.addPisoBus(8);
         builder.addPisoBus(10);
-        for (int i=0; i<4;i++) {
-            for (int j = 0; j < 8; j++) {
-                if(i != 1){
+        for (int i=0; i<8;i++) {
+            for (int j = 0; j < 4; j++) {
+                if(j != 1){
                     builder.addAsientoSalonCama(1, i, j);
                 }
             }
         }
-        for (int i=0; i<4;i++) {
-            for (int j = 0; j < 10; j++) {
-                if(j < 2){
+        for (int i=0; i<10;i++) {
+            for (int j = 0; j < 4; j++) {
+                if(i < 2){
                     builder.addAsientoSalonCama(2, i, j);
                 }
                 else builder.addAsientoSemiCama(2, i, j);
@@ -115,19 +115,19 @@ public class SintetizadorBuses {
     }
     public void makePopular(){
         builder.reset();
-        builder.addPisoBus(6);
+        builder.addPisoBus(7);
         builder.addPisoBus(10);
-        for (int i=0; i<4;i++) {
-            for (int j = 0; j < 6; j++) {
-                if(j < 4){
+        for (int i=0; i<7;i++) {
+            for (int j = 0; j < 4; j++) {
+                if(i < 5){
                     builder.addAsientoSemiCama(1, i, j);
                 }
                 else builder.addAsientoSalonCama(1, i, j);
             }
         }
-        for (int i=0; i<4;i++) {
-            for (int j = 0; j < 10; j++) {
-                if(j < 2){
+        for (int i=0; i<10;i++) {
+            for (int j = 0; j < 4; j++) {
+                if(i < 2){
                     builder.addAsientoSemiCama(2, i, j);
                 }
                 else builder.addAsientoEstandar(2, i, j);

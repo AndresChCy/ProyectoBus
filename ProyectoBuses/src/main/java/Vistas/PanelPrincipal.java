@@ -33,12 +33,13 @@ public class PanelPrincipal extends JPanel {
         //Crear los comandos necesarios
         Comandos avanzar = new ComandoAvanzar(panelActual,paneles);
         Comandos retroceder = new ComandoRetroceder(panelActual,paneles);
+        ComandoCrearComprador informacion = new ComandoCrearComprador(panelActual);
 
         // Crear los paneles individuales
         JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar);
         JPanel panelHorarios = new PanelHorarios(retroceder,avanzar);
-        JPanel panelAsientos = new PanelAsientos(avanzar,retroceder);
-        JPanel panelInformacionPasajero = new PanelInformacionPasajero(retroceder);
+        JPanel panelAsientos = new PanelAsientos(avanzar,retroceder,informacion);
+        //JPanel panelInformacionPasajero = new PanelInformacionPasajero(retroceder);
 
         CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelHorarios);
         CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelAsientos);
@@ -51,7 +52,7 @@ public class PanelPrincipal extends JPanel {
         //panelActual.add(new PanelBus(piso),"prueba");
         panelActual.add(panelHorarios, "Horarios de Salida");
         panelActual.add(panelAsientos, "Asientos");
-        panelActual.add(panelInformacionPasajero, "Información del pasajero");
+        //panelActual.add(panelInformacionPasajero, "Información del pasajero");
         panelActual.setBackground(Color.BLACK);
         // Agregar el panelActual al centro del PanelPrincipal usando GridBagConstraints
         gbc.gridx = 0;

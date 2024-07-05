@@ -1,5 +1,8 @@
 package Vistas;
 
+import Modelo.Asiento;
+import Modelo.CalendarioViajes;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -33,7 +36,7 @@ public class BotonAsiento extends JButton {
     private static final Color COLOR_PREFERENCIAL = Color.BLUE; // Color cuando el asiento es preferencial
 
     // Propiedades del botón y estado de control
-    private final String tipoAsiento; // Tipo de asiento asociado al botón
+    private final Asiento asiento; // Tipo de asiento asociado al botón
     private BufferedImage imagenBoton; // Imagen del botón cargada desde archivo
     private Color backgroundColor; // Color de fondo actual del botón
 
@@ -45,8 +48,8 @@ public class BotonAsiento extends JButton {
      * Constructor de la clase BotonAsiento.
      * @param tipoAsiento Tipo de asiento que determina la imagen asociada y el comportamiento del botón.
      */
-    public BotonAsiento(String tipoAsiento) {
-        this.tipoAsiento = tipoAsiento;
+    public BotonAsiento(Asiento asiento,ComandoCrearComprador informar) {
+        this.asiento = asiento;
         cargarIcono(); // Cargar la imagen asociada al tipo de asiento
         initComponent(); // Inicializar componentes y configurar listeners
 
@@ -75,15 +78,21 @@ public class BotonAsiento extends JButton {
                     clicked = !clicked;
                     if (clicked) {
                         setBackground(COLOR_CLICKED);
+                        informar.addPanel(asiento.getNumero());
                     } else {
                         setBackground(COLOR_NORMAL);
+                        informar.borrarPanel(asiento.getNumero());
                     }
                 }
             }
         });
+        try {
+            if (asiento.isReservado(CalendarioViajes.getInstance().getViaje())) {
+                setComprado(true);
+            }
+        }catch(Exception e){}
 
-        // Simular estado comprado aleatorio (solo para pruebas)
-        simularEstadoCompradoAleatorio();
+
     }
 
     /**
@@ -108,7 +117,10 @@ public class BotonAsiento extends JButton {
      * Carga la imagen asociada al tipo de asiento desde el mapa estático de rutas de imágenes.
      */
     private void cargarIcono() {
-        String rutaImagen = RUTAS_IMAGENES.get(tipoAsiento);
+        String rutaImagen;
+        try {
+            rutaImagen = RUTAS_IMAGENES.get(asiento.getCategoria());
+        }catch (Exception e){rutaImagen = RUTAS_IMAGENES.get("Vacío");}
         if (rutaImagen != null) {
             try {
                 imagenBoton = javax.imageio.ImageIO.read(Objects.requireNonNull(getClass().getResource(rutaImagen)));
@@ -116,7 +128,7 @@ public class BotonAsiento extends JButton {
                 System.out.println("Error al cargar imagen: " + ex.getMessage());
             }
         } else {
-            System.out.println("No se encontró la ruta de imagen para el tipo de asiento: " + tipoAsiento);
+            System.out.println("No se encontró la ruta de imagen para el tipo de asiento: " /*+ asiento.getCategoria()*/);
         }
     }
 
@@ -131,6 +143,9 @@ public class BotonAsiento extends JButton {
                 Image img = imagenBoton.getScaledInstance(anchoBoton, altoBoton, Image.SCALE_SMOOTH);
                 ImageIcon icono = new ImageIcon(img);
                 this.setIcon(icono);
+                try{
+                    add(new JLabel(String.valueOf(asiento.getNumero())));
+                }catch(Exception e){}
             }
         }
     }
@@ -177,6 +192,8 @@ public class BotonAsiento extends JButton {
      * @return String con el tipo de asiento.
      */
     public String getTipoAsiento() {
-        return tipoAsiento;
+        try {
+            return asiento.getCategoria();
+        }catch (Exception e){return "Vacío"; }
     }
 }

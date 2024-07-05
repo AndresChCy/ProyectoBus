@@ -19,11 +19,11 @@ public class PanelPrecioPagar extends JPanel {
      *
      * @param precio Precio a mostrar en el mensaje
      */
-    public PanelPrecioPagar(int precio) {
+    public PanelPrecioPagar(int precio,OperadorComandos avanzar) {
         this.setOpaque(false); // Establecer el panel como transparente
         this.mensaje = "Precio: $" + precio; // Crear el mensaje con el precio
 
-        botonComprar = new BotonComprar(); // Crear el botón de comprar
+        botonComprar = new BotonComprar(avanzar); // Crear el botón de comprar
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente); // Instanciar las fuentes personalizadas
 
         this.add(botonComprar); // Agregar el botón de comprar al panel
