@@ -16,6 +16,7 @@ public class Bus {
     public Bus(int ID) {
         this.ID = ID;
         pisosBus = new ArrayList<>();
+        asientos = new ArrayList<>();
     }
 
     /**
@@ -34,7 +35,7 @@ public class Bus {
      * @param Fila      Fila de asientos en el piso del bus.
      */
     public void addAsientoBus(Asiento asiento, int numPiso, int Columna, int Fila) {
-        if (pisosBus.size()<numPiso) {
+        if (pisosBus.size()>=numPiso) {
             if (pisosBus.get(numPiso-1).getNumAsientos()>pisosBus.get(numPiso-1).getNumAsientosActivos()) {
                 pisosBus.get(numPiso-1).addAsiento(Fila, Columna, asiento);
                 asientos.add(asiento);

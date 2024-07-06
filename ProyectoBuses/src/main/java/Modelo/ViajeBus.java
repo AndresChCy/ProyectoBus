@@ -41,9 +41,9 @@ public class ViajeBus {
      * @param numAsiento  Asiento que reservó el pasajero.
      * @return          Pasaje comprado.
      */
-    public Pasaje ComprarPasaje(Pasajero pasajero, int numAsiento) {
-        precioViaje = precioViaje*bus.getAsiento(numAsiento).getMultiplicador();
-        Pasaje aux = new Pasaje(pasajero,bus.getAsiento(numAsiento), origen, destino, fecha, precioViaje);
+    public Pasaje comprarPasaje(Pasajero pasajero, int numAsiento,Descuentos tipo) {
+        int precio = (int)(precioViaje*bus.getAsiento(numAsiento).getMultiplicador()*tipo.getDescuento());
+        Pasaje aux = new Pasaje(pasajero,bus.getAsiento(numAsiento), origen, destino, fecha, precio,tipo);
         return aux;
     }
 
