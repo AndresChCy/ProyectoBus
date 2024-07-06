@@ -5,16 +5,20 @@ package Modelo;
  */
 public class Pasajero {
     private String nombre;
-    private String Correo;
+    private String apellido;
+    private String correo;
+    private Descuentos descuento;
 
     /**
      * Constructor de la clase Pasajero.
      * @param nombre    Nombre del pasajero.
      * @param correo    Correo del pasajero.
      */
-    public Pasajero(String nombre, String correo) {
+    public Pasajero(String nombre,String apellido, String correo,Descuentos descuento) {
         this.nombre = nombre;
-        this.Correo = correo;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.descuento =descuento;
     }
 
     /**
@@ -24,13 +28,16 @@ public class Pasajero {
     public String getNombre() {
         return nombre;
     }
+    public String getApellido(){return apellido;}
 
     /**
      * Método get para obtener el correo del pasajero.
      * @return  Correo del pasajero.
      */
     public String getCorreo() {
-        return Correo;
+        return correo;
     }
+    public Descuentos getDescuento(){return descuento;}
+
 }
 

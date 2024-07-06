@@ -1,10 +1,12 @@
 package Vistas;
 
+import Modelo.Asiento;
+
 import java.util.ArrayList;
 
 public class ComandoResetear implements Comandos{
-    private ArrayList<Integer> quitar;
-    public ComandoResetear(ArrayList<Integer> quitar){
+    private ArrayList<Asiento> quitar;
+    public ComandoResetear(ArrayList<Asiento> quitar){
         this.quitar = quitar;
     }
     public void execute(){

@@ -78,10 +78,10 @@ public class BotonAsiento extends JButton {
                     clicked = !clicked;
                     if (clicked) {
                         setBackground(COLOR_CLICKED);
-                        informar.addPanel(asiento.getNumero());
+                        informar.addPanel(asiento);
                     } else {
                         setBackground(COLOR_NORMAL);
-                        informar.borrarPanel(asiento.getNumero());
+                        informar.borrarPanel(asiento);
                     }
                 }
             }

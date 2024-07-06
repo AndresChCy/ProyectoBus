@@ -34,6 +34,8 @@ public abstract class Asiento {
         return reservas.contains(viaje);
     }
 
+    public void reservar(ViajeBus viaje){reservas.add(viaje);}
+
     /**
      * Método abstracto para obtener la categoria de las subclases.
      * @return  String con la categoria.

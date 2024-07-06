@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: b bb
+Número de Asiento: 19 TIPO: Salón Cama
+Origen: CONCEPCION
+Destino: CHILLAN
+Fecha: 2024-07-07T21:15
+DESCUENTO: NO
+Precio del Viaje: 1799
+
+
+

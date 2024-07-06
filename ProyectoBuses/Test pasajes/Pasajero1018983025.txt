@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: f f
+Número de Asiento: 25 TIPO: Estándar
+Origen: CONCEPCION
+Destino: CHILLAN
+Fecha: 2024-07-07T08:30
+DESCUENTO: NO
+Precio del Viaje: 1100
+
+
+

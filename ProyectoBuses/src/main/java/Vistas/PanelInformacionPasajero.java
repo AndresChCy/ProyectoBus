@@ -1,5 +1,7 @@
 package Vistas;
 
+import Modelo.Asiento;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,6 +17,7 @@ public class PanelInformacionPasajero extends JPanel {
     private final List<PanelIntroducirInformacion> panelesInformacion; // Lista de paneles para introducir información
     private final PanelPrecioPagar panelPrecioPagar; // Panel para mostrar el precio a pagar
     private final BufferedImage imagenFondo; // Imagen de fondo del panel
+    private Asiento asiento;
 
     /**
      * Constructor de PanelInformacionPasajero.
@@ -22,12 +25,13 @@ public class PanelInformacionPasajero extends JPanel {
      * Configura el color de fondo y carga la imagen de fondo desde el tema seleccionado.
      * Inicializa y agrega los componentes necesarios al panel.
      */
-    public PanelInformacionPasajero(OperadorComandos retroceder,Comandos avanzar) {
+    public PanelInformacionPasajero(OperadorComandos retroceder, Comandos avanzar, Asiento asiento) {
         setLayout(null); // Usar layout nulo para posicionar componentes manualmente
         setBackground(Color.WHITE); // Establecer color de fondo del panel
 
         imagenFondo = PanelSelectorRuta.temaSeleccionado.imagen; // Obtener la imagen de fondo del tema seleccionado
 
+        this.asiento = asiento;
         panelTituloInfoPasajero = new PanelTitulo("Información del Pasajero:",retroceder); // Crear el panel de título de información de pasajero
         panelesInformacion = new ArrayList<>(); // Inicializar la lista para los paneles de introducción de información
 
@@ -45,6 +49,11 @@ public class PanelInformacionPasajero extends JPanel {
         }
         add(panelPrecioPagar);
     }
+
+    public String getNombre(){return panelesInformacion.get(0).getCampoTexto().getText();}
+    public String getApellido(){return panelesInformacion.get(1).getCampoTexto().getText();}
+    public String getCorreo(){return panelesInformacion.get(2).getCampoTexto().getText();}
+    public int getAsiento(){return asiento.getNumero();}
 
     /**
      * Método sobrescrito para dibujar el contenido personalizado del panel.

@@ -86,9 +86,9 @@ public class FilaBus extends JPanel {
                     this.add(botonAsiento);
                 }
                 // Marca el asiento como preferencial si es el índice aleatorio
-                if (i == indicePreferencial) {
-                    botonAsiento.setPreferencial(true);
-                }
+                //if (i == indicePreferencial) {
+                  //  botonAsiento.setPreferencial(true);
+                //}
 
                 // Ajusta la posición y tamaño del botón según el tipo de asiento
                 if (asiento.equals("Salón Cama") || asiento.equals("Premium")) {
