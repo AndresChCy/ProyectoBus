@@ -37,12 +37,13 @@ public class ComandoCrearComprador implements Comandos{
                 panelActual.add(panel, "Info Pasajero " + i);
                 registrar.addPanel(panel);
             }
-            OperadorComandos terminar  = new OperadorComandos(seguir);
-            terminar.addComando(registrar);
+            OperadorComandos terminar  = new OperadorComandos(registrar);
+            terminar.addComando(seguir);
             terminar.addComando(limpiar);
             terminar.addComando(new ComandoResetear(paneles));
             panelActual.add(new PanelConfirmarCompra(terminar,atras), "Last");
 
         }
+        else throw new RuntimeException("No se seleccionaron asientos");
     }
 }

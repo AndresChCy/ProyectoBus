@@ -20,16 +20,28 @@ public class ComandoRegistrarPasajeros implements Comandos{
         String nombre;
         String apellido;
         String correo;
-        Descuentos tipo = Descuentos.NO;
+        Descuentos tipo ;
         Pasajero pasajero;
         Pasaje pasaje;
-        for (int i=0;i<paneles.size();i++){
+        ArrayList<Pasaje> pasajes = new ArrayList<>();
+
+        for (int i = 0; i < paneles.size(); i++) {
             nombre = paneles.get(i).getNombre();
             apellido = paneles.get(i).getApellido();
             correo = paneles.get(i).getCorreo();
-            pasajero = new Pasajero(nombre,apellido,correo,tipo);
-            pasaje =CalendarioViajes.getInstance().getViaje().comprarPasaje(pasajero,paneles.get(i).getAsiento());
-            pasaje.imprimir();
+            tipo = paneles.get(i).getDescuento();
+            pasajero = new Pasajero(nombre, apellido, correo, tipo);
+            pasaje = CalendarioViajes.getInstance().getViaje().comprarPasaje(pasajero, paneles.get(i).getAsiento());
+            pasajes.add(pasaje);
+            if(nombre == null || apellido == null || correo == null || nombre.equals("Escriba aquí")
+            || apellido.equals("Escriba aquí") || correo.equals("Escriba aquí")){
+                pasajes.clear();
+                throw new RuntimeException("Faltan datos en uno de los pasajeros.");
+            }
         }
+        for (Pasaje aux: pasajes){
+            aux.imprimir();
+        }
+
     }
 }

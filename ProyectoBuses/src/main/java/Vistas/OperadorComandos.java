@@ -1,5 +1,7 @@
 package Vistas;
 
+import VentanaError.VentanaErr;
+
 import java.util.ArrayList;
 
 public class OperadorComandos {
@@ -12,8 +14,12 @@ public class OperadorComandos {
         comandos.add(comando);
     }
     public void execute(){
-        for (int i=0 ;i<comandos.size();i++){
-            comandos.get(i).execute();
+        try {
+            for (int i = 0; i < comandos.size(); i++) {
+                comandos.get(i).execute();
+            }
+        }catch(RuntimeException e){
+            new VentanaErr(e.getMessage());
         }
     }
 }

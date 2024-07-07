@@ -4,6 +4,7 @@ import Modelo.CalendarioViajes;
 import Modelo.Ciudades;
 import Modelo.ViajeBus;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,13 +32,16 @@ public class ComandoAsignarRuta implements Comandos{
         this.mes = p2;
     }
     public void execute(){
-       // try {
-            int d = Integer.parseInt(dia);
-            int m = Integer.parseInt(mes);
-            LocalDate fecha = LocalDate.of(LocalDate.now().getYear(), m, d);
-            CalendarioViajes.getInstance().llenarDatos(origen, destino, fecha);
-            CalendarioViajes.getInstance().apuntarDia(origen, destino, fecha);
-            CalendarioViajes.getInstance().notificar();
-       // }catch (Exception e){System.out.println("se atrapooo");}
+        int d;
+        int m;
+        try {
+            d = Integer.parseInt(dia);
+            m = Integer.parseInt(mes);
+        }catch(RuntimeException e){throw new RuntimeException("Fecha invalida");}
+        LocalDate fecha = LocalDate.of(LocalDate.now().getYear(), m, d);
+        CalendarioViajes.getInstance().llenarDatos(origen, destino, fecha);
+        CalendarioViajes.getInstance().apuntarDia(origen, destino, fecha);
+        CalendarioViajes.getInstance().notificar();
+
     }
 }

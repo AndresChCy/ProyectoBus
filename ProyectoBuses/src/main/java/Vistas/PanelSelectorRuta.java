@@ -8,18 +8,23 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PanelSelectorRuta extends JPanel {
     private final MenuSuperiorPanelInicial menuSuperiorPanelInicial;
-    private final SelectorCiudad selectorOrigen;
-    private final SelectorCiudad selectorDestino;
+    private final Selector selectorOrigen;
+    private final Selector selectorDestino;
     private final FechaViaje fechaViaje;
     private final BufferedImage imagenFondo;
     private final BotonAvanzar botonAvanzar;
     public static Temas.Tema temaSeleccionado;
-
-
+    private static final Map<String, Ciudades> Targets = new HashMap<>();
+    static {
+        for(Ciudades ciudades: Ciudades.values()){
+            Targets.put(ciudades.toString(),ciudades);
+        }
+    }
     /**
      * Constructor de la clase PanelSelectorRuta.
      * Configura los componentes y carga el tema aleatorio.
@@ -29,14 +34,19 @@ public class PanelSelectorRuta extends JPanel {
         Temas temas = new Temas();
         temaSeleccionado = temas.seleccionarTemaAleatorio();
         imagenFondo = temaSeleccionado.imagen;
-        OperadorComandos command = new OperadorComandos(avanzar);
         ComandoAsignarRuta asignarRuta = new ComandoAsignarRuta();
-        command.addComando(asignarRuta);
+        OperadorComandos command = new OperadorComandos(asignarRuta);
+        command.addComando(avanzar);
+
+        String[] ciudades = new String[Ciudades.values().length];
+        for(Ciudades ciudad: Ciudades.values()){
+            ciudades[ciudad.ordinal()] = ciudad.toString();
+        }
 
         // Inicializar componentes
         menuSuperiorPanelInicial = new MenuSuperiorPanelInicial();
-        selectorOrigen = new SelectorCiudad("Origen");
-        selectorDestino = new SelectorCiudad("Destino");
+        selectorOrigen = new Selector("Origen",ciudades);
+        selectorDestino = new Selector("Destino",ciudades);
         fechaViaje = new FechaViaje(asignarRuta);
         botonAvanzar = new BotonAvanzar(command);
 
@@ -44,7 +54,7 @@ public class PanelSelectorRuta extends JPanel {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    Ciudades origen = (Ciudades)e.getItem();
+                    Ciudades origen = Targets.get(e.getItem());
                     asignarRuta.setOrigen(origen);
                 }
             }
@@ -53,7 +63,7 @@ public class PanelSelectorRuta extends JPanel {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    Ciudades fin = (Ciudades)e.getItem();
+                    Ciudades fin = Targets.get(e.getItem());
                     asignarRuta.setDestino(fin);
                 }
             }

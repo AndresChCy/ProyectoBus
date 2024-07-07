@@ -54,38 +54,40 @@ public class BotonAsiento extends JButton {
         initComponent(); // Inicializar componentes y configurar listeners
 
         // Configurar listeners para eventos de ratón
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                // Cambiar color de fondo al pasar el mouse si no está en estado especial
-                if (!clicked && !comprado && !preferencial) {
-                    setBackground(COLOR_MOUSE_OVER);
-                }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // Restaurar color de fondo al salir del mouse si no está en estado especial
-                if (!clicked && !comprado && !preferencial) {
-                    setBackground(COLOR_NORMAL);
-                }
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Alternar el estado "clickeado" y cambiar el color de fondo
-                if (!comprado && !preferencial) {
-                    clicked = !clicked;
-                    if (clicked) {
-                        setBackground(COLOR_CLICKED);
-                        informar.addPanel(asiento);
-                    } else {
-                        setBackground(COLOR_NORMAL);
-                        informar.borrarPanel(asiento);
+        if(asiento != null) {
+            this.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    // Cambiar color de fondo al pasar el mouse si no está en estado especial
+                    if (!clicked && !comprado && !preferencial) {
+                        setBackground(COLOR_MOUSE_OVER);
                     }
                 }
-            }
-        });
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    // Restaurar color de fondo al salir del mouse si no está en estado especial
+                    if (!clicked && !comprado && !preferencial) {
+                        setBackground(COLOR_NORMAL);
+                    }
+                }
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Alternar el estado "clickeado" y cambiar el color de fondo
+                    if (!comprado && !preferencial) {
+                        clicked = !clicked;
+                        if (clicked) {
+                            setBackground(COLOR_CLICKED);
+                            informar.addPanel(asiento);
+                        } else {
+                            setBackground(COLOR_NORMAL);
+                            informar.borrarPanel(asiento);
+                        }
+                    }
+                }
+            });
+        }
         try {
             if (asiento.isReservado(CalendarioViajes.getInstance().getViaje())) {
                 setComprado(true);

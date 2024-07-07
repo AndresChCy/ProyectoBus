@@ -1,12 +1,16 @@
 package Vistas;
 
 import Modelo.Asiento;
+import Modelo.Ciudades;
+import Modelo.Descuentos;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * PanelInformacionPasajero es un JPanel que contiene información del pasajero,
@@ -17,7 +21,14 @@ public class PanelInformacionPasajero extends JPanel {
     private final List<PanelIntroducirInformacion> panelesInformacion; // Lista de paneles para introducir información
     private final PanelPrecioPagar panelPrecioPagar; // Panel para mostrar el precio a pagar
     private final BufferedImage imagenFondo; // Imagen de fondo del panel
+    private final Selector selectorDescuento;
     private Asiento asiento;
+    private static Map<String, Descuentos> descuentos = new HashMap();
+    static {
+        for (Descuentos tipo : Descuentos.values()){
+            descuentos.put(tipo.toString(),tipo);
+        }
+    }
 
     /**
      * Constructor de PanelInformacionPasajero.
@@ -48,12 +59,19 @@ public class PanelInformacionPasajero extends JPanel {
             add(panel);
         }
         add(panelPrecioPagar);
+        String[] tipos = new String[Descuentos.values().length];
+        for (Descuentos tipo : Descuentos.values()){
+            tipos[tipo.ordinal()] = tipo.toString();
+        }
+        selectorDescuento = new Selector("Descuento",tipos);
+        add(selectorDescuento);
     }
 
     public String getNombre(){return panelesInformacion.get(0).getCampoTexto().getText();}
     public String getApellido(){return panelesInformacion.get(1).getCampoTexto().getText();}
     public String getCorreo(){return panelesInformacion.get(2).getCampoTexto().getText();}
     public int getAsiento(){return asiento.getNumero();}
+    public Descuentos getDescuento(){return descuentos.get(selectorDescuento.getComboBox().getSelectedItem());}
 
     /**
      * Método sobrescrito para dibujar el contenido personalizado del panel.
@@ -82,6 +100,7 @@ public class PanelInformacionPasajero extends JPanel {
             panel.setBounds(margenX, posY, anchoPanelInfo, altoPanelInfo);
             posY += altoPanelInfo + margenY;
         }
+        selectorDescuento.setBounds(margenX, posY, anchoPanelInfo/2, altoPanelInfo);
 
         // Ajustar tamaño y posición del panel de precio a pagar
         int posYPagar = altoPanel - (int) (altoPanel * 0.225) - margenY;

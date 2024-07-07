@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: b b
+Número de Asiento: 37 TIPO: Estándar
+Origen: TEMUCO
+Destino: CHILLAN
+Fecha: 2024-07-07T15:15
+DESCUENTO: NO
+Precio del Viaje: 2200
+
+
+

@@ -1,15 +1,13 @@
 package Vistas;
 
-import Modelo.Ciudades;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SelectorCiudad extends JPanel {
-    private final Seleccionador seleccionador;
+public class Selector extends JPanel {
+    private final SeleccionadorElementos seleccionador;
     private final FuentesPersonalizadas fp;
     private final String fuente = "Broadway";
     private final String mensaje ;
@@ -19,7 +17,7 @@ public class SelectorCiudad extends JPanel {
      * Constructor de la clase SelectorDestino.
      * Inicializa el componente con una lista de ciudades y un selector de ciudad.
      */
-    public SelectorCiudad(String titulo) {
+    public Selector(String titulo,String[] elementos) {
         this.mensaje = titulo;
         // Configurar el layout del panel principal como BorderLayout
         setLayout(new BorderLayout());
@@ -34,7 +32,7 @@ public class SelectorCiudad extends JPanel {
         List<String> ciudades = getStrings();
 
         // Crear el selector de ciudad con la lista de ciudades
-        seleccionador = new Seleccionador(ciudades);
+        seleccionador = new SeleccionadorElementos(elementos);
 
         // Crear y configurar el panel para el título
         panelTitulo = new JPanel() {
@@ -108,7 +106,7 @@ public class SelectorCiudad extends JPanel {
         panelTitulo.setBounds(0, 0, anchoPanel, altoSelCiudad);
         seleccionador.setBounds(0, altoSelCiudad, anchoPanel, altoSelCiudad);
     }
-    public JComboBox<Ciudades> getComboBox(){
+    public JComboBox<String> getComboBox(){
         return seleccionador.getComboBox();
     }
 }

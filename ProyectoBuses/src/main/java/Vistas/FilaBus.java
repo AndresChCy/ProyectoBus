@@ -84,6 +84,7 @@ public class FilaBus extends JPanel {
                 }catch (Exception e){
                     botonAsiento = new BotonAsiento(null,informar);
                     this.add(botonAsiento);
+
                 }
                 // Marca el asiento como preferencial si es el índice aleatorio
                 //if (i == indicePreferencial) {
