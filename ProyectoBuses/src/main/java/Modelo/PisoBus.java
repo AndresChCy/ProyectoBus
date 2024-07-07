@@ -1,9 +1,11 @@
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  * Clase que simula un piso perteneciente a un bus.
  */
-public class PisoBus {
+public class PisoBus implements Serializable {
     private Asiento[][] asientos;
     private int numAsientosActivos;
     private int numFilas;

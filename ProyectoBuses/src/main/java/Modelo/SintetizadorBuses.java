@@ -98,7 +98,7 @@ public class SintetizadorBuses {
         builder.addPisoBus(8);
         builder.addPisoBus(10);
         for (int i=0; i<4;i++) {
-            for (int j = 0; j < 9; j++) {
+            for (int j = 0; j < 8; j++) {
                 if(i != 1){
                     builder.addAsientoSalonCama(1, i, j);
                 }
@@ -118,7 +118,7 @@ public class SintetizadorBuses {
         builder.addPisoBus(6);
         builder.addPisoBus(10);
         for (int i=0; i<4;i++) {
-            for (int j = 0; j < 7; j++) {
+            for (int j = 0; j < 6; j++) {
                 if(j < 4){
                     builder.addAsientoSemiCama(1, i, j);
                 }

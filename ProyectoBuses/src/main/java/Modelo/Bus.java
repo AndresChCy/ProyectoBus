@@ -1,10 +1,11 @@
 package Modelo;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Clase que simula un Bus.
  */
-public class Bus {
+public class Bus implements Serializable {
     private int ID;
     private ArrayList<PisoBus> pisosBus;
     private ArrayList<Asiento> asientos;

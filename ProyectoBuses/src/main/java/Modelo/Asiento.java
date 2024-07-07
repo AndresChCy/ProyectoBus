@@ -1,10 +1,11 @@
 package Modelo;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Super clase que representa un asiento de bus.
  */
-public abstract class Asiento {
+public abstract class Asiento implements Serializable {
     private int numero;
     private ArrayList<ViajeBus> reservas;
 

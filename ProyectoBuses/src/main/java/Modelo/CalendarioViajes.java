@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.io.*;
+import java.security.Guard;
 import java.util.ArrayList;
 import java.time.*;
 import java.util.Collections;
@@ -13,19 +15,29 @@ import java.util.Comparator;
  * Usamos el patrón Singleton ya que no tendria sentido que la empresa tenga 2 calendarios
  * de viajes distintos
  */
-public class CalendarioViajes {
+public class CalendarioViajes implements Serializable {
     private static CalendarioViajes fechas;
     private ArrayList<ViajeBus>[][][] calendario;
+    private LocalDate ultimoGuardado;
 
     private CalendarioViajes(){
-        int numCiudades = Ciudades.values().length;
-        calendario = new ArrayList[numCiudades][numCiudades][14];
-        for(int i = 0 ;i<numCiudades;i++){
-            for(int j = 0;j<numCiudades;j++){
-                for(int k = 0;k<14;k++){
-                    calendario[i][j][k] = new ArrayList<>();
+        try{
+            FileInputStream fileInputStream = new FileInputStream("InfCalendario.txt");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            fechas = (CalendarioViajes) objectInputStream.readObject();
+            objectInputStream.close();
+            actualizarCalendario();
+        }catch(Exception e){
+            int numCiudades = Ciudades.values().length;
+            calendario = new ArrayList[numCiudades][numCiudades][14];
+            for(int i = 0 ;i<numCiudades;i++){
+                for(int j = 0;j<numCiudades;j++){
+                    for(int k = 0;k<14;k++){
+                        calendario[i][j][k] = new ArrayList<>();
+                    }
                 }
             }
+            ultimoGuardado = LocalDate.now();
         }
     }
     public static CalendarioViajes getInstance(){
@@ -64,10 +76,10 @@ public class CalendarioViajes {
             Bus bus;
             int numViajes = (int) (Math.floor(Math.random() * (7) + 4)); //Numeros entre 10 y 4
             for (int i = 0; i <= numViajes; i++) {
-                hora = (int) (Math.floor(Math.random() * (25)));
+                hora = (int) (Math.floor(Math.random() * (24)));
                 minutos = 5 * (int) (Math.floor(Math.random() * (12)));
                 horario = LocalTime.of(hora, minutos);
-                cualBus = (int) (Math.floor(Math.random() * (7)));
+                cualBus = (int) (Math.floor(Math.random() * (6)));
                 creator.make(ModelosBus.values()[cualBus]);
                 bus = creator.getBus();
                 viaje = new ViajeBus(bus, origen, destino, LocalDateTime.of(dia, horario), 1);
@@ -96,7 +108,21 @@ public class CalendarioViajes {
             break;
         }
     }
-    public void actualizarCalendario(){}
+    public void actualizarCalendario(){
+        int diff = LocalDate.now().getDayOfYear()-ultimoGuardado.getDayOfYear();
+        int numCiudades = Ciudades.values().length;
+        for(int i = 0 ;i<numCiudades;i++){
+            for(int j = 0;j<numCiudades;j++){
+                for(int k = 0;k<14;k++){
+                    if(k+14>diff){
+                        calendario[i][j][k] = calendario[i][j][k+diff];
+                    }
+                    else calendario[i][j][k] = new ArrayList<>();
+                    if (k==0){actualizarDia(Ciudades.values()[i],Ciudades.values()[j]);}
+                }
+            }
+        }
+    }
     public ArrayList<ViajeBus>[][][] getCalendario(){
         return calendario;
     }
@@ -111,5 +137,11 @@ public class CalendarioViajes {
             throw new RuntimeException("El dia sobrepasa el rango permitido.");
         }
         return calendario[origen.ordinal()][destino.ordinal()][diff];
+    }
+    public void Guardar() throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream("InfCalendario.txt");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(this);
+        objectOutputStream.close();
     }
 }

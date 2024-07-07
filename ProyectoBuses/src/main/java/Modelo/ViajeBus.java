@@ -1,11 +1,12 @@
 package Modelo;
+import java.io.Serializable;
 import java.time.*;
 
 /**
  * Clase que representa el viaje de un bus.
  */
 
-public class ViajeBus {
+public class ViajeBus implements Serializable {
 
     private Bus bus;
     private Ciudades origen;

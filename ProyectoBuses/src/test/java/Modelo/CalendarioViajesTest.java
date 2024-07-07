@@ -62,4 +62,5 @@ class CalendarioViajesTest {
         RuntimeException exception = assertThrows(RuntimeException.class, ()-> viajes.getDia(Ciudades.TEMUCO, Ciudades.CHILLAN, LocalDate.now().plusDays(14)));
         assertEquals("El dia sobrepasa el rango permitido.", exception.getMessage());
     }
+
 }

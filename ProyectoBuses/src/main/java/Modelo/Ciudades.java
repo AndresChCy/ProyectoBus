@@ -1,9 +1,11 @@
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  * Enumeracion que contiene las ciudades disponibles.
  */
-public enum Ciudades {
+public enum Ciudades implements Serializable {
     CHILLAN(-36, -72),
     CONCEPCION(-36,-73),
     TEMUCO(-38,-72),
