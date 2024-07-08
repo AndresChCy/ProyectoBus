@@ -143,7 +143,12 @@ public class PanelSelectorRuta extends JPanel implements TemasObserver {
             int posXFecha = (int) (anchoPanel * 0.35);
             int posYFecha = margenSuperior + altoSelector + (int) (altoPanel * 0.2);
             fechaViaje.setBounds(posXFecha, posYFecha, anchoSelector, altoSelector);
-            botonAvanzar.setBounds(posXOrigen+50, (int) margenSuperior * 2, anchoSelector, altoSelector);
+
+            int posXAvanzar = (int) (anchoPanel * 0.8);
+            int posYAvanzar = (int) (altoPanel * 0.87);
+            int anchoAvanzar = (int) (anchoPanel * 0.17);
+            int altoAvanzar = (int) (altoPanel * 0.1);
+            botonAvanzar.setBounds(posXAvanzar, posYAvanzar, anchoAvanzar, altoAvanzar);
         }
 
         int anchoConfig = (int) (anchoPanel * 0.5);

@@ -20,6 +20,8 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
     PanelCambioPiso panelCambioPiso;
     PanelTitulo panelTituloAsientos;
     ComandoCrearComprador informar ;
+    BotonAvanzar botonAvanzar;
+    PanelPrecioPagar precioPagar;
 
     /**
      * Constructor de PanelAsientos.
@@ -35,15 +37,17 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
         OperadorComandos comandosAvanzar = new OperadorComandos(informar);
         comandosAvanzar.addComando(avanzar);
         // Inicializa los subpaneles
-        BotonAvanzar botonAvanzar = new BotonAvanzar(comandosAvanzar);
+        botonAvanzar = new BotonAvanzar(comandosAvanzar);
         panelCodigoColor = new PanelCodigoColor();
         panelTituloAsientos = new PanelTitulo("Seleccione Asiento",comandoAtras);
         paneles = new ArrayList<>();
+        precioPagar = new PanelPrecioPagar(15990);
 
         // Añade los subpaneles al panel principal
         this.add(botonAvanzar);
         this.add(panelTituloAsientos);
         this.add(panelCodigoColor);
+        this.add(precioPagar);
         //update();
     }
 
@@ -71,7 +75,7 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
 
         // Dimensiones del panel de buses
         int anchoPanelBus = (int) (anchoPanel * 0.75);
-        int altoPanelBus = (int) (altoPanel * 0.8625);
+        int altoPanelBus = (int) (altoPanel * 0.75);
 
         // Posiciona y dimensiona el panel de buses dentro del panel principal
         panelBus.setBounds(margenX, margenY + altoTitulo, anchoPanelBus, altoPanelBus);
@@ -88,12 +92,24 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
         panelCodigoColor.setBounds(posXCodigoColor, posYCodigoColor, anchoCodigoColor, altoCodigoColor);
 
         // Posición y dimensiones del panel de cambio de piso
-        int posYCambioPiso = altoCodigoColor + posYCodigoColor + margenY;
-        int anchoCambioPiso = (int) (anchoPanel * 0.2);
+        int posXCambioPiso = margenX;
+        int posYCambioPiso = altoPanelBus + 2 * margenY + altoTitulo;
         int altoCambioPiso = (int) (altoPanel * 0.1);
+        int anchoCambioPiso = (int) (anchoPanel * 0.25);
 
         // Posiciona y dimensiona el panel de cambio de piso dentro del panel principal
-        panelCambioPiso.setBounds(posXCodigoColor, posYCambioPiso, anchoCambioPiso, altoCambioPiso);
+        panelCambioPiso.setBounds(posXCambioPiso, posYCambioPiso, anchoCambioPiso, altoCambioPiso);
+
+        int posXPrecioPagar = (int) (anchoPanel * 0.17) + anchoCambioPiso + posXCambioPiso + margenX;
+        int anchoPrecioPagar = (int) (anchoPanel * 0.5);
+        int altoPrecioPagar = (int) (altoPanel * 0.1);
+        precioPagar.setBounds(posXPrecioPagar, posYCambioPiso, anchoPrecioPagar, altoPrecioPagar);
+
+        int posYBotonAvanzar = altoCodigoColor + posYCodigoColor + margenY;
+        int anchoBotonAvanzar = (int) (anchoPanel * 0.2);
+        int altoBotonAvanzar = (int) (altoPanel * 0.1);
+
+        botonAvanzar.setBounds(posXCodigoColor, posYBotonAvanzar, anchoBotonAvanzar, altoBotonAvanzar);
     }
     public void update(){
         try{

@@ -13,6 +13,14 @@ public class PanelPrecioPagar extends JPanel {
     private final String mensaje; // Mensaje que muestra el precio
     private final BotonComprar botonComprar; // Botón para realizar la compra
 
+    public PanelPrecioPagar(int precio) {
+        this.setOpaque(false); // Establecer el panel como transparente
+        this.mensaje = "Precio: $" + precio; // Crear el mensaje con el precio
+
+        fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente); // Instanciar las fuentes personalizadas
+        botonComprar = null; // El botón no es usado
+    }
+
     /**
      * Constructor de PanelPrecioPagar.
      * Configura el panel como transparente, inicializa el mensaje del precio y crea el botón de comprar.
@@ -76,9 +84,11 @@ public class PanelPrecioPagar extends JPanel {
             g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent());
         }
 
-        // Calcular la posición y tamaño del botón de comprar
-        int posXBoton = (int) (anchoPanel * 0.7);
-        int anchoBoton = (int) (anchoPanel * 0.3);
-        botonComprar.setBounds(posXBoton, 0, anchoBoton, altoPanel); // Establecer los límites del botón
+        if (botonComprar != null) {
+            // Calcular la posición y tamaño del botón de comprar
+            int posXBoton = (int) (anchoPanel * 0.7);
+            int anchoBoton = (int) (anchoPanel * 0.3);
+            botonComprar.setBounds(posXBoton, 0, anchoBoton, altoPanel); // Establecer los límites del botón
+        }
     }
 }
