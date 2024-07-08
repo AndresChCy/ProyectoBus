@@ -17,7 +17,7 @@ public class BotonComprar extends JButton {
      */
     public BotonComprar(OperadorComandos oc) {
         // Establecer el color de fondo del botón usando el color secundario del tema seleccionado
-        this.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
+        this.setBackground(Temas.temaSeleccionado.colorSecundario);
 
         // Inicializar objeto para gestionar fuentes personalizadas
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);

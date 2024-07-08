@@ -14,13 +14,15 @@ public class BotonAvanzar extends JButton {
      */
     public BotonAvanzar(OperadorComandos command) {
         // Establecer el color de fondo del botón usando el color secundario del tema seleccionado
-        this.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
+        this.setBackground(Temas.temaSeleccionado.colorSecundario);
 
         // Inicializar objeto para gestionar fuentes personalizadas
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
 
         // Agregar ActionListener para manejar el evento de clic
-        this.addActionListener(e -> command.execute());
+        if (command!=null) {
+            this.addActionListener(e -> command.execute());
+        }
     }
 
     /**
@@ -30,6 +32,8 @@ public class BotonAvanzar extends JButton {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        this.setBackground(Temas.temaSeleccionado.colorSecundario);
 
         int anchoPanel = getWidth();
         int altoPanel = getHeight();

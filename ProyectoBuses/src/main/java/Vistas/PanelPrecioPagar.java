@@ -58,7 +58,7 @@ public class PanelPrecioPagar extends JPanel {
 
         // Buscar la posición del símbolo '$' en el mensaje
         int indiceDolar = mensaje.indexOf('$');
-        g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario);
+        g.setColor(Temas.temaSeleccionado.colorTerciario);
         if (indiceDolar != -1) {
             // Dibujar la parte antes del símbolo '$'
             g.drawString(mensaje.substring(0, indiceDolar), posXMensaje, posYMensaje + fm.getAscent());

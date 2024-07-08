@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * un título y un botón para retroceder. Utiliza fuentes personalizadas y colores
  * del tema seleccionado.
  */
-public class PanelHorarios extends JPanel implements CalendarioObserver {
+public class PanelHorarios extends JPanel implements CalendarioObserver,TemasObserver {
     private final PanelTitulo panelTitulo;
    // private final BotonRetroceder botonRetroceder;
     private final PanelHorariosDisponibles panelHorariosDisponibles;
@@ -25,7 +25,7 @@ public class PanelHorarios extends JPanel implements CalendarioObserver {
      */
     public PanelHorarios(Comandos retroceder,Comandos avanzar) {
         setLayout(null); // Establece el layout a nulo para poder posicionar los componentes manualmente
-        setBackground(PanelSelectorRuta.temaSeleccionado.colorPrimario); // Establece el color de fondo del panel
+        setBackground(Temas.temaSeleccionado.colorPrimario); // Establece el color de fondo del panel
         OperadorComandos comandoAtras = new OperadorComandos(retroceder);
         OperadorComandos comandosAvanzar = new OperadorComandos(avanzar);
         // Creación del panel de título
@@ -58,6 +58,7 @@ public class PanelHorarios extends JPanel implements CalendarioObserver {
 
         int anchoPanel = getWidth();
         int altoPanel = getHeight();
+        setBackground(Temas.temaSeleccionado.colorPrimario);
 
         // Actualizar el tamaño y posición del panel de horarios disponibles
         panelHorariosDisponibles.setBounds(0, (int) (altoPanel * 0.3), anchoPanel, (int) (altoPanel * 0.7));
@@ -79,5 +80,8 @@ public class PanelHorarios extends JPanel implements CalendarioObserver {
     }
     public void update(){
         panelHorariosDisponibles.update();
+    }
+    public void updateTema(){
+        panelHorariosDisponibles.updateTemas();
     }
 }

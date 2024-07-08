@@ -34,7 +34,7 @@ public class PanelInfoBus extends JPanel {
         String comprar = "COMPRAR";
         botonComprar = new JButton(comprar); // Crear el botón de compra
         botonComprar.addActionListener(e -> avanzar.execute()); // Asociar acción de mostrar asientos al hacer clic
-        botonComprar.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario); // Color de fondo del botón
+        botonComprar.setBackground(Temas.temaSeleccionado.colorSecundario); // Color de fondo del botón
         botonComprar.setForeground(Color.BLACK); // Color del texto del botón
         this.setLayout(null); // Usar layout nulo para posicionar componentes manualmente
         this.add(botonComprar); // Agregar el botón al panel
@@ -53,7 +53,7 @@ public class PanelInfoBus extends JPanel {
 
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Borde blanco para separación visual
         String comprar = "COMPRAR";
-        botonComprar.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario); // Color de fondo del botón
+        botonComprar.setBackground(Temas.temaSeleccionado.colorSecundario); // Color de fondo del botón
         botonComprar.setForeground(Color.BLACK); // Color del texto del botón
         this.setLayout(null); // Usar layout nulo para posicionar componentes manualmente
 
@@ -72,7 +72,7 @@ public class PanelInfoBus extends JPanel {
         g.setFont(new Font(fuente, Font.BOLD, tamanoTextoHora));
         g.setColor(Color.BLACK);
         g.drawString("Salida: " + viaje.getFecha(), margenMensaje * 2 + 2, margenMensaje + fm1.getAscent() + 2);
-        g.setColor(PanelSelectorRuta.temaSeleccionado.colorSecundario);
+        g.setColor(Temas.temaSeleccionado.colorSecundario);
         g.drawString("Salida: " + viaje.getFecha(), margenMensaje * 2, margenMensaje + fm1.getAscent());
 
         // Dibujar separador vertical
@@ -86,7 +86,7 @@ public class PanelInfoBus extends JPanel {
         g.setFont(new Font(fuente, Font.BOLD, tamanoMensajeAsiento));
         g.setColor(Color.BLACK);
         g.drawString("Desde: $" + precioDesde, margenMensaje * 2 + xSeparador + 2, margenMensaje + fm2.getAscent() + 2);
-        g.setColor(PanelSelectorRuta.temaSeleccionado.colorSecundario);
+        g.setColor(Temas.temaSeleccionado.colorSecundario);
         g.drawString("Desde: $" + precioDesde, margenMensaje * 2 + xSeparador, margenMensaje + fm2.getAscent());
 
         // Ajustar tamaño y posición del botón de compra

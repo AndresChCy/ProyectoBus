@@ -35,14 +35,20 @@ public class PanelPrincipal extends JPanel {
         Comandos retroceder = new ComandoRetroceder(panelActual,paneles);
         ComandoCrearComprador informacion = new ComandoCrearComprador(panelActual);
 
+        Temas tema = new Temas();
+
         // Crear los paneles individuales
-        JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar);
+        JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar,tema);
         JPanel panelHorarios = new PanelHorarios(retroceder,avanzar);
         JPanel panelAsientos = new PanelAsientos(avanzar,retroceder,informacion);
         //JPanel panelInformacionPasajero = new PanelInformacionPasajero(retroceder);
 
         CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelHorarios);
         CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelAsientos);
+
+        tema.suscribir((TemasObserver)panelSelectorRuta);
+        tema.suscribir((TemasObserver)panelHorarios );
+        tema.suscribir((TemasObserver) panelAsientos);
 
         PisoBus piso = new PisoBus(6);
         piso.addAsiento(1,1,new Estandar(1));

@@ -51,9 +51,9 @@ public class Selector extends JPanel {
                 int anchoMensaje = fm.stringWidth(mensaje);
                 int posXMensaje = (anchoPanel - anchoMensaje) / 2;
                 int posYMensaje = (altoPanel + fm.getAscent()) / 2; // Centrar verticalmente
-                g.setColor(PanelSelectorRuta.temaSeleccionado.colorPrimario);
+                g.setColor(Temas.temaSeleccionado.colorPrimario);
                 g.drawString(mensaje, posXMensaje + 2, posYMensaje + 2);
-                g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario);
+                g.setColor(Temas.temaSeleccionado.colorTerciario);
                 g.drawString(mensaje, posXMensaje, posYMensaje);
             }
         };

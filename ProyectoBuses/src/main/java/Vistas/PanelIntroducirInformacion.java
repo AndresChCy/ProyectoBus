@@ -23,7 +23,7 @@ public class PanelIntroducirInformacion extends JPanel {
      * @param mensaje Mensaje inicial para el campo de texto
      */
     public PanelIntroducirInformacion(String mensaje) {
-        this.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario); // Establecer color de fondo del panel
+        this.setBackground(Temas.temaSeleccionado.colorSecundario); // Establecer color de fondo del panel
         this.mensaje = mensaje;
 
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente); // Inicializar las fuentes personalizadas
@@ -57,6 +57,8 @@ public class PanelIntroducirInformacion extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Llamar al método paintComponent de la superclase JPanel
 
+        this.setBackground(Temas.temaSeleccionado.colorSecundario);
+
         int anchoPanel = getWidth(); // Obtener el ancho del panel
         int altoPanel = getHeight(); // Obtener el alto del panel
 
@@ -71,14 +73,14 @@ public class PanelIntroducirInformacion extends JPanel {
         g.setColor(Color.BLACK); // Establecer color negro para el mensaje con sombra
         g.drawString(mensaje, posXMensaje + 2, posYMensaje + fm.getAscent() + 2); // Dibujar mensaje con sombra
 
-        g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario); // Establecer color terciario del tema para el mensaje
+        g.setColor(Temas.temaSeleccionado.colorTerciario); // Establecer color terciario del tema para el mensaje
         g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent()); // Dibujar mensaje principal
 
         int posXCampoTexto = (int) (0.3 * anchoPanel); // Posición X para el campo de texto
         int anchoCampoTexto = (int) (0.7 * anchoPanel); // Ancho del campo de texto
         campoTexto.setFont(g.getFont()); // Establecer la fuente del campo de texto
-        campoTexto.setForeground(PanelSelectorRuta.temaSeleccionado.colorSecundario); // Color de texto del campo
-        campoTexto.setBackground(PanelSelectorRuta.temaSeleccionado.colorTerciario); // Color de fondo del campo
+        campoTexto.setForeground(Temas.temaSeleccionado.colorSecundario); // Color de texto del campo
+        campoTexto.setBackground(Temas.temaSeleccionado.colorTerciario); // Color de fondo del campo
         campoTexto.setBounds(posXCampoTexto, 0, anchoCampoTexto, altoPanel); // Establecer límites del campo de texto
     }
     public JTextField getCampoTexto(){

@@ -18,7 +18,7 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
     private PanelInfoBus[] panelesInfoBus; // Array de paneles de información de buses
     private int desplazamiento = 0; // Desplazamiento vertical
     //private final PanelPrincipal panelPrincipal; // Referencia al panel principal
-    private final Color[] colores = new Color[] {Color.WHITE, PanelSelectorRuta.temaSeleccionado.colorTerciario}; // Colores alternados para los paneles
+    private Color[] colores ; // Colores alternados para los paneles
     private final Random random; // Objeto Random para generar números aleatorios
     private Comandos avanzar;
 
@@ -28,6 +28,7 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
      *  Referencia al panel principal
      */
     public PanelHorariosDisponibles(Comandos avanzar) {
+        colores = new Color[] {Color.WHITE, Temas.temaSeleccionado.colorTerciario};
         this.viajes = CalendarioViajes.getInstance().getDia();
         this.avanzar = avanzar;
        // this.panelPrincipal = panelPrincipal;
@@ -99,5 +100,9 @@ public class PanelHorariosDisponibles extends JPanel implements MouseWheelListen
     public void update() {
         this.viajes = CalendarioViajes.getInstance().getDia();
         inicializarPaneles();
+    }
+    public void updateTemas(){
+        colores = new Color[] {Color.WHITE, Temas.temaSeleccionado.colorTerciario};
+        repaint();
     }
 }

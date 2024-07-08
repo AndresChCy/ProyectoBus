@@ -27,6 +27,8 @@ public class Temas {
 
     private final List<Tema> temas;
     private final Random random;
+    private ArrayList<TemasObserver> subs;
+    public static Tema temaSeleccionado ;
 
     /**
      * Constructor de la clase Temas.
@@ -36,7 +38,7 @@ public class Temas {
         temas = new ArrayList<>();
         long semilla = System.currentTimeMillis();
         random = new Random(semilla);
-
+        subs = new ArrayList<>();
         try {
             // Cargar temas predefinidos con imágenes y colores
             cargarTema("/temas/tema_1.png", new Color(41, 48, 60), new Color(127, 105, 79), new Color(136, 167, 185));
@@ -62,6 +64,7 @@ public class Temas {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        seleccionarTemaAleatorio();
     }
 
     /**
@@ -83,9 +86,10 @@ public class Temas {
      *
      * @return El tema seleccionado aleatoriamente.
      */
-    public Tema seleccionarTemaAleatorio() {
+    public void seleccionarTemaAleatorio() {
         int index = random.nextInt(temas.size());
-        return temas.get(index);
+        temaSeleccionado = temas.get(index);
+        informar();
     }
 
     /**
@@ -98,5 +102,19 @@ public class Temas {
      */
     public void agregarTema(BufferedImage imagen, Color colorPrimario, Color colorSecundario, Color colorTerciario) {
         temas.add(new Tema(imagen, colorPrimario, colorSecundario, colorTerciario));
+    }
+    public List<Tema> getTemas(){return temas;}
+    public void seleccionarTema(int i){
+        temaSeleccionado = temas.get(i);
+        informar();
+
+    }
+    public void informar(){
+        for (TemasObserver aux : subs){
+            aux.updateTema();
+        }
+    }
+    public void suscribir(TemasObserver panel){
+        subs.add(panel);
     }
 }

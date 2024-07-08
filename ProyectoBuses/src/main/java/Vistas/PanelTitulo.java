@@ -18,7 +18,7 @@ public class PanelTitulo extends JPanel {
         botonRetroceder.setBounds(0, 0, 30, 30);
         add(botonRetroceder);
         this.mensaje = mensaje ;
-        this.setBackground(PanelSelectorRuta.temaSeleccionado.colorPrimario); // Color de fondo según el tema seleccionado
+        this.setBackground(Temas.temaSeleccionado.colorPrimario); // Color de fondo según el tema seleccionado
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente); // Inicializar las fuentes personalizadas
     }
 
@@ -33,6 +33,7 @@ public class PanelTitulo extends JPanel {
 
         int anchoPanel = getWidth();
         int altoPanel = getHeight();
+        this.setBackground(Temas.temaSeleccionado.colorPrimario);
 
         // Calcular el tamaño de la fuente basado en las dimensiones del panel
         int tamanoFuente = fuentesPersonalizadas.calcularTamanoLetras(anchoPanel, altoPanel, g);
@@ -49,7 +50,7 @@ public class PanelTitulo extends JPanel {
         g.drawString(mensaje, posXMensaje + 5, posYMensaje + fm.getAscent() + 5);
 
         // Dibujar el mensaje en el color terciario del tema seleccionado
-        g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario);
+        g.setColor(Temas.temaSeleccionado.colorTerciario);
         g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent());
 
         int margenBoton = (int) (altoPanel * 0.5 );

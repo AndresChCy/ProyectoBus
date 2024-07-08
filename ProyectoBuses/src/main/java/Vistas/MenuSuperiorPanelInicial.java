@@ -2,6 +2,8 @@ package Vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * MenuSuperiorPanelInicial es un JPanel que muestra un mensaje y un botón de configuraciones en la parte superior.
@@ -16,20 +18,24 @@ public class MenuSuperiorPanelInicial extends JPanel {
     private final String mensaje = "Planea tu Próximo Viaje con Nosotros";
     private final String fuente = "Century Gothic";
 
-    // Tema seleccionado para el panel
-    private final Temas.Tema temaSeleccionado;
-
     /**
      * Constructor de MenuSuperiorPanelInicial.
      * Inicializa los componentes y configura el tema seleccionado.
      */
-    public MenuSuperiorPanelInicial() {
-        this.temaSeleccionado = PanelSelectorRuta.temaSeleccionado; // Obtiene el tema seleccionado desde PanelSelectorRuta
-        this.setBackground(temaSeleccionado.colorPrimario); // Establece el color de fondo basado en el tema seleccionado
+    public MenuSuperiorPanelInicial(PanelConfiguracion panelConfiguracion) {
+
+        this.setBackground(Temas.temaSeleccionado.colorPrimario); // Establece el color de fondo basado en el tema seleccionado
 
         // Inicializa el botón de configuraciones y las fuentes personalizadas
         botonConfiguraciones = new BotonConfiguraciones();
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
+
+        botonConfiguraciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelConfiguracion.open();
+            }
+        });
 
         // Agrega el botón de configuraciones al panel
         this.add(botonConfiguraciones);
@@ -44,6 +50,7 @@ public class MenuSuperiorPanelInicial extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        this.setBackground(Temas.temaSeleccionado.colorPrimario);
         int altoPanel = getHeight(); // Alto del panel
         int anchoPanel = getWidth(); // Ancho del panel
 
@@ -63,11 +70,11 @@ public class MenuSuperiorPanelInicial extends JPanel {
         FontMetrics fm = g.getFontMetrics();
 
         // Dibuja el mensaje con sombra
-        g.setColor(PanelSelectorRuta.temaSeleccionado.colorTerciario);
+        g.setColor(Temas.temaSeleccionado.colorTerciario);
         g.drawString(mensaje, margenMensaje * 2 + 2, margenMensaje + fm.getAscent() + 2);
 
         // Dibuja el mensaje principal
-        g.setColor(temaSeleccionado.colorSecundario);
+        g.setColor(Temas.temaSeleccionado.colorSecundario);
         g.drawString(mensaje, margenMensaje * 2, margenMensaje + fm.getAscent());
 
         // Establece el tamaño y posición del botón de configuraciones

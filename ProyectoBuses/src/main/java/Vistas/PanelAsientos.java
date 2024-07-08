@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * PanelAsientos es un JPanel que contiene varios subpaneles relacionados con la visualización de asientos de buses.
  */
-public class PanelAsientos extends JPanel implements CalendarioObserver {
+public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObserver {
 
     // Paneles relacionados con la visualización de asientos
     PanelBus panelBus;
@@ -147,4 +147,5 @@ public class PanelAsientos extends JPanel implements CalendarioObserver {
         add(panelBus);
 
     }
+    public void updateTema(){}
 }

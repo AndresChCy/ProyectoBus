@@ -11,14 +11,15 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PanelSelectorRuta extends JPanel {
+public class PanelSelectorRuta extends JPanel implements TemasObserver {
     private final MenuSuperiorPanelInicial menuSuperiorPanelInicial;
+    private final PanelConfiguracion panelConfiguracion;
     private final Selector selectorOrigen;
     private final Selector selectorDestino;
     private final FechaViaje fechaViaje;
-    private final BufferedImage imagenFondo;
+    private BufferedImage imagenFondo;
     private final BotonAvanzar botonAvanzar;
-    public static Temas.Tema temaSeleccionado;
+
     private static final Map<String, Ciudades> Targets = new HashMap<>();
     static {
         for(Ciudades ciudades: Ciudades.values()){
@@ -29,11 +30,9 @@ public class PanelSelectorRuta extends JPanel {
      * Constructor de la clase PanelSelectorRuta.
      * Configura los componentes y carga el tema aleatorio.
      */
-    public PanelSelectorRuta(Comandos avanzar) {
+    public PanelSelectorRuta(Comandos avanzar,Temas temas) {
         // Seleccionar un tema aleatorio y obtener su imagen de fondo
-        Temas temas = new Temas();
-        temaSeleccionado = temas.seleccionarTemaAleatorio();
-        imagenFondo = temaSeleccionado.imagen;
+        imagenFondo = Temas.temaSeleccionado.imagen;
         ComandoAsignarRuta asignarRuta = new ComandoAsignarRuta();
         OperadorComandos command = new OperadorComandos(asignarRuta);
         command.addComando(avanzar);
@@ -44,7 +43,8 @@ public class PanelSelectorRuta extends JPanel {
         }
 
         // Inicializar componentes
-        menuSuperiorPanelInicial = new MenuSuperiorPanelInicial();
+        panelConfiguracion = new PanelConfiguracion(temas,this);
+        menuSuperiorPanelInicial = new MenuSuperiorPanelInicial(panelConfiguracion);
         selectorOrigen = new Selector("Origen",ciudades);
         selectorDestino = new Selector("Destino",ciudades);
         fechaViaje = new FechaViaje(asignarRuta);
@@ -78,6 +78,13 @@ public class PanelSelectorRuta extends JPanel {
         this.add(selectorDestino);
         this.add(fechaViaje);
         this.add(menuSuperiorPanelInicial);
+        panelConfiguracion.setEnabled(false);
+        panelConfiguracion.setVisible(false);
+        this.add(panelConfiguracion);
+        setComponentZOrder(panelConfiguracion,0);
+        setComponentZOrder(botonAvanzar,1);
+        setComponentZOrder(selectorDestino,2);
+        setComponentZOrder(selectorOrigen,3);
     }
 
     /**
@@ -91,7 +98,6 @@ public class PanelSelectorRuta extends JPanel {
 
         int altoPanel = getHeight();
         int anchoPanel = getWidth();
-
         int altoMenuSuperior = (int) (altoPanel * 0.1);
 
         // Dibujar la imagen de fondo con ajuste de opacidad
@@ -122,22 +128,30 @@ public class PanelSelectorRuta extends JPanel {
 
         // Posicionar el menú superior
         menuSuperiorPanelInicial.setBounds(0, 0, anchoPanel, altoMenuSuperior);
+        if(this.isEnabled()) {
+            // Calcular posiciones y dimensiones para los selectores y la fecha de viaje
+            int margenSuperior = altoMenuSuperior + (int) (altoPanel * 0.25);
+            int altoSelector = (int) (altoPanel * 0.1);
+            int anchoSelector = (int) (anchoPanel * 0.3);
 
-        // Calcular posiciones y dimensiones para los selectores y la fecha de viaje
-        int margenSuperior = altoMenuSuperior + (int) (altoPanel * 0.25);
-        int altoSelector = (int) (altoPanel * 0.1);
-        int anchoSelector = (int) (anchoPanel * 0.3);
+            int posXOrigen = (int) (anchoPanel * 0.2);
+            selectorOrigen.setBounds(posXOrigen, margenSuperior, anchoSelector, altoSelector);
 
+            int posXDestino = posXOrigen + anchoSelector;
+            selectorDestino.setBounds(posXDestino, margenSuperior, anchoSelector, altoSelector);
+
+            int posXFecha = (int) (anchoPanel * 0.35);
+            int posYFecha = margenSuperior + altoSelector + (int) (altoPanel * 0.2);
+            fechaViaje.setBounds(posXFecha, posYFecha, anchoSelector, altoSelector);
+            botonAvanzar.setBounds(posXOrigen+50, (int) margenSuperior * 2, anchoSelector, altoSelector);
+        }
+
+        int anchoConfig = (int) (anchoPanel * 0.5);
+        int altoCongif = (int) (altoPanel * 0.5);
         int posXOrigen = (int) (anchoPanel * 0.2);
-        selectorOrigen.setBounds(posXOrigen, margenSuperior, anchoSelector, altoSelector);
+        int margenSuperior = altoMenuSuperior + (int) (altoPanel * 0.25);
+        panelConfiguracion.setBounds(posXOrigen, margenSuperior, anchoConfig, altoCongif);
 
-        int posXDestino = posXOrigen + anchoSelector;
-        selectorDestino.setBounds(posXDestino, margenSuperior, anchoSelector, altoSelector);
-
-        int posXFecha = (int) (anchoPanel * 0.35);
-        int posYFecha = margenSuperior + altoSelector + (int) (altoPanel * 0.2);
-        fechaViaje.setBounds(posXFecha, posYFecha, anchoSelector, altoSelector);
-        botonAvanzar.setBounds(posXOrigen, (int)margenSuperior*2 ,anchoSelector,altoSelector);
     }
 
     /**
@@ -169,5 +183,9 @@ public class PanelSelectorRuta extends JPanel {
         g2d.dispose();
 
         return imagenAjustada;
+    }
+    public void updateTema(){
+        imagenFondo = Temas.temaSeleccionado.imagen;
+        repaint();
     }
 }

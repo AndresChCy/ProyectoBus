@@ -47,7 +47,7 @@ public class PanelCambioPiso extends JPanel {
         }
 
         // Configura el fondo del panel
-        this.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
+        this.setBackground(Temas.temaSeleccionado.colorSecundario);
 
         // Inicializa la fuente personalizada
         fp = new FuentesPersonalizadas(mensaje, fuente);
@@ -132,7 +132,7 @@ public class PanelCambioPiso extends JPanel {
         etiquetaMensaje.setBounds(0, 0, anchoMensaje, altoPanel);
 
         // Configura y posiciona el botón de subir
-        botonSubir.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
+        botonSubir.setBackground(Temas.temaSeleccionado.colorSecundario);
         botonSubir.setIcon(redimensionarIcono(iconoArriba, anchoBoton));
         botonSubir.setBounds(anchoMensaje, 0, anchoBoton, altoPanel);
         botonSubir.setBorderPainted(false);
@@ -140,7 +140,7 @@ public class PanelCambioPiso extends JPanel {
         botonSubir.setContentAreaFilled(false);
 
         // Configura y posiciona el botón de bajar
-        botonBajar.setBackground(PanelSelectorRuta.temaSeleccionado.colorSecundario);
+        botonBajar.setBackground(Temas.temaSeleccionado.colorSecundario);
         botonBajar.setIcon(redimensionarIcono(iconoAbajo, anchoBoton));
         botonBajar.setBounds(anchoMensaje + anchoBoton, 0, anchoBoton, altoPanel);
         botonBajar.setBorderPainted(false);

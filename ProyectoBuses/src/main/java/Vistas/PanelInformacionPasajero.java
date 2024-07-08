@@ -40,7 +40,7 @@ public class PanelInformacionPasajero extends JPanel {
         setLayout(null); // Usar layout nulo para posicionar componentes manualmente
         setBackground(Color.WHITE); // Establecer color de fondo del panel
 
-        imagenFondo = PanelSelectorRuta.temaSeleccionado.imagen; // Obtener la imagen de fondo del tema seleccionado
+        imagenFondo = Temas.temaSeleccionado.imagen; // Obtener la imagen de fondo del tema seleccionado
 
         this.asiento = asiento;
         panelTituloInfoPasajero = new PanelTitulo("Información del Pasajero:",retroceder); // Crear el panel de título de información de pasajero
