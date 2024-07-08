@@ -66,15 +66,16 @@ public class PanelIntroducirInformacion extends JPanel {
         int tamanoFuente = fuentesPersonalizadas.calcularTamanoLetras(anchoMensaje, altoPanel, g); // Calcular tamaño de la fuente
         g.setFont(new Font(fuente, Font.BOLD, tamanoFuente)); // Establecer la fuente y estilo
         FontMetrics fm = g.getFontMetrics(); // Obtener métricas de la fuente
+        int altoTexto = fm.getHeight(); // Obtener la altura del texto
 
-        int posXMensaje = (int) (anchoPanel * 0.05); // Posición X para dibujar el mensaje
-        int posYMensaje = (int) (altoPanel * 0.05); // Posición Y para dibujar el mensaje
+        int posXMensaje = (int) (anchoPanel * 0.01); // Posición X para dibujar el mensaje
+        int posYMensaje = (altoPanel - altoTexto) / 2 + fm.getAscent(); // Calcular la posición Y para centrar el mensaje
 
         g.setColor(Color.BLACK); // Establecer color negro para el mensaje con sombra
-        g.drawString(mensaje, posXMensaje + 2, posYMensaje + fm.getAscent() + 2); // Dibujar mensaje con sombra
+        g.drawString(mensaje, posXMensaje + 2, posYMensaje + 2); // Dibujar mensaje con sombra
 
         g.setColor(Temas.temaSeleccionado.colorTerciario); // Establecer color terciario del tema para el mensaje
-        g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent()); // Dibujar mensaje principal
+        g.drawString(mensaje, posXMensaje, posYMensaje); // Dibujar mensaje principal
 
         int posXCampoTexto = (int) (0.3 * anchoPanel); // Posición X para el campo de texto
         int anchoCampoTexto = (int) (0.7 * anchoPanel); // Ancho del campo de texto

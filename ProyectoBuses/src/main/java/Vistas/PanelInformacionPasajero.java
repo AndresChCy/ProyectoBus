@@ -23,6 +23,12 @@ public class PanelInformacionPasajero extends JPanel {
     private final BufferedImage imagenFondo; // Imagen de fondo del panel
     private final Selector selectorDescuento;
     private Asiento asiento;
+    private JPanel categoriaAsiento;
+    private JPanel numeroAsiento;
+    private FuentesPersonalizadas fp1;
+    private FuentesPersonalizadas fp2;
+    private String fuente = "Roboto";
+    private BotonAvanzar botonAvanzar;
     private static Map<String, Descuentos> descuentos = new HashMap();
     static {
         for (Descuentos tipo : Descuentos.values()){
@@ -42,6 +48,17 @@ public class PanelInformacionPasajero extends JPanel {
 
         imagenFondo = Temas.temaSeleccionado.imagen; // Obtener la imagen de fondo del tema seleccionado
 
+        ComandoAsignarRuta asignarRuta = new ComandoAsignarRuta();
+        OperadorComandos command = new OperadorComandos(asignarRuta);
+        command.addComando(avanzar);
+        botonAvanzar = new BotonAvanzar(command);
+
+        String mensaje1 = "Categoría: " + "categoría";
+        String mensaje2 = "Número asiento: " + "numeroAsiento";
+
+        fp1 = new FuentesPersonalizadas(mensaje1, fuente);
+        fp2 = new FuentesPersonalizadas(mensaje2, fuente);
+
         this.asiento = asiento;
         panelTituloInfoPasajero = new PanelTitulo("Información del Pasajero:",retroceder); // Crear el panel de título de información de pasajero
         panelesInformacion = new ArrayList<>(); // Inicializar la lista para los paneles de introducción de información
@@ -51,14 +68,63 @@ public class PanelInformacionPasajero extends JPanel {
         for (String etiqueta : etiquetas) {
             panelesInformacion.add(new PanelIntroducirInformacion(etiqueta));
         }
+
         OperadorComandos oc = new OperadorComandos(avanzar);
-        panelPrecioPagar = new PanelPrecioPagar(24990,oc); // Crear panel para mostrar el precio a pagar (ejemplo: 24990)
+        panelPrecioPagar = new PanelPrecioPagar(24990); // Crear panel para mostrar el precio a pagar (ejemplo: 24990)
+
+        // Crear y configurar los paneles para la categoría y número de asiento
+        categoriaAsiento = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                setOpaque(false); // Hacer que el JPanel sea transparente
+                int anchoPanel = getWidth();
+                int altoPanel = getHeight();
+
+                int tamanoFuente = fp1.calcularTamanoLetras(anchoPanel, altoPanel, g);
+                g.setFont(new Font(fuente, Font.BOLD, tamanoFuente));
+                FontMetrics fm = g.getFontMetrics();
+
+                int posXMensaje = 10; // Posición x fija para alinear a la izquierda
+                int posYMensaje = (altoPanel + fm.getAscent()) / 2;
+                g.setColor(Temas.temaSeleccionado.colorPrimario);
+                g.drawString(mensaje1, posXMensaje + 5, posYMensaje + 5);
+                g.setColor(Temas.temaSeleccionado.colorTerciario);
+                g.drawString(mensaje1, posXMensaje, posYMensaje);
+            }
+        };
+
+        numeroAsiento = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                setOpaque(false); // Hacer que el JPanel sea transparente
+                int anchoPanel = getWidth();
+                int altoPanel = getHeight();
+
+                int tamanoFuente = fp2.calcularTamanoLetras(anchoPanel, altoPanel, g);
+                g.setFont(new Font(fuente, Font.BOLD, tamanoFuente));
+                FontMetrics fm = g.getFontMetrics();
+
+                int posXMensaje = 10; // Posición x fija para alinear a la izquierda
+                int posYMensaje = (altoPanel + fm.getAscent()) / 2;
+                g.setColor(Temas.temaSeleccionado.colorPrimario);
+                g.drawString(mensaje2, posXMensaje + 5, posYMensaje + 5);
+                g.setColor(Temas.temaSeleccionado.colorTerciario);
+                g.drawString(mensaje2, posXMensaje, posYMensaje);
+            }
+        };
+
         // Agregar componentes al panel principal
         add(panelTituloInfoPasajero);
         for (PanelIntroducirInformacion panel : panelesInformacion) {
             add(panel);
         }
         add(panelPrecioPagar);
+        add(categoriaAsiento);
+        add(numeroAsiento);
+        add(botonAvanzar);
+
         String[] tipos = new String[Descuentos.values().length];
         for (Descuentos tipo : Descuentos.values()){
             tipos[tipo.ordinal()] = tipo.toString();
@@ -73,11 +139,6 @@ public class PanelInformacionPasajero extends JPanel {
     public int getAsiento(){return asiento.getNumero();}
     public Descuentos getDescuento(){return descuentos.get(selectorDescuento.getComboBox().getSelectedItem());}
 
-    /**
-     * Método sobrescrito para dibujar el contenido personalizado del panel.
-     *
-     * @param g Objeto Graphics utilizado para dibujar
-     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Llamar al método paintComponent de la superclase JPanel
@@ -85,10 +146,10 @@ public class PanelInformacionPasajero extends JPanel {
         int anchoPanel = getWidth(); // Obtener el ancho del panel
         int altoPanel = getHeight(); // Obtener el alto del panel
 
-        int altoPanelTitulo = (int) (altoPanel * 0.12); // Altura del panel de título
+        int altoPanelTitulo = (int) (altoPanel * 0.15); // Altura del panel de título
         int margenX = (int) (anchoPanel * 0.05); // Margen horizontal
-        int margenY = (int) (altoPanel * 0.05); // Margen vertical
-        int anchoPanelInfo = (int) (anchoPanel * 0.9); // Ancho de los paneles de información
+        int margenY = (int) (altoPanel * 0.025); // Margen vertical
+        int anchoPanelInfo = (int) (anchoPanel * 0.55); // Ancho de los paneles de información
         int altoPanelInfo = (int) (altoPanel * 0.1); // Altura de los paneles de información
 
         // Ajustar tamaño y posición del panel de título
@@ -100,13 +161,31 @@ public class PanelInformacionPasajero extends JPanel {
             panel.setBounds(margenX, posY, anchoPanelInfo, altoPanelInfo);
             posY += altoPanelInfo + margenY;
         }
-        selectorDescuento.setBounds(margenX, posY, anchoPanelInfo/2, altoPanelInfo);
+
+        int posXDescuento = anchoPanelInfo + 2 * margenX;
+        int posYDescuento = altoPanelTitulo + margenY;
+        int anchoDescuento = anchoPanelInfo / 2;
+        int altoDescuento = (int) (altoPanel * 0.15);
+
+        selectorDescuento.setBounds(posXDescuento, posYDescuento, anchoDescuento, altoDescuento);
 
         // Ajustar tamaño y posición del panel de precio a pagar
-        int posYPagar = altoPanel - (int) (altoPanel * 0.225) - margenY;
-        int altoPagar = (int) (altoPanel * 0.225);
-
+        int posYPagar = posY + 4 * margenY - altoPanelInfo;
+        int altoPagar = (int) (altoPanel * 0.1);
         panelPrecioPagar.setBounds(margenX, posYPagar, anchoPanelInfo, altoPagar);
+
+        // Ajustar tamaño y posición de los paneles de categoría y número de asiento
+        int posYAsiento = posYPagar + altoPagar + margenY;
+        categoriaAsiento.setBounds(margenX, posYAsiento, anchoPanelInfo, altoPagar);
+
+        int posYNumero = posYAsiento + altoPagar + margenY;
+        numeroAsiento.setBounds(margenX, posYNumero, anchoPanelInfo, altoPagar);
+
+        int posXBoton = anchoPanelInfo + 2 * margenX;
+        int posYBoton = posYAsiento + altoPagar + margenY;
+        int anchoBoton = anchoPanelInfo / 2;
+        int altoBoton = (int) (altoPanel * 0.15);
+        botonAvanzar.setBounds(posXBoton, posYBoton, anchoBoton, altoBoton);
 
         // Dibujar imagen de fondo si está disponible
         if (imagenFondo != null) {
@@ -135,32 +214,18 @@ public class PanelInformacionPasajero extends JPanel {
         }
     }
 
-    /**
-     * Ajusta la opacidad de una imagen dada.
-     *
-     * @param imagenOriginal Imagen original
-     * @return Imagen ajustada con la opacidad deseada
-     */
     private BufferedImage ajustarOpacidad(BufferedImage imagenOriginal) {
         if (imagenOriginal == null) {
             return null;
         }
 
-        // Creamos una imagen compatible para la nueva imagen con la opacidad deseada
         BufferedImage imagenAjustada = new BufferedImage(
                 imagenOriginal.getWidth(), imagenOriginal.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-        // Obtenemos el contexto gráfico de la nueva imagen
         Graphics2D g2d = imagenAjustada.createGraphics();
-
-        // Aplicamos el composite para ajustar la opacidad
         AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) 0.3);
         g2d.setComposite(alphaComposite);
-
-        // Dibujamos la imagen original en la nueva imagen
         g2d.drawImage(imagenOriginal, 0, 0, null);
-
-        // Liberamos recursos del contexto gráfico
         g2d.dispose();
 
         return imagenAjustada;

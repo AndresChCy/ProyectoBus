@@ -11,15 +11,6 @@ public class PanelPrecioPagar extends JPanel {
     private final FuentesPersonalizadas fuentesPersonalizadas; // Objeto para las fuentes personalizadas
     private final String fuente = "Comic Sans MS"; // Fuente utilizada para el mensaje
     private final String mensaje; // Mensaje que muestra el precio
-    private final BotonComprar botonComprar; // Botón para realizar la compra
-
-    public PanelPrecioPagar(int precio) {
-        this.setOpaque(false); // Establecer el panel como transparente
-        this.mensaje = "Precio: $" + precio; // Crear el mensaje con el precio
-
-        fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente); // Instanciar las fuentes personalizadas
-        botonComprar = null; // El botón no es usado
-    }
 
     /**
      * Constructor de PanelPrecioPagar.
@@ -27,14 +18,11 @@ public class PanelPrecioPagar extends JPanel {
      *
      * @param precio Precio a mostrar en el mensaje
      */
-    public PanelPrecioPagar(int precio,OperadorComandos avanzar) {
+    public PanelPrecioPagar(int precio) {
         this.setOpaque(false); // Establecer el panel como transparente
         this.mensaje = "Precio: $" + precio; // Crear el mensaje con el precio
 
-        botonComprar = new BotonComprar(avanzar); // Crear el botón de comprar
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente); // Instanciar las fuentes personalizadas
-
-        this.add(botonComprar); // Agregar el botón de comprar al panel
     }
 
     /**
@@ -82,13 +70,6 @@ public class PanelPrecioPagar extends JPanel {
         } else {
             // Si no se encuentra el símbolo '$', dibujar el mensaje completo en el color primario del tema
             g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent());
-        }
-
-        if (botonComprar != null) {
-            // Calcular la posición y tamaño del botón de comprar
-            int posXBoton = (int) (anchoPanel * 0.7);
-            int anchoBoton = (int) (anchoPanel * 0.3);
-            botonComprar.setBounds(posXBoton, 0, anchoBoton, altoPanel); // Establecer los límites del botón
         }
     }
 }
