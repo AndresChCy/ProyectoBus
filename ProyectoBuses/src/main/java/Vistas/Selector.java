@@ -2,9 +2,6 @@ package Vistas;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Selector extends JPanel {
     private final SeleccionadorElementos seleccionador;
@@ -15,7 +12,6 @@ public class Selector extends JPanel {
 
     /**
      * Constructor de la clase SelectorDestino.
-     * Inicializa el componente con una lista de ciudades y un selector de ciudad.
      */
     public Selector(String titulo,String[] elementos) {
         this.mensaje = titulo;
@@ -27,9 +23,6 @@ public class Selector extends JPanel {
 
         // Inicializar fuentes personalizadas
         fp = new FuentesPersonalizadas(mensaje, fuente);
-
-        // Inicializar la lista de ciudades con ciudades de Chile
-        List<String> ciudades = getStrings();
 
         // Crear el selector de ciudad con la lista de ciudades
         seleccionador = new SeleccionadorElementos(elementos);
@@ -66,28 +59,6 @@ public class Selector extends JPanel {
 
         // Agregar el selector de ciudad al sur del BorderLayout
         add(seleccionador, BorderLayout.SOUTH);
-    }
-
-    private static List<String> getStrings() {
-        String[] ciudadesChile = {
-                "Santiago", "Viña del Mar", "Valparaíso", "Concepción", "Antofagasta", "Puerto Montt",
-                "Arica", "La Serena", "Iquique", "Rancagua", "Talca", "Temuco", "Chillán", "Los Ángeles",
-                "Valdivia", "Copiapó", "Quillota", "Osorno", "Calama", "Punta Arenas", "Curicó", "Quilpué",
-                "Ovalle", "San Felipe", "Los Andes", "Linares", "San Antonio", "Melipilla", "San Fernando",
-                "Pucón", "Villarrica", "La Ligua", "Cauquenes", "Puerto Varas", "Castro", "Ancud",
-                "Talcahuano", "La Calera", "Tocopilla", "Coquimbo", "Angol", "Loncoche", "La Unión",
-                "Limache", "Puerto Natales", "Lota", "Victoria", "Collipulli", "Coronel", "Lebu", "Coelemu",
-                "Curanilahue", "Santa Cruz", "Paine", "Puerto Aysén", "Panguipulli", "Pitrufquén",
-                "Vallenar", "Vicuña", "Salamanca", "Illapel", "Coyhaique", "Chaitén", "Puerto Cisnes",
-                "Futrono", "Chonchi", "Hualpén", "Quellón", "Quirihue", "Puerto Octay", "Frutillar",
-                "Llanquihue", "Puerto Williams", "San Carlos", "Curaco de Vélez", "Dalcahue", "Quemchi",
-                "Puerto Quellón", "Puerto Ingeniero Ibáñez", "San José de la Mariquina", "Puerto Saavedra",
-                "Pichilemu", "Lanco", "San Vicente de Tagua Tagua", "Lonquimay", "Pitrufquén", "Puerto Natales",
-                "Cochrane", "Tolhuin", "Timaukel", "Coyhaique", "Alto Hospicio", "El Bosque", "Huechuraba",
-                "Cerrillos", "Pudahuel", "Recoleta", "Quilicura", "Colina", "Lampa", "Padre Hurtado",
-                "Peñaflor", "Talagante", "Melipilla", "Buin", "Calera de Tango", "Paine", "San Bernardo"
-        };
-        return new ArrayList<>(Arrays.asList(ciudadesChile));
     }
 
     /**

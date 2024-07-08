@@ -1,15 +1,15 @@
 package Vistas;
 
-import Modelo.*;
+import Modelo.CalendarioObserver;
+import Modelo.CalendarioViajes;
+import Modelo.Estandar;
+import Modelo.PisoBus;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 
 public class PanelPrincipal extends JPanel {
-    private final CardLayout paneles;
-    private final JPanel panelActual;
 
     /**
      * Constructor de la clase PanelPrincipal.
@@ -17,8 +17,8 @@ public class PanelPrincipal extends JPanel {
      */
     public PanelPrincipal() {
         // Inicializar el CardLayout y el panel que lo contendrá
-        paneles = new CardLayout();
-        panelActual = new JPanel(paneles);
+        CardLayout paneles = new CardLayout();
+        JPanel panelActual = new JPanel(paneles);
 
         // Configurar el layout del PanelPrincipal
         setLayout(new GridBagLayout());
@@ -31,8 +31,8 @@ public class PanelPrincipal extends JPanel {
         this.setBackground(Color.BLACK);
 
         //Crear los comandos necesarios
-        Comandos avanzar = new ComandoAvanzar(panelActual,paneles);
-        Comandos retroceder = new ComandoRetroceder(panelActual,paneles);
+        Comandos avanzar = new ComandoAvanzar(panelActual, paneles);
+        Comandos retroceder = new ComandoRetroceder(panelActual, paneles);
         ComandoCrearComprador informacion = new ComandoCrearComprador(panelActual);
 
         Temas tema = new Temas();
@@ -41,7 +41,6 @@ public class PanelPrincipal extends JPanel {
         JPanel panelSelectorRuta = new PanelSelectorRuta(avanzar,tema);
         JPanel panelHorarios = new PanelHorarios(retroceder,avanzar);
         JPanel panelAsientos = new PanelAsientos(avanzar,retroceder,informacion);
-        //JPanel panelInformacionPasajero = new PanelInformacionPasajero(retroceder);
 
         CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelHorarios);
         CalendarioViajes.getInstance().suscribir((CalendarioObserver) panelAsientos);
@@ -55,48 +54,12 @@ public class PanelPrincipal extends JPanel {
 
         // Agregar los paneles al panelActual con sus respectivos nombres
         panelActual.add(panelSelectorRuta, "Selector de Ruta");
-        //panelActual.add(new PanelBus(piso),"prueba");
         panelActual.add(panelHorarios, "Horarios de Salida");
         panelActual.add(panelAsientos, "Asientos");
-        //panelActual.add(panelInformacionPasajero, "Información del pasajero");
         panelActual.setBackground(Color.BLACK);
-        // Agregar el panelActual al centro del PanelPrincipal usando GridBagConstraints
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(panelActual, gbc);
 
-    }
-
-
-    /**
-     * Método para mostrar el panel "Selector de Ruta".
-     * Utiliza CardLayout para cambiar la vista.
-     */
-    public void mostrarPanelSelectorRuta() {
-        paneles.show(panelActual, "Selector de Ruta");
-    }
-
-    /**
-     * Método para mostrar el panel "Horarios de Salida".
-     * Utiliza CardLayout para cambiar la vista.
-     */
-    public void mostrarPanelHorarios() {
-        paneles.show(panelActual, "Horarios de Salida");
-    }
-
-    /**
-     * Método para mostrar el panel "Asientos".
-     * Utiliza CardLayout para cambiar la vista.
-     */
-    public void mostrarPanelAsientos() {
-        paneles.show(panelActual, "Asientos");
-    }
-
-    /**
-     * Método para mostrar el panel "Información del pasajero".
-     * Utiliza CardLayout para cambiar la vista.
-     */
-    public void mostrarPanelInformacionPasajero() {
-        paneles.show(panelActual, "Información del pasajero");
     }
 }

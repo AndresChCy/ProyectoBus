@@ -7,7 +7,7 @@ import java.awt.*;
 
 /**
  * El PanelInfoBus representa un panel que muestra información específica de un bus,
- * incluyendo el horario de salida y el precio mínimo, junto con un botón para comprar.
+ * incluyendo el horario de salida y el precio mínimo.
  */
 public class PanelInfoBus extends JPanel {
     private final ViajeBus viaje; // viaje de salida del bus
@@ -27,7 +27,7 @@ public class PanelInfoBus extends JPanel {
     public PanelInfoBus(ViajeBus viaje, OperadorComandos avanzar, Color color) {
         this.viaje = viaje;
         this.precioDesde = viaje.getPrecioMasBarato();
-        this.fecha = new String();
+        this.fecha = "";
         fecha = viaje.getFecha().getDayOfMonth() + "/" + viaje.getFecha().getMonthValue() + " a las "+ viaje.getFecha().getHour()+":"+viaje.getFecha().getMinute();
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Borde blanco para separación visual
         mensajeHora = new FuentesPersonalizadas("Salida: " + fecha, fuente); // Crear mensaje personalizado para el horario
@@ -54,7 +54,6 @@ public class PanelInfoBus extends JPanel {
         super.paintComponent(g); // Llamar al método paintComponent de la superclase JPanel
 
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Borde blanco para separación visual
-        String comprar = "COMPRAR";
         botonComprar.setBackground(Temas.temaSeleccionado.colorSecundario); // Color de fondo del botón
         botonComprar.setForeground(Color.BLACK); // Color del texto del botón
         this.setLayout(null); // Usar layout nulo para posicionar componentes manualmente

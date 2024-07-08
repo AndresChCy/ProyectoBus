@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * PanelAsientos es un JPanel que contiene varios subpaneles relacionados con la visualización de asientos de buses.
  */
-public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObserver {
+public class PanelAsientos extends JPanel implements CalendarioObserver, TemasObserver {
 
     // Paneles relacionados con la visualización de asientos
     PanelBus panelBus;
@@ -19,27 +19,33 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
     PanelCodigoColor panelCodigoColor;
     PanelCambioPiso panelCambioPiso;
     PanelTitulo panelTituloAsientos;
-    ComandoCrearComprador informar ;
+    ComandoCrearComprador informar;
     BotonAvanzar botonAvanzar;
     PanelPrecioPagar precioPagar;
 
     /**
      * Constructor de PanelAsientos.
      * Inicializa los subpaneles y los añade al panel principal.
+     * @param avanzar Comando para avanzar
+     * @param retroceder Comando para retroceder
+     * @param compradores Comando para crear compradores
      */
-    public PanelAsientos(Comandos avanzar,Comandos retroceder,ComandoCrearComprador compradores) {
-        // Establece el color de fondo del panel principal
+    public PanelAsientos(Comandos avanzar, Comandos retroceder, ComandoCrearComprador compradores) {
+        // Establece el layout y el color de fondo del panel principal
         setLayout(new GridBagLayout());
         this.setBackground(Color.DARK_GRAY);
         this.informar = compradores;
+
+        // Configuración de comandos
         OperadorComandos comandoAtras = new OperadorComandos(retroceder);
         comandoAtras.addComando(new ComandoResetear(informar.getList()));
         OperadorComandos comandosAvanzar = new OperadorComandos(informar);
         comandosAvanzar.addComando(avanzar);
-        // Inicializa los subpaneles
-        botonAvanzar = new BotonAvanzar(comandosAvanzar,"CONTINUAR");
+
+        // Inicialización de los subpaneles
+        botonAvanzar = new BotonAvanzar(comandosAvanzar, "CONTINUAR");
         panelCodigoColor = new PanelCodigoColor();
-        panelTituloAsientos = new PanelTitulo("Seleccione Asiento",comandoAtras);
+        panelTituloAsientos = new PanelTitulo("Seleccione Asiento", comandoAtras);
         paneles = new ArrayList<>();
         precioPagar = new PanelPrecioPagar(0);
         compradores.setPanelPrecio(precioPagar);
@@ -61,8 +67,9 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int anchoPanel = getWidth(); // Ancho actual del panel principal
-        int altoPanel = getHeight(); // Alto actual del panel principal
+        // Obtiene las dimensiones actuales del panel principal
+        int anchoPanel = getWidth();
+        int altoPanel = getHeight();
 
         // Márgenes para los componentes dentro del panel principal
         int margenX = (int) (anchoPanel * 0.02);
@@ -80,7 +87,6 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
 
         // Posiciona y dimensiona el panel de buses dentro del panel principal
         panelBus.setBounds(margenX, margenY + altoTitulo, anchoPanelBus, altoPanelBus);
-       // panelBus.setPreferredSize(new Dimension(anchoPanelBus, altoPanelBus));
         panelBus.repaint();
 
         // Posición y dimensiones del panel de código de color
@@ -101,68 +107,76 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
         // Posiciona y dimensiona el panel de cambio de piso dentro del panel principal
         panelCambioPiso.setBounds(posXCambioPiso, posYCambioPiso, anchoCambioPiso, altoCambioPiso);
 
+        // Posición y dimensiones del panel de precio a pagar
         int posXPrecioPagar = (int) (anchoPanel * 0.17) + anchoCambioPiso + posXCambioPiso + margenX;
         int anchoPrecioPagar = (int) (anchoPanel * 0.5);
         int altoPrecioPagar = (int) (altoPanel * 0.1);
         precioPagar.setBounds(posXPrecioPagar, posYCambioPiso, anchoPrecioPagar, altoPrecioPagar);
 
+        // Posición y dimensiones del botón de avanzar
         int posYBotonAvanzar = altoCodigoColor + posYCodigoColor + margenY;
         int anchoBotonAvanzar = (int) (anchoPanel * 0.2);
         int altoBotonAvanzar = (int) (altoPanel * 0.1);
-
         botonAvanzar.setBounds(posXCodigoColor, posYBotonAvanzar, anchoBotonAvanzar, altoBotonAvanzar);
     }
-    public void update(){
-        try{
+
+    /**
+     * Actualiza los paneles dentro del PanelAsientos.
+     * Elimina los paneles actuales y los reemplaza con nuevos basados en la información del bus.
+     */
+    public void update() {
+        try {
+            // Elimina los paneles actuales si existen
             this.remove(panelBus);
             this.remove(panelCambioPiso);
-        }catch(Exception e){}
-        try{
-            //CardLayout asientos = new CardLayout();
-            //panelBus = new JPanel(new GridBagLayout());
+        } catch (Exception ignored) {}
 
+        try {
+            // Obtiene los pisos del bus y crea los paneles correspondientes
             ArrayList<PisoBus> pisos = CalendarioViajes.getInstance().getViaje().getBus().getPisosBus();
             paneles.clear();
-            //asientos.addLayoutComponent(new PanelInformacionPasajero(new ComandoRetroceder(panelBus,asientos)),"prueba");
-            for (PisoBus piso : pisos){
-                System.out.println("AAAA");
-                //asientos.addLayoutComponent(new PanelBus(piso),"Piso"+pisos.indexOf(piso));
-                //panelBus = new PanelBus(piso);
-                paneles.add(new PanelBus(piso,informar));
+            for (PisoBus piso : pisos) {
+                paneles.add(new PanelBus(piso, informar));
             }
-            //JPanel panelPisos = new JPanel(asientos);
-            //panelBus = new JPanel(new GridBagLayout());
-            //asientos.first(panelPisos);
-            //Comandos subirPiso = new ComandoAvanzar(panelPisos,asientos);
-            //Comandos bajarPiso = new ComandoRetroceder(panelPisos,asientos);
-            //panelCambioPiso = new PanelCambioPiso(subirPiso,bajarPiso);
             panelBus = paneles.get(0);
             panelCambioPiso = new PanelCambioPiso(this);
+
+            // Añade los nuevos paneles al panel principal
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.fill = GridBagConstraints.BOTH; // Permitir que los componentes se expandan
             gbc.weightx = 1.0; // Permitir expansión horizontal
             gbc.weighty = 1.0; // Permitir expansión vertical
-
             gbc.gridx = 0;
             gbc.gridy = 0;
 
-            //panelBus.add(panelPisos, gbc);
-            //this.setLayout(new GridBagLayout());
             this.add(panelBus);
             this.add(panelCambioPiso);
             repaint();
-        }catch(NullPointerException e){
-            System.out.println("No se encontro el bus" + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("No se encontró el bus: " + e.getMessage());
         }
     }
-    public ArrayList<PanelBus> getPaneles(){
+
+    /**
+     * Obtiene la lista de paneles de bus.
+     * @return Lista de paneles de bus.
+     */
+    public ArrayList<PanelBus> getPaneles() {
         return paneles;
     }
-    public void setPanelBus(int i){
+
+    /**
+     * Establece el panel de bus actual basado en un índice.
+     * @param i Índice del panel de bus.
+     */
+    public void setPanelBus(int i) {
         this.panelBus = paneles.get(i);
         remove(panelBus);
         add(panelBus);
-
     }
-    public void updateTema(){}
+
+    /**
+     * Actualiza el tema del panel.
+     */
+    public void updateTema() {}
 }

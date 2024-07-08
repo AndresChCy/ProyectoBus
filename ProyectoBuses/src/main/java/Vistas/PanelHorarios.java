@@ -1,87 +1,84 @@
 package Vistas;
 
 import Modelo.CalendarioObserver;
-import Modelo.CalendarioViajes;
-import Modelo.ViajeBus;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * PanelHorarios es un JPanel personalizado que muestra horarios disponibles,
  * un título y un botón para retroceder. Utiliza fuentes personalizadas y colores
  * del tema seleccionado.
  */
-public class PanelHorarios extends JPanel implements CalendarioObserver,TemasObserver {
+public class PanelHorarios extends JPanel implements CalendarioObserver, TemasObserver {
     private final PanelTitulo panelTitulo;
-   // private final BotonRetroceder botonRetroceder;
     private final PanelHorariosDisponibles panelHorariosDisponibles;
 
     /**
      * Constructor de PanelHorarios.
      *
-     * @ Referencia al panel principal que contiene este panel.
+     * @param retroceder Comando para retroceder.
+     * @param avanzar Comando para avanzar.
      */
-    public PanelHorarios(Comandos retroceder,Comandos avanzar) {
-        setLayout(null); // Establece el layout a nulo para poder posicionar los componentes manualmente
-        setBackground(Temas.temaSeleccionado.colorPrimario); // Establece el color de fondo del panel
+    public PanelHorarios(Comandos retroceder, Comandos avanzar) {
+        // Establece el layout a nulo para poder posicionar los componentes manualmente
+        setLayout(null);
+        // Establece el color de fondo del panel según el tema seleccionado
+        setBackground(Temas.temaSeleccionado.colorPrimario);
+
+        // Configuración de comandos
         OperadorComandos comandoAtras = new OperadorComandos(retroceder);
         OperadorComandos comandosAvanzar = new OperadorComandos(avanzar);
-        // Creación del panel de título
-        panelTitulo = new PanelTitulo("Horarios Disponibles",comandoAtras);
 
-        // Creación del botón para retroceder
-       // botonRetroceder = new BotonRetroceder(panelPrincipal);
-        //botonRetroceder.setBounds(10, 10, 30, 30);
+        // Creación del panel de título
+        panelTitulo = new PanelTitulo("Horarios Disponibles", comandoAtras);
 
         // Creación del panel de horarios disponibles
         panelHorariosDisponibles = new PanelHorariosDisponibles(avanzar);
+
+        // Posiciona el panel de horarios disponibles
         panelHorariosDisponibles.setBounds(0, (int) (getHeight() * 0.3), getWidth(), (int) (getHeight() * 0.7));
 
         // Agregar componentes al panel principal
         add(panelTitulo);
         add(panelHorariosDisponibles);
-        //add(botonRetroceder);
     }
 
     /**
-     * Crea y configura el panel de horarios disponibles.
+     * Sobrescribe el método paintComponent para posicionar y redimensionar los subpaneles dentro del panel principal.
      *
-     * Referencia al panel principal que contiene este panel.
-     * @return El panel de horarios disponibles configurado.
+     * @param g Objeto Graphics para pintar los componentes.
      */
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // Obtiene las dimensiones actuales del panel principal
         int anchoPanel = getWidth();
         int altoPanel = getHeight();
+        // Establece el color de fondo del panel según el tema seleccionado
         setBackground(Temas.temaSeleccionado.colorPrimario);
 
-        // Actualizar el tamaño y posición del panel de horarios disponibles
+        // Actualiza el tamaño y posición del panel de horarios disponibles
         panelHorariosDisponibles.setBounds(0, (int) (altoPanel * 0.3), anchoPanel, (int) (altoPanel * 0.7));
 
-        // Calcular posición y tamaño del botón para retroceder
-        //int margenBoton = (int) (altoPanel * 0.1 * 0.3);
-        //int medidaBoton = (int) (altoPanel * 0.3 * 0.3);
-        //int margenTitulo = 2 * margenBoton + medidaBoton;
-
-        // Obtener y ajustar el panel de título y el botón para retroceder
-        //JPanel panelTitulo = (JPanel) getComponent(0);
-        //panelTitulo.setBounds(margenTitulo, 0, anchoPanel - 2 * margenTitulo, (int) (altoPanel * 0.3));
         // Altura del título en relación al tamaño del panel principal
         int altoTitulo = (int) (altoPanel * 0.1);
-
-        // Posiciona y dimensiona el panel de título de asientos
+        // Posiciona y dimensiona el panel de título
         panelTitulo.setBounds(0, 0, anchoPanel, altoTitulo);
-        //botonRetroceder.setBounds(margenBoton, margenBoton, medidaBoton, medidaBoton);
     }
-    public void update(){
+
+    /**
+     * Actualiza los datos mostrados en el panel de horarios disponibles.
+     */
+    public void update() {
         panelHorariosDisponibles.update();
     }
-    public void updateTema(){
+
+    /**
+     * Actualiza el tema de los componentes del panel.
+     */
+    public void updateTema() {
         panelHorariosDisponibles.updateTemas();
     }
 }

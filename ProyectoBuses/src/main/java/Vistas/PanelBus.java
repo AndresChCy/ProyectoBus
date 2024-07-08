@@ -1,7 +1,6 @@
 package Vistas;
 
 import Modelo.Asiento;
-import Modelo.Estandar;
 import Modelo.PisoBus;
 
 import javax.swing.*;
@@ -20,7 +19,6 @@ public class PanelBus extends JPanel {
 
     final static int MIN_COLUMNAS = 8;
     final static int MAX_COLUMNAS = 15;
-    String[] busesTest; // Array para probar diferentes tipos de asientos
     int sumaAsientos; // Suma total de asientos en el panel
     int columnas; // Número de columnas basado en la suma de asientos
     List<FilaBus> filaBuses; // Lista de filas de buses

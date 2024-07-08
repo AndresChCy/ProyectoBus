@@ -2,10 +2,7 @@ package Vistas;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 /**
  * FechaViaje es un JPanel que contiene dos subpaneles para introducir el día y el mes de un viaje.
@@ -36,7 +33,7 @@ public class FechaViaje extends JPanel {
             }
         });
 
-                // Añade los subpaneles al panel principal
+        // Añade los subpaneles al panel principal
         this.add(piiDia);
         this.add(piiMes);
     }

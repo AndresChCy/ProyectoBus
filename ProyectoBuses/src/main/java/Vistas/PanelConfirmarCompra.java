@@ -8,8 +8,8 @@ import java.util.Objects;
  * JPanel para confirmar la compra de pasajes
  */
 public class PanelConfirmarCompra extends JPanel {
-    private PanelTitulo titulo;
-    private BotonAvanzar botonAvanzar;
+    private final PanelTitulo titulo;
+    private final BotonAvanzar botonAvanzar;
     private ImageIcon tarjetaGif;
 
     /**

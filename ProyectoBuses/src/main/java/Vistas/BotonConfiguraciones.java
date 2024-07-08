@@ -44,12 +44,6 @@ public class BotonConfiguraciones extends JButton {
             }
         });
 
-        // Agregar un listener para la acción de clic en el botón
-        addActionListener(e -> {
-            // Acción a realizar cuando se hace clic en el botón
-            System.out.println("Botón de configuraciones pulsado");
-        });
-
         // Agregar listeners para iniciar y detener la animación al entrar y salir del botón
         addMouseListener(new MouseAdapter() {
             @Override

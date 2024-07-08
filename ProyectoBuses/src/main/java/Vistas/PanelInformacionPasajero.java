@@ -34,8 +34,8 @@ public class PanelInformacionPasajero extends JPanel {
     private BotonAvanzar botonAvanzar;
     private static Map<String, Descuentos> descuentos = new HashMap();
     static {
-        for (Descuentos tipo : Descuentos.values()){
-            descuentos.put(tipo.toString(),tipo);
+        for (Descuentos tipo : Descuentos.values()) {
+            descuentos.put(tipo.toString(), tipo);
         }
     }
 
@@ -52,7 +52,7 @@ public class PanelInformacionPasajero extends JPanel {
         imagenFondo = Temas.temaSeleccionado.imagen; // Obtener la imagen de fondo del tema seleccionado
 
         OperadorComandos command = new OperadorComandos(avanzar);
-        botonAvanzar = new BotonAvanzar(command,"Continuar");
+        botonAvanzar = new BotonAvanzar(command, "Continuar");
 
         String mensaje1 = "Categoría: " + asiento.getCategoria();
         String mensaje2 = "Número asiento: " + asiento.getNumero();
@@ -61,7 +61,7 @@ public class PanelInformacionPasajero extends JPanel {
         fp2 = new FuentesPersonalizadas(mensaje2, fuente);
 
         this.asiento = asiento;
-        panelTituloInfoPasajero = new PanelTitulo("Información del Pasajero:",retroceder); // Crear el panel de título de información de pasajero
+        panelTituloInfoPasajero = new PanelTitulo("Información del Pasajero:", retroceder); // Crear el panel de título de información de pasajero
         panelesInformacion = new ArrayList<>(); // Inicializar la lista para los paneles de introducción de información
 
         // Crear paneles de introducción de información para cada etiqueta
@@ -72,7 +72,7 @@ public class PanelInformacionPasajero extends JPanel {
 
         OperadorComandos oc = new OperadorComandos(avanzar);
         int precio = CalendarioViajes.getInstance().getViaje().getPrecio();
-        panelPrecioPagar = new PanelPrecioPagar((int) (asiento.getMultiplicador()*precio)); // Crear panel para mostrar el precio a pagar (ejemplo: 24990)
+        panelPrecioPagar = new PanelPrecioPagar((int) (asiento.getMultiplicador() * precio)); // Crear panel para mostrar el precio a pagar (ejemplo: 24990)
 
         // Crear y configurar los paneles para la categoría y número de asiento
         categoriaAsiento = new JPanel() {
@@ -128,26 +128,71 @@ public class PanelInformacionPasajero extends JPanel {
         add(botonAvanzar);
 
         String[] tipos = new String[Descuentos.values().length];
-        for (Descuentos tipo : Descuentos.values()){
+        for (Descuentos tipo : Descuentos.values()) {
             tipos[tipo.ordinal()] = tipo.toString();
         }
-        selectorDescuento = new Selector("Descuento",tipos);
+        selectorDescuento = new Selector("Descuento", tipos);
         selectorDescuento.getComboBox().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                panelPrecioPagar.actualizarPrecio((int) (descuentos.get(e.getItem()).getDescuento()*precio*asiento.getMultiplicador()));
+                panelPrecioPagar.actualizarPrecio((int) (descuentos.get(e.getItem()).getDescuento() * precio * asiento.getMultiplicador()));
                 panelPrecioPagar.repaint();
             }
         });
         add(selectorDescuento);
     }
 
-    public String getNombre(){return panelesInformacion.get(0).getCampoTexto().getText();}
-    public String getApellido(){return panelesInformacion.get(1).getCampoTexto().getText();}
-    public String getCorreo(){return panelesInformacion.get(2).getCampoTexto().getText();}
-    public int getAsiento(){return asiento.getNumero();}
-    public Descuentos getDescuento(){return descuentos.get(selectorDescuento.getComboBox().getSelectedItem());}
+    /**
+     * Obtiene el nombre del pasajero.
+     *
+     * @return el nombre del pasajero.
+     */
+    public String getNombre() {
+        return panelesInformacion.get(0).getCampoTexto().getText();
+    }
 
+    /**
+     * Obtiene el apellido del pasajero.
+     *
+     * @return el apellido del pasajero.
+     */
+    public String getApellido() {
+        return panelesInformacion.get(1).getCampoTexto().getText();
+    }
+
+    /**
+     * Obtiene el correo electrónico del pasajero.
+     *
+     * @return el correo electrónico del pasajero.
+     */
+    public String getCorreo() {
+        return panelesInformacion.get(2).getCampoTexto().getText();
+    }
+
+    /**
+     * Obtiene el número de asiento del pasajero.
+     *
+     * @return el número de asiento.
+     */
+    public int getAsiento() {
+        return asiento.getNumero();
+    }
+
+    /**
+     * Obtiene el tipo de descuento seleccionado.
+     *
+     * @return el tipo de descuento.
+     */
+    public Descuentos getDescuento() {
+        return descuentos.get(selectorDescuento.getComboBox().getSelectedItem());
+    }
+
+    /**
+     * Método sobrescrito para dibujar el contenido del panel.
+     * Configura y ajusta la posición de los componentes del panel.
+     *
+     * @param g Objeto Graphics utilizado para dibujar.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Llamar al método paintComponent de la superclase JPanel
@@ -223,6 +268,12 @@ public class PanelInformacionPasajero extends JPanel {
         }
     }
 
+    /**
+     * Ajusta la opacidad de una imagen a un 30% de su valor original.
+     *
+     * @param imagenOriginal La imagen original cuya opacidad se ajustará.
+     * @return La imagen ajustada con la nueva opacidad.
+     */
     private BufferedImage ajustarOpacidad(BufferedImage imagenOriginal) {
         if (imagenOriginal == null) {
             return null;

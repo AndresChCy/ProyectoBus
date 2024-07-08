@@ -29,7 +29,7 @@ public class PanelCambioPiso extends JPanel {
 
     // Logger para la clase PanelCambioPiso
     private static final Logger logger = Logger.getLogger(PanelCambioPiso.class.getName());
-    private PanelAsientos panelAsientos;
+    private final PanelAsientos panelAsientos;
 
     /**
      * Constructor de PanelCambioPiso.

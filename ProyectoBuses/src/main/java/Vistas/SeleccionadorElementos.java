@@ -5,55 +5,34 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+/**
+ * Clase SeleccionadorElementos
+ *
+ * Panel personalizado que contiene un JComboBox con autocompletado dinámico
+ * basado en una lista de elementos proporcionada al inicializar el componente.
+ */
 public class SeleccionadorElementos extends JPanel {
 
-    //private final List<String> ciudades;
     private final JComboBox<String> comboBox;
     private final DefaultComboBoxModel<String> comboBoxModel;
     private final JTextField campoTexto;
-    private boolean isAdjusting = false;
 
     /**
      * Constructor de la clase SeleccionadorElementos.
-     * Inicializa el componente con una lista de ciudades.
-     * @param ciudades Lista de ciudades disponibles para la selección.
+     * Inicializa el componente con una lista de elementos.
+     *
+     * @param elementos Lista de elementos disponibles para la selección.
      */
     public SeleccionadorElementos(String[] elementos) {
-        //this.ciudades = ciudades;
         this.setOpaque(false); // Hacer el fondo transparente
 
-        // Modelo del ComboBox con la lista de ciudades
+        // Modelo del ComboBox con la lista de elementos
         comboBoxModel = new DefaultComboBoxModel<>(elementos);
         comboBox = new JComboBox<>(comboBoxModel);
         comboBox.setEditable(true); // Permitir edición del texto en el ComboBox
 
         // Obtener el campo de texto interno del ComboBox
         campoTexto = (JTextField) comboBox.getEditor().getEditorComponent();
-
-
-        // Agregar un listener al documento para actualizar las sugerencias al editar
-     /*  campoTexto.getDocument().addDocumentListener(new EscuchaTextos() {
-           @Override
-           public void update(DocumentEvent e) {
-               if (isAdjusting) {
-                   return;
-               }
-               isAdjusting = true;
-               SwingUtilities.invokeLater(() -> {
-                   String texto = campoTexto.getText();
-                   List<String> matches = Arrays.stream(elementos)
-                           .filter(element -> element.contains(texto))
-                           .toList();
-                   comboBoxModel.removeAllElements();
-                   for (String match : matches) {
-                       comboBoxModel.addElement(match);
-                   }
-                   campoTexto.setText(texto); // Establecer el texto filtrado
-                   comboBox.setPopupVisible(!matches.isEmpty()); // Mostrar el desplegable si hay coincidencias
-                   isAdjusting = false;
-               });
-           }
-       }) ;*/
 
         // Configurar el layout del panel y añadir el ComboBox al centro
         setLayout(new BorderLayout());
@@ -80,32 +59,25 @@ public class SeleccionadorElementos extends JPanel {
      */
     private void ajustarTamanoCampoTexto() {
         comboBox.setPreferredSize(new Dimension(getWidth(), comboBox.getPreferredSize().height));
-
         revalidate(); // Validar el layout para reflejar los cambios
         repaint(); // Repintar el componente
     }
 
     /**
-     * Método para obtener la ciudad seleccionada en el ComboBox.
-     * @return Nombre de la ciudad seleccionada.
+     * Método para obtener el elemento seleccionado en el ComboBox.
+     *
+     * @return Elemento seleccionado en el ComboBox.
      */
-    public String getCiudadSeleccionada() {
+    public String getElementoSeleccionado() {
         return (String) comboBox.getSelectedItem();
-    }
-    public JComboBox<String> getComboBox(){
-        return comboBox;
     }
 
     /**
-     * Método para cambiar la lista de ciudades disponibles en el ComboBox.
-     * @param nuevasCiudades Nueva lista de ciudades.
+     * Método para obtener el JComboBox utilizado.
+     *
+     * @return JComboBox utilizado en el componente.
      */
-  /*  public void setCambiarCiudades(List<String> nuevasCiudades) {
-        ciudades.clear();
-        ciudades.addAll(nuevasCiudades);
-        comboBoxModel.removeAllElements();
-        for (String ciudad : ciudades) {
-            comboBoxModel.addElement(ciudad);
-        }
-    }*/
+    public JComboBox<String> getComboBox() {
+        return comboBox;
+    }
 }

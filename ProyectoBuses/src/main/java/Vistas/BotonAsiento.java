@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Clase que representa un botón personalizado para un asiento en un transporte.
+ * Clase que representa un botón personalizado para un asiento del bus.
  */
 public class BotonAsiento extends JButton {
     // Mapa estático para mapear tipos de asiento a sus respectivas rutas de imágenes

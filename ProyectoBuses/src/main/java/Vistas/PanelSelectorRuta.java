@@ -2,7 +2,6 @@ package Vistas;
 
 import Modelo.Ciudades;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -11,26 +10,31 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * PanelSelectorRuta es un JPanel que permite a los usuarios seleccionar una ruta,
+ * incluyendo origen, destino y fecha de viaje, y luego avanzar para ver los horarios disponibles.
+ */
 public class PanelSelectorRuta extends JPanel implements TemasObserver {
-    private final MenuSuperiorPanelInicial menuSuperiorPanelInicial;
-    private final PanelConfiguracion panelConfiguracion;
-    private final Selector selectorOrigen;
-    private final Selector selectorDestino;
-    private final FechaViaje fechaViaje;
-    private BufferedImage imagenFondo;
-    private final BotonAvanzar botonAvanzar;
+    private final MenuSuperiorPanelInicial menuSuperiorPanelInicial; // Panel superior del menú
+    private final PanelConfiguracion panelConfiguracion; // Panel de configuración
+    private final Selector selectorOrigen; // Selector de ciudad de origen
+    private final Selector selectorDestino; // Selector de ciudad de destino
+    private final FechaViaje fechaViaje; // Componente de selección de fecha de viaje
+    private BufferedImage imagenFondo; // Imagen de fondo del panel
+    private final BotonAvanzar botonAvanzar; // Botón para avanzar al siguiente paso
 
-    private static final Map<String, Ciudades> Targets = new HashMap<>();
+    private static final Map<String, Ciudades> Targets = new HashMap<>(); // Mapa para convertir nombres de ciudades a objetos Ciudades
     static {
-        for(Ciudades ciudades: Ciudades.values()){
-            Targets.put(ciudades.toString(),ciudades);
+        for (Ciudades ciudades : Ciudades.values()) {
+            Targets.put(ciudades.toString(), ciudades);
         }
     }
+
     /**
      * Constructor de la clase PanelSelectorRuta.
      * Configura los componentes y carga el tema aleatorio.
      */
-    public PanelSelectorRuta(Comandos avanzar,Temas temas) {
+    public PanelSelectorRuta(Comandos avanzar, Temas temas) {
         // Seleccionar un tema aleatorio y obtener su imagen de fondo
         imagenFondo = Temas.temaSeleccionado.imagen;
         ComandoAsignarRuta asignarRuta = new ComandoAsignarRuta();
@@ -38,18 +42,19 @@ public class PanelSelectorRuta extends JPanel implements TemasObserver {
         command.addComando(avanzar);
 
         String[] ciudades = new String[Ciudades.values().length];
-        for(Ciudades ciudad: Ciudades.values()){
+        for (Ciudades ciudad : Ciudades.values()) {
             ciudades[ciudad.ordinal()] = ciudad.toString();
         }
 
         // Inicializar componentes
-        panelConfiguracion = new PanelConfiguracion(temas,this);
+        panelConfiguracion = new PanelConfiguracion(temas, this);
         menuSuperiorPanelInicial = new MenuSuperiorPanelInicial(panelConfiguracion);
-        selectorOrigen = new Selector("Origen",ciudades);
-        selectorDestino = new Selector("Destino",ciudades);
+        selectorOrigen = new Selector("Origen", ciudades);
+        selectorDestino = new Selector("Destino", ciudades);
         fechaViaje = new FechaViaje(asignarRuta);
-        botonAvanzar = new BotonAvanzar(command,"VER HORARIOS");
+        botonAvanzar = new BotonAvanzar(command, "VER HORARIOS");
 
+        // Añadir oyentes a los selectores de origen y destino
         selectorOrigen.getComboBox().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -59,6 +64,7 @@ public class PanelSelectorRuta extends JPanel implements TemasObserver {
                 }
             }
         });
+
         selectorDestino.getComboBox().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -81,15 +87,16 @@ public class PanelSelectorRuta extends JPanel implements TemasObserver {
         panelConfiguracion.setEnabled(false);
         panelConfiguracion.setVisible(false);
         this.add(panelConfiguracion);
-        setComponentZOrder(panelConfiguracion,0);
-        setComponentZOrder(botonAvanzar,1);
-        setComponentZOrder(selectorDestino,2);
-        setComponentZOrder(selectorOrigen,3);
+        setComponentZOrder(panelConfiguracion, 0);
+        setComponentZOrder(botonAvanzar, 1);
+        setComponentZOrder(selectorDestino, 2);
+        setComponentZOrder(selectorOrigen, 3);
     }
 
     /**
      * Método sobrecargado para dibujar el componente.
      * Dibuja la imagen de fondo con ajuste de opacidad y posiciona los componentes.
+     *
      * @param g Objeto Graphics para dibujar en el panel.
      */
     @Override
@@ -128,7 +135,8 @@ public class PanelSelectorRuta extends JPanel implements TemasObserver {
 
         // Posicionar el menú superior
         menuSuperiorPanelInicial.setBounds(0, 0, anchoPanel, altoMenuSuperior);
-        if(this.isEnabled()) {
+
+        if (this.isEnabled()) {
             // Calcular posiciones y dimensiones para los selectores y la fecha de viaje
             int margenSuperior = altoMenuSuperior + (int) (altoPanel * 0.25);
             int altoSelector = (int) (altoPanel * 0.1);
@@ -151,12 +159,12 @@ public class PanelSelectorRuta extends JPanel implements TemasObserver {
             botonAvanzar.setBounds(posXAvanzar, posYAvanzar, anchoAvanzar, altoAvanzar);
         }
 
+        // Posicionar el panel de configuración
         int anchoConfig = (int) (anchoPanel * 0.5);
-        int altoCongif = (int) (altoPanel * 0.5);
-        int posXOrigen = (int) (anchoPanel * 0.2);
-        int margenSuperior = altoMenuSuperior + (int) (altoPanel * 0.25);
-        panelConfiguracion.setBounds(posXOrigen, margenSuperior, anchoConfig, altoCongif);
-
+        int altoConfig = (int) (altoPanel * 0.5);
+        int posXConfig = (int) (anchoPanel * 0.25);
+        int posYConfig = altoMenuSuperior + (int) (altoPanel * 0.25);
+        panelConfiguracion.setBounds(posXConfig, posYConfig, anchoConfig, altoConfig);
     }
 
     /**
@@ -189,7 +197,11 @@ public class PanelSelectorRuta extends JPanel implements TemasObserver {
 
         return imagenAjustada;
     }
-    public void updateTema(){
+
+    /**
+     * Método que actualiza el tema del panel, incluyendo la imagen de fondo.
+     */
+    public void updateTema() {
         imagenFondo = Temas.temaSeleccionado.imagen;
         repaint();
     }

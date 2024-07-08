@@ -111,21 +111,21 @@ public class BotonRetroceder extends JButton {
 
     /**
      * Método para redimensionar una imagen dada a un tamaño específico.
-     * @param originalImage Imagen original que se va a redimensionar.
-     * @param targetWidth Ancho deseado para la imagen redimensionada.
-     * @param targetHeight Alto deseado para la imagen redimensionada.
+     * @param imagenOriginal Imagen original que se va a redimensionar.
+     * @param anchoDeseado Ancho deseado para la imagen redimensionada.
+     * @param altoDeseado Alto deseado para la imagen redimensionada.
      * @return Imagen redimensionada al tamaño especificado.
      */
-    private BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
-        if (targetWidth <= 0 || targetHeight <= 0) {
-            return originalImage;
+    private BufferedImage resizeImage(BufferedImage imagenOriginal, int anchoDeseado, int altoDeseado) {
+        if (anchoDeseado <= 0 || altoDeseado <= 0) {
+            return imagenOriginal;
         }
-        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = resizedImage.createGraphics();
+        BufferedImage imagenRedimensionada = new BufferedImage(anchoDeseado, altoDeseado, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = imagenRedimensionada.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        g.drawImage(imagenOriginal, 0, 0, anchoDeseado, altoDeseado, null);
         g.dispose();
-        return resizedImage;
+        return imagenRedimensionada;
     }
 
     /**
