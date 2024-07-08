@@ -84,9 +84,9 @@ public class PanelConfiguracion extends JPanel {
                 return super.getPreferredSize();
             }
         };
-
+        OperadorComandos oc = new OperadorComandos(new ComandoGuardar());
         // Acción al pulsar el botón de guardar
-        botonGuardar.addActionListener(e -> System.out.println("Guardado"));
+        botonGuardar.addActionListener(e -> oc.execute());
 
         // Configurar diseño del botón
         botonGuardar.setOpaque(false);

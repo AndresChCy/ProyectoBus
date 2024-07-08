@@ -5,6 +5,9 @@ import Vistas.PanelPrincipal;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * JFrame auxiliar que se abre para notificar errores o avisos
+ */
 public class VentanaErr extends JFrame {
     public VentanaErr(String err) {
         // Configurar título, tamaño y cierre de la ventana

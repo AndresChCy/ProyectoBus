@@ -8,15 +8,32 @@ import VentanaError.VentanaErr;
 
 import java.util.ArrayList;
 
+/**
+ * Comando para registrar la información de los pasajeros y confirmar la compra de un pasaje
+ */
 public class ComandoRegistrarPasajeros implements Comandos{
     private ArrayList<PanelInformacionPasajero> paneles;
+
+    /**
+     * Constructor inicializa los campos
+     */
     public ComandoRegistrarPasajeros(){
         paneles = new ArrayList<>();
     }
+
+    /**
+     * Metodo para añadir paneles de pasajero los cuales registrara sus datos
+     * @param panel el panel de información Pasajero
+     */
     public void addPanel(PanelInformacionPasajero panel){
         paneles.add(panel);
     }
 
+    /**
+     * Crea un objeto Pasajero por cada panel y luego imprime un pasaje para el segun
+     * el viaje seleccionado en el CalendarioViajes
+     */
+    @Override
     public void execute(){
         String nombre;
         String apellido;

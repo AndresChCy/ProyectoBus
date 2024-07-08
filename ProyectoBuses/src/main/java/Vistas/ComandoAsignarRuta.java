@@ -9,12 +9,18 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Comando para apuntar a una ruta y dia del calendarioViajes
+ */
 public class ComandoAsignarRuta implements Comandos{
     private Ciudades origen;
     private Ciudades destino;
     private String dia;
     private String mes ;
 
+    /**
+     * Constructor por defecto inicializa las ciudades en el primer elemento
+     */
     public ComandoAsignarRuta() {
         origen = Ciudades.values()[0];
         destino = Ciudades.values()[0];
@@ -31,6 +37,11 @@ public class ComandoAsignarRuta implements Comandos{
     public void setMes(String p2){
         this.mes = p2;
     }
+
+    /**
+     * Apunta un dia y ruta del calendario segun los datos dados
+     */
+    @Override
     public void execute(){
         int d;
         int m;

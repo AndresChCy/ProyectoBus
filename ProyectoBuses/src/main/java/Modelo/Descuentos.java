@@ -1,5 +1,8 @@
 package Modelo;
 
+/**
+ * Enum para diversos descuentos para un pasaje
+ */
 public enum Descuentos {
     NO(1),
     ESTUDIANTE(0.5),

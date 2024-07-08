@@ -20,6 +20,7 @@ import java.util.Comparator;
  * de viajes distintos
  */
 public class CalendarioViajes implements Serializable {
+
     private static CalendarioViajes fechas;
     private ArrayList<ViajeBus>[][][] calendario;
     private LocalDate ultimoGuardado;
@@ -28,7 +29,12 @@ public class CalendarioViajes implements Serializable {
     private ArrayList<CalendarioObserver> seguidores;
 
 
-
+    /**
+     * Constructor privado de CalendarioViajes
+     * Si encuentra un archivo que contenga un estado guardado de esta clase se construye en base a esos datos
+     * En caso contrario simplemente inicializara las propiedades con una matriz cubica para cada posible ciudad de origen y destino
+     * La tercera dimensión es 14 representando que solo almacena los siguiente 14 dias
+     */
     private CalendarioViajes(){
         try{
             String ruta = System.getProperty("user.dir") + "/SaveCalendar/InfCalendario.txt";
@@ -53,12 +59,22 @@ public class CalendarioViajes implements Serializable {
         seguidores = new ArrayList<>();
         //viajeApuntado = diaApuntado.get(0);
     }
+
+    /**
+     * Metodo para obtener la instancia estatica de esta clase
+     * @return La instancia de esta clase
+     */
     public static CalendarioViajes getInstance(){
         if(fechas == null){
             fechas = new CalendarioViajes();
         }
         return fechas;
     }
+
+    /**
+     * Añade un viaje al calendario
+     * @param viaje viaje que se añade segun su origen destino y fecha
+     */
     public void añadirViaje(ViajeBus viaje ){
         Ciudades orig = viaje.getOrigen();
         Ciudades est = viaje.getDestino();
@@ -66,6 +82,11 @@ public class CalendarioViajes implements Serializable {
         Period diff = LocalDate.now().until(fecha.toLocalDate());
         calendario[orig.ordinal()][est.ordinal()][diff.getDays()].add(viaje);
     }
+
+    /**
+     * Metodo para eliminar un viaje del calendario
+     * @param viaje que quieres remover
+     */
     public void quitarViaje(ViajeBus viaje){
         Ciudades orig = viaje.getOrigen();
         Ciudades est = viaje.getDestino();
@@ -74,6 +95,12 @@ public class CalendarioViajes implements Serializable {
         calendario[orig.ordinal()][est.ordinal()][diff.getDays()].remove(viaje);
     }
 
+    /**
+     * Metodo para llenar automaticamente con viajes una trayectoria de un dia especifico del calendario
+     * @param origen Ciudad de origen
+     * @param destino Ciudad de destino
+     * @param dia Fecha del viaje
+     */
     public void llenarDatos(Ciudades origen,Ciudades destino,LocalDate dia ){
         ArrayList<ViajeBus> aux = getDia(origen,destino,dia);
         if (origen==destino) {
@@ -105,10 +132,23 @@ public class CalendarioViajes implements Serializable {
             }
         }
     }
+
+    /**
+     * Ordena la lista de viajes de una especifica trayectoria y fecha segun la hora de salida
+     * @param origen ciudad de origen
+     * @param destino ciudad de destino
+     * @param dia fecha del viaje
+     */
     public void ordenarViajes(Ciudades origen,Ciudades destino,LocalDate dia){
         Collections.sort(getDia(origen,destino,dia),
                 (v1,v2) -> v1.getFecha().compareTo(v2.getFecha()));
     }
+
+    /**
+     * Actualiza el dia actual para una trayectoria especifica (Elimina los viajes que ya haya pasado su hora)
+     * @param origen ciudad de origen
+     * @param destino ciudad de destino
+     */
     public void actualizarDia(Ciudades origen,Ciudades destino) {
         if (origen==destino) {
             throw new RuntimeException("El origen no puede ser el destino.");
@@ -121,6 +161,11 @@ public class CalendarioViajes implements Serializable {
             calendario[origen.ordinal()][destino.ordinal()][0].remove(0);
         }
     }
+
+    /**
+     * Metodo para actualizar el calendario absolutamente
+     * Se encargara de mover el calendario segun la fecha actual eliminando las ya pasadas
+     */
     public void actualizarCalendario(){
         int diff = LocalDate.now().getDayOfYear()-ultimoGuardado.getDayOfYear();
         int numCiudades = Ciudades.values().length;
@@ -135,11 +180,24 @@ public class CalendarioViajes implements Serializable {
                 }
             }
         }
+        ultimoGuardado = LocalDate.now();
     }
+
+    /**
+     *
+     * @return el calendario asociado a la clase
+     */
     public ArrayList<ViajeBus>[][][] getCalendario(){
         return calendario;
     }
 
+    /**
+     * Si la trayectoria y la fecha es valida retorna la lista de viajes para ese dia y esa trayectoria
+     * @param origen ciudad de origen
+     * @param destino ciudad de destino
+     * @param dia fecha del viaje
+     * @return La lista de viajes con los parametros dados
+     */
     public ArrayList<ViajeBus> getDia(Ciudades origen,Ciudades destino,LocalDate dia) {
         if (origen==destino) {
             throw new RuntimeException("El origen no puede ser el destino.");
@@ -153,6 +211,10 @@ public class CalendarioViajes implements Serializable {
         return calendario[origen.ordinal()][destino.ordinal()][diff];
     }
 
+    /**
+     * Metodo que serializa y genera un archivo que guarda la informacion del calendario
+     * @throws IOException
+     */
     public void Guardar() throws IOException {
         String ruta = System.getProperty("user.dir") + "/SaveCalendar/";
         File archivo = new File(ruta +"InfCalendario.txt");
@@ -166,6 +228,12 @@ public class CalendarioViajes implements Serializable {
         objectOutputStream.close();
     }
 
+    /**
+     * selecciona un dia del calendario segun los parametros
+     * @param origen ciudad de origen
+     * @param destino ciudad de destino
+     * @param dia fecha del viaje
+     */
     public void apuntarDia(Ciudades origen,Ciudades destino,LocalDate dia){
         if (origen==destino) {
             throw new RuntimeException("El origen no puede ser el destino.");
@@ -176,18 +244,42 @@ public class CalendarioViajes implements Serializable {
         }
         this.diaApuntado = calendario[origen.ordinal()][destino.ordinal()][diff];
     }
+
+    /**
+     * Se obtiene el dia seleccionado por el metodo apuntarDia()
+     * @return el dia seleccionado
+     */
     public ArrayList<ViajeBus> getDia(){
         return diaApuntado;
     }
+
+    /**
+     * Selecciona un viaje del dia apuntado
+     * @param i
+     */
     public void apuntarViaje(int i){
         viajeApuntado = this.diaApuntado.get(i);
     }
+
+    /**
+     * obtiene el viaje seleccionadoo con apuntarViaje()
+     * @return el viaje seleccionado
+     */
     public ViajeBus getViaje(){
         return viajeApuntado;
     }
+
+    /**
+     * Metodo para añadir objetos que quieran saber de los cambios del Calendario
+     * @param observer CalendarioObserver para ser añadido
+     */
     public void suscribir(CalendarioObserver observer){
         this.seguidores.add(observer);
     }
+
+    /**
+     * Manda a su lista de observdores a actualizarse.
+     */
     public void notificar(){
         for (int i=0;i<seguidores.size();i++){
             seguidores.get(i).update();

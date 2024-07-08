@@ -1,14 +1,31 @@
 package Modelo;
 
+/**
+ * Clase directora del patron builder para construir Modelos de buses
+ */
 public class SintetizadorBuses {
     private Builder builder;
 
+    /**
+     * Metodo constructor
+     * @param builder Builder con el que se construira el bus
+     */
     public SintetizadorBuses(Builder builder){
         this.builder = builder;
     }
+
+    /**
+     * metodo para cambiar de builder
+     * @param builder el nuevo builder
+     */
     public void  changeBuilder(Builder builder){
         this.builder = builder;
     }
+
+    /**
+     * Construye un bus segun el modelo dado
+     * @param modelo ModeloBus que construira.
+     */
     public void make(ModelosBus modelo){
         switch (modelo){
             case ESTANDAR:
@@ -31,6 +48,11 @@ public class SintetizadorBuses {
                 break;
         }
     }
+
+    /**
+     * Obtener el bus construido
+     * @return el Bus hecho
+     */
     public Bus getBus(){
         return builder.finalizar();
     }

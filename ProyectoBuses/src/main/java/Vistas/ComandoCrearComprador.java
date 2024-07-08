@@ -7,21 +7,39 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Clase para crear paneles de pasajero segun una cantidad especifica en un CardLayout
+ */
 public class ComandoCrearComprador implements Comandos{
     private ArrayList<Asiento> paneles;
     private JPanel panelActual;
     private PanelPrecioPagar panelP;
+
+    /**
+     * Constructor
+     * @param panelActual panel que usa CardLayout
+     */
     public ComandoCrearComprador(JPanel panelActual){
         this.panelActual = panelActual;
         paneles = new ArrayList<>();
     }
     public void setPanelPrecio(PanelPrecioPagar panel){panelP = panel;}
+
+    /**
+     * Guarda el asiento para al momento de ejecutar usarlo en un panel
+     * @param asiento el asiento a guardar
+     */
     public void addPanel(Asiento asiento){
         paneles.add(asiento);
         if(panelP != null){
             panelP.actualizarPrecio((int) (panelP.getPrecio()+asiento.getMultiplicador()* CalendarioViajes.getInstance().getViaje().getPrecio()));
         }
     }
+
+    /**
+     * Quita un asiento guardado en la lista
+     * @param asiento el cual quitar
+     */
     public void borrarPanel(Asiento asiento){
         paneles.remove(asiento);
         if(panelP != null){
@@ -29,6 +47,12 @@ public class ComandoCrearComprador implements Comandos{
         }
     }
     public ArrayList getList(){return paneles;}
+
+    /**
+     * Crea paneles para introducir información de pasajeros segun la cantidad de asientos en la lista
+     * Tambien al final del cardLayout coloca un panel final para confirmar la compra
+     */
+    @Override
     public void execute(){
         if (paneles.size()!= 0) {
             CardLayout layout = (CardLayout) panelActual.getLayout();

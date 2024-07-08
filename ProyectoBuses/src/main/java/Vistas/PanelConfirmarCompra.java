@@ -4,11 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * JPanel para confirmar la compra de pasajes
+ */
 public class PanelConfirmarCompra extends JPanel {
     private PanelTitulo titulo;
     private BotonAvanzar botonAvanzar;
     private ImageIcon tarjetaGif;
 
+    /**
+     * Constructor que coloca todos los componentes del panel
+     * @param avanzar OperadorComandos para el boton de comprar
+     * @param atras Comando para volver hacia atras
+     */
     public PanelConfirmarCompra(OperadorComandos avanzar, Comandos atras) {
         setLayout(null); // Usar layout nulo para posicionar componentes manualmente
         setBackground(Temas.temaSeleccionado.colorTerciario); // Establecer color de fondo del panel
@@ -28,7 +36,7 @@ public class PanelConfirmarCompra extends JPanel {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
