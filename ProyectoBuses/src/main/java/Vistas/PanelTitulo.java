@@ -54,7 +54,7 @@ public class PanelTitulo extends JPanel {
         g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent());
 
         int margenBoton = (int) (altoPanel * 0.5 );
-        int medidaBoton = (int) (altoPanel * 0.8 );
+        int medidaBoton = 75;
         botonRetroceder.setBounds(10, 10, medidaBoton, medidaBoton);
     }
 }
