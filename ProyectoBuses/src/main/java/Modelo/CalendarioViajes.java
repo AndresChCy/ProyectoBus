@@ -87,7 +87,7 @@ public class CalendarioViajes implements Serializable {
             LocalTime horario;
             ViajeBus viaje;
             Bus bus;
-            int numViajes = (int) (Math.floor(Math.random() * (0) + 4)); //Numeros entre 10 y 4
+            int numViajes = (int) (Math.floor(Math.random() * (8) + 4)); //Numeros entre 10 y 4
             for (int i = 0; i <= numViajes; i++) {
                 hora = (int) (Math.floor(Math.random() * (24)));
                 minutos = 5 * (int) (Math.floor(Math.random() * (12)));

@@ -1,6 +1,7 @@
 package Vistas;
 
 import Modelo.Asiento;
+import Modelo.CalendarioViajes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,15 +10,23 @@ import java.util.ArrayList;
 public class ComandoCrearComprador implements Comandos{
     private ArrayList<Asiento> paneles;
     private JPanel panelActual;
+    private PanelPrecioPagar panelP;
     public ComandoCrearComprador(JPanel panelActual){
         this.panelActual = panelActual;
         paneles = new ArrayList<>();
     }
+    public void setPanelPrecio(PanelPrecioPagar panel){panelP = panel;}
     public void addPanel(Asiento asiento){
         paneles.add(asiento);
+        if(panelP != null){
+            panelP.actualizarPrecio((int) (panelP.getPrecio()+asiento.getMultiplicador()* CalendarioViajes.getInstance().getViaje().getPrecio()));
+        }
     }
     public void borrarPanel(Asiento asiento){
         paneles.remove(asiento);
+        if(panelP != null){
+            panelP.actualizarPrecio((int)(panelP.getPrecio()-asiento.getMultiplicador()*CalendarioViajes.getInstance().getViaje().getPrecio()));
+        }
     }
     public ArrayList getList(){return paneles;}
     public void execute(){

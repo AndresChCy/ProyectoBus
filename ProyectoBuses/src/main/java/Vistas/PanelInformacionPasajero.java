@@ -1,11 +1,14 @@
 package Vistas;
 
 import Modelo.Asiento;
+import Modelo.CalendarioViajes;
 import Modelo.Ciudades;
 import Modelo.Descuentos;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,13 +51,11 @@ public class PanelInformacionPasajero extends JPanel {
 
         imagenFondo = Temas.temaSeleccionado.imagen; // Obtener la imagen de fondo del tema seleccionado
 
-        ComandoAsignarRuta asignarRuta = new ComandoAsignarRuta();
-        OperadorComandos command = new OperadorComandos(asignarRuta);
-        command.addComando(avanzar);
-        botonAvanzar = new BotonAvanzar(command);
+        OperadorComandos command = new OperadorComandos(avanzar);
+        botonAvanzar = new BotonAvanzar(command,"Continuar");
 
-        String mensaje1 = "Categoría: " + "categoría";
-        String mensaje2 = "Número asiento: " + "numeroAsiento";
+        String mensaje1 = "Categoría: " + asiento.getCategoria();
+        String mensaje2 = "Número asiento: " + asiento.getNumero();
 
         fp1 = new FuentesPersonalizadas(mensaje1, fuente);
         fp2 = new FuentesPersonalizadas(mensaje2, fuente);
@@ -70,7 +71,8 @@ public class PanelInformacionPasajero extends JPanel {
         }
 
         OperadorComandos oc = new OperadorComandos(avanzar);
-        panelPrecioPagar = new PanelPrecioPagar(24990); // Crear panel para mostrar el precio a pagar (ejemplo: 24990)
+        int precio = CalendarioViajes.getInstance().getViaje().getPrecio();
+        panelPrecioPagar = new PanelPrecioPagar((int) (asiento.getMultiplicador()*precio)); // Crear panel para mostrar el precio a pagar (ejemplo: 24990)
 
         // Crear y configurar los paneles para la categoría y número de asiento
         categoriaAsiento = new JPanel() {
@@ -130,6 +132,13 @@ public class PanelInformacionPasajero extends JPanel {
             tipos[tipo.ordinal()] = tipo.toString();
         }
         selectorDescuento = new Selector("Descuento",tipos);
+        selectorDescuento.getComboBox().addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                panelPrecioPagar.actualizarPrecio((int) (descuentos.get(e.getItem()).getDescuento()*precio*asiento.getMultiplicador()));
+                panelPrecioPagar.repaint();
+            }
+        });
         add(selectorDescuento);
     }
 

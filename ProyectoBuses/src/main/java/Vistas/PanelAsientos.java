@@ -41,7 +41,8 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
         panelCodigoColor = new PanelCodigoColor();
         panelTituloAsientos = new PanelTitulo("Seleccione Asiento",comandoAtras);
         paneles = new ArrayList<>();
-        precioPagar = new PanelPrecioPagar(15990);
+        precioPagar = new PanelPrecioPagar(0);
+        compradores.setPanelPrecio(precioPagar);
 
         // Añade los subpaneles al panel principal
         this.add(botonAvanzar);

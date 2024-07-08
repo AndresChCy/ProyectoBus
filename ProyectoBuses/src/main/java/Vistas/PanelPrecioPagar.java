@@ -10,7 +10,8 @@ import java.awt.*;
 public class PanelPrecioPagar extends JPanel {
     private final FuentesPersonalizadas fuentesPersonalizadas; // Objeto para las fuentes personalizadas
     private final String fuente = "Comic Sans MS"; // Fuente utilizada para el mensaje
-    private final String mensaje; // Mensaje que muestra el precio
+    private String mensaje; // Mensaje que muestra el precio
+    private int precio;
 
     /**
      * Constructor de PanelPrecioPagar.
@@ -19,6 +20,7 @@ public class PanelPrecioPagar extends JPanel {
      * @param precio Precio a mostrar en el mensaje
      */
     public PanelPrecioPagar(int precio) {
+        this.precio = precio;
         this.setOpaque(false); // Establecer el panel como transparente
         this.mensaje = "Precio: $" + precio; // Crear el mensaje con el precio
 
@@ -71,5 +73,12 @@ public class PanelPrecioPagar extends JPanel {
             // Si no se encuentra el símbolo '$', dibujar el mensaje completo en el color primario del tema
             g.drawString(mensaje, posXMensaje, posYMensaje + fm.getAscent());
         }
+    }
+    public void actualizarPrecio(int n){
+        this.mensaje = "Precio: $" + n;
+        precio = n;
+    }
+    public int getPrecio(){
+        return precio;
     }
 }
