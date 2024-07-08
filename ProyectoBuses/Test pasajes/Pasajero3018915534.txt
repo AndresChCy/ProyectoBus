@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: a a
+Número de Asiento: 34 TIPO: Estándar
+Origen: SANTIAGO
+Destino: CHILLAN
+Fecha: 2024-07-07T01:55
+DESCUENTO: ESTUDIANTE
+Precio del Viaje: 1983
+
+
+

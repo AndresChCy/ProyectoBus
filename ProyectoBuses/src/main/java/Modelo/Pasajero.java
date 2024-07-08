@@ -7,16 +7,18 @@ public class Pasajero {
     private String nombre;
     private String apellido;
     private String correo;
+    private Descuentos descuento;
 
     /**
      * Constructor de la clase Pasajero.
      * @param nombre    Nombre del pasajero.
      * @param correo    Correo del pasajero.
      */
-    public Pasajero(String nombre,String apellido, String correo) {
+    public Pasajero(String nombre,String apellido, String correo,Descuentos descuento) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
+        this.descuento =descuento;
     }
 
     /**
@@ -35,6 +37,7 @@ public class Pasajero {
     public String getCorreo() {
         return correo;
     }
+    public Descuentos getDescuento(){return descuento;}
 
 }
 

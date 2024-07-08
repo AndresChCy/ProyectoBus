@@ -18,7 +18,7 @@ public class SalonCama extends Asiento {
      */
     @Override
     public String getCategoria() {
-        return "SalonCama";
+        return "Salón Cama";
     }
 
     /**

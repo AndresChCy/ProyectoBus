@@ -15,7 +15,7 @@ public class PisoBus implements Serializable {
      * @param numFilas  Numero de filas que tendrá la matriz de asientos.
      */
     public PisoBus(int numFilas) {
-        asientos = new Asiento[numFilas][4];
+        asientos = new Asiento[4][numFilas];
         this.numFilas = numFilas;
         this.numAsientosActivos = 0;
     }
@@ -64,4 +64,5 @@ public class PisoBus implements Serializable {
     public int getNumAsientos() {
         return numFilas*4;
     }
+    public Asiento[][] getAsientos(){return this.asientos;}
 }

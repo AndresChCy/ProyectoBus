@@ -1,7 +1,11 @@
 package Modelo;
 
+
 import java.io.*;
 import java.security.Guard;
+
+import java.time.temporal.ChronoUnit;
+
 import java.util.ArrayList;
 import java.time.*;
 import java.util.Collections;
@@ -19,6 +23,11 @@ public class CalendarioViajes implements Serializable {
     private static CalendarioViajes fechas;
     private ArrayList<ViajeBus>[][][] calendario;
     private LocalDate ultimoGuardado;
+    private ArrayList<ViajeBus> diaApuntado;
+    private ViajeBus viajeApuntado;
+    private ArrayList<CalendarioObserver> seguidores;
+
+
 
     private CalendarioViajes(){
         try{
@@ -39,6 +48,9 @@ public class CalendarioViajes implements Serializable {
             }
             ultimoGuardado = LocalDate.now();
         }
+        diaApuntado = calendario[0][1][0];
+        seguidores = new ArrayList<>();
+        //viajeApuntado = diaApuntado.get(0);
     }
     public static CalendarioViajes getInstance(){
         if(fechas == null){
@@ -74,7 +86,7 @@ public class CalendarioViajes implements Serializable {
             LocalTime horario;
             ViajeBus viaje;
             Bus bus;
-            int numViajes = (int) (Math.floor(Math.random() * (7) + 4)); //Numeros entre 10 y 4
+            int numViajes = (int) (Math.floor(Math.random() * (0) + 4)); //Numeros entre 10 y 4
             for (int i = 0; i <= numViajes; i++) {
                 hora = (int) (Math.floor(Math.random() * (24)));
                 minutos = 5 * (int) (Math.floor(Math.random() * (12)));
@@ -82,14 +94,17 @@ public class CalendarioViajes implements Serializable {
                 cualBus = (int) (Math.floor(Math.random() * (6)));
                 creator.make(ModelosBus.values()[cualBus]);
                 bus = creator.getBus();
-                viaje = new ViajeBus(bus, origen, destino, LocalDateTime.of(dia, horario), 1);
+                int id = hora*1000+minutos*100+cualBus*10+i;
+                viaje = new ViajeBus(bus, origen, destino, LocalDateTime.of(dia, horario), id);
                 aux.add(viaje);
             }
             ordenarViajes(origen, destino, dia);
+            if(dia.getDayOfYear() == LocalDate.now().getDayOfYear()){
+                actualizarDia(origen, destino);
+            }
         }
     }
     public void ordenarViajes(Ciudades origen,Ciudades destino,LocalDate dia){
-        int fecha = LocalDate.now().until(dia).getDays();
         Collections.sort(getDia(origen,destino,dia),
                 (v1,v2) -> v1.getFecha().compareTo(v2.getFecha()));
     }
@@ -103,9 +118,9 @@ public class CalendarioViajes implements Serializable {
         ordenarViajes(origen, destino, LocalDate.now());
         for (int i = 0;i < numViajes ;i++){
             if(LocalDateTime.now().isAfter(dia1.get(i).getFecha())){
-                dia1.remove(i);
+                calendario[origen.ordinal()][destino.ordinal()][0].remove(i);
             }
-            break;
+            else break;
         }
     }
     public void actualizarCalendario(){
@@ -132,16 +147,46 @@ public class CalendarioViajes implements Serializable {
             throw new RuntimeException("El origen no puede ser el destino.");
         }
 
-        int diff = LocalDate.now().until(dia).getDays();
+        int diff = (int)ChronoUnit.DAYS.between(LocalDate.now(),dia);
+        System.out.println(diff);
         if(diff>=14){
             throw new RuntimeException("El dia sobrepasa el rango permitido.");
         }
         return calendario[origen.ordinal()][destino.ordinal()][diff];
     }
+
     public void Guardar() throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream("InfCalendario.txt");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
+    }
+
+    public void apuntarDia(Ciudades origen,Ciudades destino,LocalDate dia){
+        if (origen==destino) {
+            throw new RuntimeException("El origen no puede ser el destino.");
+        }
+        int diff = LocalDate.now().until(dia).getDays();
+        if(diff>=14){
+            throw new RuntimeException("El dia sobrepasa el rango permitido.");
+        }
+        this.diaApuntado = calendario[origen.ordinal()][destino.ordinal()][diff];
+    }
+    public ArrayList<ViajeBus> getDia(){
+        return diaApuntado;
+    }
+    public void apuntarViaje(int i){
+        viajeApuntado = this.diaApuntado.get(i);
+    }
+    public ViajeBus getViaje(){
+        return viajeApuntado;
+    }
+    public void suscribir(CalendarioObserver observer){
+        this.seguidores.add(observer);
+    }
+    public void notificar(){
+        for (int i=0;i<seguidores.size();i++){
+            seguidores.get(i).update();
+        }
     }
 }

@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: a a
+Número de Asiento: 38 TIPO: Estándar
+Origen: TEMUCO
+Destino: CHILLAN
+Fecha: 2024-07-07T15:15
+DESCUENTO: ESTUDIANTE
+Precio del Viaje: 1100
+
+
+

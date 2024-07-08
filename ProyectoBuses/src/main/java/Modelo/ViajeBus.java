@@ -42,7 +42,9 @@ public class ViajeBus implements Serializable {
      * @param numAsiento  Asiento que reservó el pasajero.
      * @return          Pasaje comprado.
      */
-    public Pasaje comprarPasaje(Pasajero pasajero, int numAsiento,Descuentos tipo) {
+    public Pasaje comprarPasaje(Pasajero pasajero, int numAsiento) {
+        bus.getAsiento(numAsiento).reservar(this);
+        Descuentos tipo = pasajero.getDescuento();
         int precio = (int)(precioViaje*bus.getAsiento(numAsiento).getMultiplicador()*tipo.getDescuento());
         Pasaje aux = new Pasaje(pasajero,bus.getAsiento(numAsiento), origen, destino, fecha, precio,tipo);
         return aux;
@@ -73,4 +75,5 @@ public class ViajeBus implements Serializable {
     public Bus getBus(){
         return bus;
     }
+    public int getPrecio(){return (int) precioViaje;}
 }

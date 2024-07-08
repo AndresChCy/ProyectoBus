@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: a a
+Número de Asiento: 16 TIPO: SemiCama
+Origen: CHILLAN
+Destino: SANTIAGO
+Fecha: 2024-07-08T22:55
+DESCUENTO: NO
+Precio del Viaje: 5047
+
+
+

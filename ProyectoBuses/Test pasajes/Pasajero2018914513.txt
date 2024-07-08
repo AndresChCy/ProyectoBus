@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: a a
+Número de Asiento: 13 TIPO: SemiCama
+Origen: TEMUCO
+Destino: CHILLAN
+Fecha: 2024-07-07T01:45
+DESCUENTO: NO
+Precio del Viaje: 2799
+
+
+
