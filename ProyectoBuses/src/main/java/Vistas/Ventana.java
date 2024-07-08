@@ -1,6 +1,6 @@
 package Vistas;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -38,7 +38,12 @@ public class Ventana extends JFrame {
      */
     public static void main(String[] args) {
         // Crear una nueva instancia de la ventana principal
-        new Ventana();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Ventana v = new Ventana();
+
+            }
+        });
     }
 }
 

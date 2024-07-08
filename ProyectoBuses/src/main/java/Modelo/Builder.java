@@ -36,6 +36,7 @@ public interface Builder {
      * @param Fila      Fila de los asientos disponibles en el piso.
      */
     void addAsientoSalonCama(int piso, int Columna, int Fila);
+    void addAsientoPremium(int piso, int Columna, int Fila);
 
     /** Finaliza la construcción del bus */
     Bus finalizar();

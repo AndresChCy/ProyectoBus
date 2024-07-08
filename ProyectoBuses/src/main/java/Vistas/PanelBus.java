@@ -66,7 +66,6 @@ public class PanelBus extends JPanel {
                 repaint(); // Vuelve a pintar el panel al cambiar el tamaño
             }
         });
-        this.add(new JLabel("MENSAJE E AYUA"));
     }
 
     /**

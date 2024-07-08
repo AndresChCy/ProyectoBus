@@ -16,7 +16,7 @@ public class PanelInfoBus extends JPanel {
     private final FuentesPersonalizadas mensajeAsiento; // Mensaje personalizado para el precio
     private final String fuente = "Roboto"; // Fuente utilizada en los mensajes
     private final JButton botonComprar; // Botón para realizar la compra
-
+    private String fecha;
     /**
      * Constructor del PanelInfoBus.
      *
@@ -26,10 +26,12 @@ public class PanelInfoBus extends JPanel {
      */
     public PanelInfoBus(ViajeBus viaje, OperadorComandos avanzar, Color color) {
         this.viaje = viaje;
-        this.precioDesde = viaje.getPrecio();
+        this.precioDesde = viaje.getPrecioMasBarato();
+        this.fecha = new String();
+        fecha = viaje.getFecha().getDayOfMonth() + "/" + viaje.getFecha().getMonthValue() + " a las "+ viaje.getFecha().getHour()+":"+viaje.getFecha().getMinute();
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE)); // Borde blanco para separación visual
-        mensajeHora = new FuentesPersonalizadas("Salida: " + viaje.getFecha(), fuente); // Crear mensaje personalizado para el horario
-        mensajeAsiento = new FuentesPersonalizadas("Desde: $" + viaje.getPrecio(), fuente); // Crear mensaje personalizado para el precio
+        mensajeHora = new FuentesPersonalizadas("Salida: " + fecha, fuente); // Crear mensaje personalizado para el horario
+        mensajeAsiento = new FuentesPersonalizadas("Desde: $" + precioDesde, fuente); // Crear mensaje personalizado para el precio
 
         String comprar = "COMPRAR";
         botonComprar = new JButton(comprar); // Crear el botón de compra
@@ -71,9 +73,9 @@ public class PanelInfoBus extends JPanel {
         FontMetrics fm1 = g.getFontMetrics();
         g.setFont(new Font(fuente, Font.BOLD, tamanoTextoHora));
         g.setColor(Color.BLACK);
-        g.drawString("Salida: " + viaje.getFecha(), margenMensaje * 2 + 2, margenMensaje + fm1.getAscent() + 2);
+        g.drawString("Salida: " + fecha, margenMensaje * 2 + 2, margenMensaje + fm1.getAscent() + 2);
         g.setColor(Temas.temaSeleccionado.colorSecundario);
-        g.drawString("Salida: " + viaje.getFecha(), margenMensaje * 2, margenMensaje + fm1.getAscent());
+        g.drawString("Salida: " + fecha, margenMensaje * 2, margenMensaje + fm1.getAscent());
 
         // Dibujar separador vertical
         int xSeparador = margenMensaje + anchoInfo;

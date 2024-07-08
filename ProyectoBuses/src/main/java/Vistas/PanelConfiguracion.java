@@ -15,6 +15,7 @@ public class PanelConfiguracion extends JPanel {
     private JPanel panelConfig;
 
     public PanelConfiguracion(Temas tema, JPanel panel) {
+        this.setBorder(BorderFactory.createLineBorder(Temas.temaSeleccionado.colorTerciario));
         setLayout(null); // Usar layout nulo para posicionar componentes manualmente
         setBackground(Temas.temaSeleccionado.colorSecundario);
         this.panel = panel;

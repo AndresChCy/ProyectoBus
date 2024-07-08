@@ -68,6 +68,12 @@ public class BusBuilder implements Builder {
         bus.addAsientoBus(aux, piso, Columna, Fila);
         numAsiento++;
     }
+    @Override
+    public void addAsientoPremium(int piso, int Columna, int Fila){
+        Asiento aux = new AsientoPremium(numAsiento);
+        bus.addAsientoBus(aux, piso, Columna, Fila);
+        numAsiento++;
+    }
 
     /**
      * Método para finalizar la construcción del bus.

@@ -76,4 +76,13 @@ public class ViajeBus implements Serializable {
         return bus;
     }
     public int getPrecio(){return (int) precioViaje;}
+    public int getPrecioMasBarato(){
+        double lower = bus.getAsientos().get(0).getMultiplicador();
+        for (int i=1;i<bus.getAsientos().size();i++){
+            if(bus.getAsientos().get(i).getMultiplicador()<lower){
+               lower = bus.getAsientos().get(i).getMultiplicador() ;
+            }
+        }
+        return (int)(lower*precioViaje);
+    }
 }

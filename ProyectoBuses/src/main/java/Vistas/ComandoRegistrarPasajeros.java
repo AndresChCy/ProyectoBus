@@ -4,6 +4,7 @@ import Modelo.CalendarioViajes;
 import Modelo.Descuentos;
 import Modelo.Pasaje;
 import Modelo.Pasajero;
+import VentanaError.VentanaErr;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ public class ComandoRegistrarPasajeros implements Comandos{
         for (Pasaje aux: pasajes){
             aux.imprimir();
         }
+        new VentanaErr("Compra exitosa! Revisar pasajes en la carpeta Test Pasajes");
 
     }
 }

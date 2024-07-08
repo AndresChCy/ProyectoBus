@@ -65,4 +65,5 @@ public class Bus implements Serializable {
     public ArrayList<PisoBus> getPisosBus(){
         return pisosBus;
     }
+    public ArrayList<Asiento> getAsientos(){return asientos;}
 }
