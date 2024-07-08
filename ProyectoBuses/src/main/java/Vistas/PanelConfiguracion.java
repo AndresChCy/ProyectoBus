@@ -14,15 +14,16 @@ public class PanelConfiguracion extends JPanel {
     private JPanel panel;
     private JPanel panelConfig;
 
-    public PanelConfiguracion(Temas tema, JPanel panel){
+    public PanelConfiguracion(Temas tema, JPanel panel) {
+        setLayout(null); // Usar layout nulo para posicionar componentes manualmente
         setBackground(Temas.temaSeleccionado.colorSecundario);
-        this.panel=panel;
+        this.panel = panel;
         List<Temas.Tema> temas = tema.getTemas();
         String[] elementosSel = new String[temas.size()];
-        for (int i=0 ;i<temas.size();i++){
-            elementosSel[i] = "Tema "+i;
+        for (int i = 0; i < temas.size(); i++) {
+            elementosSel[i] = "Tema " + i;
         }
-        selectorTema = new Selector("Cambiar tema",elementosSel);
+        selectorTema = new Selector("Cambiar tema", elementosSel);
         selectorTema.getComboBox().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -30,74 +31,63 @@ public class PanelConfiguracion extends JPanel {
             }
         });
 
-        botonCerrar = new BotonAvanzar(null,"Cerrar");
+        botonCerrar = new JButton("Cerrar");
         botonCerrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 close();
             }
         });
-        panelConfig = new JPanel(){
-            @Override
-            protected void paintComponent(Graphics g){
-                int anchoPanel = (int) getWidth();
-                int altoPanel = (int) getHeight();
-                setBackground(Temas.temaSeleccionado.colorPrimario);
-                int margenX = (int) (anchoPanel * 0.1); // Margen horizontal
-                int margenY = (int) (altoPanel * 0.1); // Margen vertical
-                int anchoPanelInfo = (int) (anchoPanel * 0.5); // Ancho de los paneles de información
-                int altoPanelInfo = (int) (altoPanel * 0.2); // Altura de los paneles de información
 
-                selectorTema.setBounds(margenX,margenY,anchoPanelInfo,altoPanelInfo);
-                margenY+= (int) (altoPanel*0.2);
-                botonCerrar.setBounds(margenX,margenY,anchoPanelInfo,altoPanelInfo);
+        panelConfig = new JPanel(null) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                int anchoPanel = getWidth();
+                int altoPanel = getHeight();
+                setBackground(Temas.temaSeleccionado.colorPrimario);
+                int margenX = (int) (anchoPanel * 0.05); // Margen horizontal del 5%
+                int margenY = (int) (altoPanel * 0.05); // Margen vertical del 5%
+                int anchoDisponible = (int) (anchoPanel * 0.9); // Ancho que ocupa el 90% del panel
+                int altoPanelInfo = (int) (altoPanel * 0.45); // Altura que ocupa el 45% del panel
+
+                selectorTema.setBounds(margenX, margenY, anchoDisponible, altoPanelInfo / 2);
+                botonCerrar.setBounds(anchoPanel - margenX - 100, altoPanel - margenY - 30, 100, 30);
             }
         };
         panelConfig.add(selectorTema);
         panelConfig.add(botonCerrar);
-
+        add(panelConfig);
     }
-    protected void paintComponent(Graphics g){
 
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Llamar al método paintComponent de la superclase JPanel
         setBackground(Temas.temaSeleccionado.colorPrimario);
         int anchoPanel = getWidth(); // Obtener el ancho del panel
         int altoPanel = getHeight(); // Obtener el alto del panel
 
-        int margenX = (int) (anchoPanel * 0.15); // Margen horizontal
-        int margenY = (int) (altoPanel * 0.15); // Margen vertical
-        int anchoPanelC = (int) (anchoPanel*0.8);
-        int altoPanelC = (int) (altoPanel*0.8);
-        panelConfig.setBackground(Temas.temaSeleccionado.colorSecundario);
-        panelConfig.setBounds(margenX,margenY,anchoPanelC,altoPanelC);
+        int margenX = (int) (anchoPanel * 0.05); // Margen horizontal del 5%
+        int margenY = (int) (altoPanel * 0.05); // Margen vertical del 5%
+        int anchoPanelC = (int) (anchoPanel * 0.9); // Ancho que ocupa el 90% del panel
+        int altoPanelC = (int) (altoPanel * 0.9); // Altura que ocupa el 90% del panel
+        panelConfig.setBounds(margenX, margenY, anchoPanelC, altoPanelC);
         panelConfig.repaint();
-
-       /* margenX = (int) (anchoPanel * 0.1); // Margen horizontal
-        margenY = (int) (altoPanel * 0.1); // Margen vertical
-        int anchoPanelInfo = (int) (anchoPanel * 0.5); // Ancho de los paneles de información
-        int altoPanelInfo = (int) (altoPanel * 0.2); // Altura de los paneles de información
-
-        selectorTema.setBounds(margenX,margenY,anchoPanelInfo,altoPanelInfo);
-        margenY+= (int) (altoPanel*0.2);
-        botonCerrar.setBounds(margenX,margenY,anchoPanelInfo,altoPanelInfo);*/
-
     }
-    public void open(){
-        //panel.setEnabled(false);
-        //for(Component component: panel.getComponents()){
-          // component.setEnabled(false);
-            //component.enableInputMethods(false);
-       // }
-        this.setEnabled(true);
-        this.setVisible(true);
+
+    public void open() {
+        panel.setEnabled(false);
+        for (Component component : panel.getComponents()) {
+            component.setEnabled(false);
+        }
+        setVisible(true); // Mostrar el panel de configuración
     }
-    public void close(){
-        //panel.setEnabled(true);
-        //for(Component component: panel.getComponents()){
-          //  component.setEnabled(true);
-            //component.enableInputMethods(true);
-        //}
-        this.setEnabled(false);
-        this.setVisible(false);
+
+    public void close() {
+        panel.setEnabled(true);
+        for (Component component : panel.getComponents()) {
+            component.setEnabled(true);
+        }
+        setVisible(false); // Ocultar el panel de configuración
     }
 }
