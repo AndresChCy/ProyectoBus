@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: a b
+Número de Asiento: 36 TIPO: Estándar
+Origen: CONCEPCION
+Destino: CHILLAN
+Fecha: 2024-07-08T18:10
+DESCUENTO: ESTUDIANTE
+Precio del Viaje: 550
+
+
+

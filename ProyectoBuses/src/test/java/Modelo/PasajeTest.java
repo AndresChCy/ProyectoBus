@@ -21,8 +21,8 @@ class PasajeTest {
     @Test
     @DisplayName("Test para imprimir pasaje")
     void testImprimirPasaje(){
-        Pasajero pasajero = new Pasajero("juan","navarro","a@gmail.com");
-        Pasaje pasaje = viaje.comprarPasaje(pasajero,4,Descuentos.ESTUDIANTE);
+        Pasajero pasajero = new Pasajero("juan","navarro","a@gmail.com",Descuentos.ESTUDIANTE);
+        Pasaje pasaje = viaje.comprarPasaje(pasajero,4);
         pasaje.imprimir();
     }
 

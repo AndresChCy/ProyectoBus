@@ -48,7 +48,7 @@ public class PanelSelectorRuta extends JPanel implements TemasObserver {
         selectorOrigen = new Selector("Origen",ciudades);
         selectorDestino = new Selector("Destino",ciudades);
         fechaViaje = new FechaViaje(asignarRuta);
-        botonAvanzar = new BotonAvanzar(command);
+        botonAvanzar = new BotonAvanzar(command,"VER HORARIOS");
 
         selectorOrigen.getComboBox().addItemListener(new ItemListener() {
             @Override

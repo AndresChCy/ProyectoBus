@@ -9,6 +9,6 @@ public class PanelConfirmarCompra extends JPanel {
         setLayout(new BorderLayout());
         OperadorComandos volver = new OperadorComandos(atras);
         add(new PanelTitulo("CONFIRMAR PAGO",volver),BorderLayout.NORTH);
-        add(new BotonAvanzar(avanzar),BorderLayout.CENTER);
+        add(new BotonAvanzar(avanzar,"Pagar"),BorderLayout.CENTER);
     }
 }

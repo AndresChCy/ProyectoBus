@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: a a
+Número de Asiento: 14 TIPO: Salón Cama
+Origen: TEMUCO
+Destino: CHILLAN
+Fecha: 2024-07-08T09:40
+DESCUENTO: NO
+Precio del Viaje: 3599
+
+
+

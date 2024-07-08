@@ -37,7 +37,7 @@ public class PanelAsientos extends JPanel implements CalendarioObserver,TemasObs
         OperadorComandos comandosAvanzar = new OperadorComandos(informar);
         comandosAvanzar.addComando(avanzar);
         // Inicializa los subpaneles
-        botonAvanzar = new BotonAvanzar(comandosAvanzar);
+        botonAvanzar = new BotonAvanzar(comandosAvanzar,"CONTINUAR");
         panelCodigoColor = new PanelCodigoColor();
         panelTituloAsientos = new PanelTitulo("Seleccione Asiento",comandoAtras);
         paneles = new ArrayList<>();

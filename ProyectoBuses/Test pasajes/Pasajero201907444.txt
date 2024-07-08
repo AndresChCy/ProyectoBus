@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: juan navarro
+Número de Asiento: 4 TIPO: Estándar
+Origen: TEMUCO
+Destino: CHILLAN
+Fecha: 2024-07-08T07:44:51.308664
+DESCUENTO: ESTUDIANTE
+Precio del Viaje: 1100
+
+
+

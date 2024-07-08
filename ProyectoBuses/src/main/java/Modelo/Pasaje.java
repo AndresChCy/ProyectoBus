@@ -78,9 +78,12 @@ public class Pasaje {
         PrintWriter escritor;
         try {
             // Ruta relativa al directorio del proyecto
-            String ruta = System.getProperty("user.dir") + "/ProyectoBus/Test pasajes/";
+            String ruta = System.getProperty("user.dir") + "/Test pasajes/";
             File archivo = new File(ruta + nombrar() + ".txt");
-
+            File carpeta = archivo.getParentFile();
+            if (!carpeta.exists()){
+                carpeta.mkdirs();
+            }
             informe = new FileWriter(archivo);
             escritor = new PrintWriter(informe);
 

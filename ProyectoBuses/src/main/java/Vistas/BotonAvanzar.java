@@ -8,25 +8,26 @@ import java.awt.event.MouseEvent;
 public class BotonAvanzar extends JButton {
     private final FuentesPersonalizadas fuentesPersonalizadas;
     private final String fuente = "Roboto";
-    private final String mensaje = "CONTINUAR";
+    private final String mensaje ;
     private boolean isMouseOver = false;
 
     /**
      * Constructor de la clase BotonAvanzar.
      * Configura el color de fondo y fuente del botón, y añade un ActionListener para ejecutar un comando al hacer clic.
      */
-    public BotonAvanzar(OperadorComandos command) {
+    public BotonAvanzar(OperadorComandos command,String mensaje) {
         // Eliminar el background predeterminado para personalizar el pintado
         this.setContentAreaFilled(false);
         this.setOpaque(false);
         this.setBorderPainted(false);
 
         // Inicializar objeto para gestionar fuentes personalizadas
+        this.mensaje = mensaje;
         fuentesPersonalizadas = new FuentesPersonalizadas(mensaje, fuente);
-
-        // Agregar ActionListener para manejar el evento de clic
-        this.addActionListener(e -> command.execute());
-
+        if(command!=null) {
+            // Agregar ActionListener para manejar el evento de clic
+            this.addActionListener(e -> command.execute());
+        }
         // Agregar MouseListener para manejar el evento cuando el mouse está encima
         this.addMouseListener(new MouseAdapter() {
             @Override

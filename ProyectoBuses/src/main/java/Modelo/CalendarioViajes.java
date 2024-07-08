@@ -31,7 +31,8 @@ public class CalendarioViajes implements Serializable {
 
     private CalendarioViajes(){
         try{
-            FileInputStream fileInputStream = new FileInputStream("InfCalendario.txt");
+            String ruta = System.getProperty("user.dir") + "/SaveCalendar/InfCalendario.txt";
+            FileInputStream fileInputStream = new FileInputStream(ruta);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             fechas = (CalendarioViajes) objectInputStream.readObject();
             objectInputStream.close();
@@ -116,11 +117,8 @@ public class CalendarioViajes implements Serializable {
         ArrayList<ViajeBus> dia1 = calendario[origen.ordinal()][destino.ordinal()][0];
         int numViajes = dia1.size();
         ordenarViajes(origen, destino, LocalDate.now());
-        for (int i = 0;i < numViajes ;i++){
-            if(LocalDateTime.now().isAfter(dia1.get(i).getFecha())){
-                calendario[origen.ordinal()][destino.ordinal()][0].remove(i);
-            }
-            else break;
+        while(LocalDateTime.now().isAfter(dia1.get(0).getFecha())){
+            calendario[origen.ordinal()][destino.ordinal()][0].remove(0);
         }
     }
     public void actualizarCalendario(){
@@ -156,7 +154,13 @@ public class CalendarioViajes implements Serializable {
     }
 
     public void Guardar() throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream("InfCalendario.txt");
+        String ruta = System.getProperty("user.dir") + "/SaveCalendar/";
+        File archivo = new File(ruta +"InfCalendario.txt");
+        File carpeta = archivo.getParentFile();
+        if (!carpeta.exists()){
+            carpeta.mkdirs();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(archivo);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
