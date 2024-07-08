@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Clase que representa un botón personalizado para un asiento en un transporte.
@@ -38,7 +37,6 @@ public class BotonAsiento extends JButton {
     // Propiedades del botón y estado de control
     private final Asiento asiento; // Tipo de asiento asociado al botón
     private BufferedImage imagenBoton; // Imagen del botón cargada desde archivo
-    private Color backgroundColor; // Color de fondo actual del botón
 
     private boolean clicked = false; // Indica si el botón ha sido clickeado
     private boolean comprado = false; // Indica si el asiento está comprado
@@ -46,7 +44,6 @@ public class BotonAsiento extends JButton {
 
     /**
      * Constructor de la clase BotonAsiento.
-     * @param tipoAsiento Tipo de asiento que determina la imagen asociada y el comportamiento del botón.
      */
     public BotonAsiento(Asiento asiento,ComandoCrearComprador informar) {
         this.asiento = asiento;
@@ -89,10 +86,10 @@ public class BotonAsiento extends JButton {
             });
         }
         try {
-            if (asiento.isReservado(CalendarioViajes.getInstance().getViaje())) {
+            if (Objects.requireNonNull(asiento).isReservado(CalendarioViajes.getInstance().getViaje())) {
                 setComprado(true);
             }
-        }catch(Exception e){}
+        }catch(Exception ignored){}
 
 
     }
@@ -105,7 +102,6 @@ public class BotonAsiento extends JButton {
         setContentAreaFilled(false);
         setOpaque(true);
         setBackground(COLOR_NORMAL);
-        this.backgroundColor = COLOR_NORMAL;
 
         // Listener para redimensionar la imagen cuando el componente cambia de tamaño
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -145,9 +141,6 @@ public class BotonAsiento extends JButton {
                 Image img = imagenBoton.getScaledInstance(anchoBoton, altoBoton, Image.SCALE_SMOOTH);
                 ImageIcon icono = new ImageIcon(img);
                 this.setIcon(icono);
-                try{
-                    add(new JLabel(String.valueOf(asiento.getNumero())));
-                }catch(Exception e){}
             }
         }
     }
@@ -182,13 +175,6 @@ public class BotonAsiento extends JButton {
         }
     }
 
-    // Método temporal para simular aleatoriamente si el asiento está comprado o no
-    public void simularEstadoCompradoAleatorio() {
-        Random random = new Random();
-        boolean estadoAleatorio = random.nextBoolean();
-        setComprado(estadoAleatorio);
-    }
-
     /**
      * Obtiene el tipo de asiento asociado al botón.
      * @return String con el tipo de asiento.
@@ -197,5 +183,19 @@ public class BotonAsiento extends JButton {
         try {
             return asiento.getCategoria();
         }catch (Exception e){return "Vacío"; }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (asiento != null) {
+            String numero = String.valueOf(asiento.getNumero());
+            g.setFont(new Font("Roboto", Font.BOLD, 15));
+            g.setColor(Color.BLACK);
+            FontMetrics metrics = g.getFontMetrics(g.getFont());
+            int x = (getWidth() - metrics.stringWidth(numero)) / 2;
+            int y = ((getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+            g.drawString(numero, x, y);
+        }
     }
 }

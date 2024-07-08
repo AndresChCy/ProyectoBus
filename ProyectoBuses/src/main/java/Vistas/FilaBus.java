@@ -6,13 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random; // Solo para pruebas
 
 /**
  * FilaBus es un JPanel que representa una fila de asientos en un bus.
  */
 public class FilaBus extends JPanel {
-    private List<Asiento> asientos;
+    private final List<Asiento> asientos;
     private int sumaAsientos;
 
     /**
@@ -37,7 +36,7 @@ public class FilaBus extends JPanel {
             for (Asiento asiento : asientos) {
                 try {
                     String tipAsiento = asiento.getCategoria();
-                    if (Objects.equals(tipAsiento, "Estándar") || Objects.equals(tipAsiento, "Semi Cama") || asiento == null) {
+                    if (Objects.equals(tipAsiento, "Estándar") || Objects.equals(tipAsiento, "Semi Cama")) {
                         sumaAsientos++;
                     } else if (Objects.equals(tipAsiento, "Salón Cama") || Objects.equals(tipAsiento, "Premium")) {
                         sumaAsientos += 2;
@@ -52,54 +51,35 @@ public class FilaBus extends JPanel {
     }
 
     /**
-     * Crea un nuevo botón de asiento según el tipo de asiento especificado.
-     *
-     * @param tipo Tipo de asiento para crear el botón.
-     * @return El botón de asiento creado.
-     */
-    //private BotonAsiento crearBotonAsiento(String tipo) {
-        //return new BotonAsiento(tipo);
-    //}
-
-    /**
      * Agrega botones de asiento a la fila, cada uno posicionado según el tipo de asiento y su cantidad.
      * También marca un asiento como preferencial de forma aleatoria para propósitos de prueba.
      */
     private void agregarBotones(ComandoCrearComprador informar) {
-            int posXBoton = 0;
-            int anchoBoton = getWidth() / sumaAsientos; // Ancho inicial de cada botón de asiento
+        int posXBoton = 0;
+        int anchoBoton = getWidth() / sumaAsientos; // Ancho inicial de cada botón de asiento
 
-            // Genera un índice aleatorio para el botón preferencial para propósitos de prueba
-            Random random = new Random();
-            int indicePreferencial = random.nextInt(asientos.size());
-
-            // Itera sobre los tipos de asientos y agrega los botones correspondientes
-            for (int i = 0; i < asientos.size(); i++) {
-                String asiento = "";
-                BotonAsiento botonAsiento;
-                try {
-                    asiento = asientos.get(i).getCategoria();
-                    botonAsiento = new BotonAsiento(asientos.get(i),informar);
-                    this.add(botonAsiento); // Agrega el botón al panel
-                }catch (Exception e){
-                    botonAsiento = new BotonAsiento(null,informar);
-                    this.add(botonAsiento);
-
-                }
-                // Marca el asiento como preferencial si es el índice aleatorio
-                //if (i == indicePreferencial) {
-                  //  botonAsiento.setPreferencial(true);
-                //}
-
-                // Ajusta la posición y tamaño del botón según el tipo de asiento
-                if (asiento.equals("Salón Cama") || asiento.equals("Premium")) {
-                    botonAsiento.setBounds(posXBoton, 0, anchoBoton * 2, getHeight());
-                    posXBoton += anchoBoton * 2; // Avanza la posición para el siguiente botón
-                } else {
-                    botonAsiento.setBounds(posXBoton, 0, anchoBoton, getHeight());
-                    posXBoton += anchoBoton; // Avanza la posición para el siguiente botón
-                }
+        // Itera sobre los tipos de asientos y agrega los botones correspondientes
+        for (Asiento value : asientos) {
+            String asiento = "";
+            BotonAsiento botonAsiento;
+            try {
+                asiento = value.getCategoria();
+                botonAsiento = new BotonAsiento(value, informar);
+                this.add(botonAsiento); // Agrega el botón al panel
+            } catch (Exception e) {
+                botonAsiento = new BotonAsiento(null, informar);
+                this.add(botonAsiento);
             }
+
+            // Ajusta la posición y tamaño del botón según el tipo de asiento
+            if (asiento.equals("Salón Cama") || asiento.equals("Premium")) {
+                botonAsiento.setBounds(posXBoton, 0, anchoBoton * 2, getHeight());
+                posXBoton += anchoBoton * 2; // Avanza la posición para el siguiente botón
+            } else {
+                botonAsiento.setBounds(posXBoton, 0, anchoBoton, getHeight());
+                posXBoton += anchoBoton; // Avanza la posición para el siguiente botón
+            }
+        }
     }
 
     /**

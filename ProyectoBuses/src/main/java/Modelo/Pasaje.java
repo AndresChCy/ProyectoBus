@@ -1,6 +1,8 @@
 package Modelo;
+
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
@@ -19,46 +21,47 @@ public class Pasaje {
 
     /**
      * Constructor de Pasaje que inicializa las variables.
-     * @param Pasajero  Pasajero dueño del pasaje.
-     * @param Asiento   Asiento del pasajero.
-     * @param Origen    Ciduad de origen del viaje.
-     * @param Destino   Ciudad de destino del viaje.
-     * @param Fecha     Fecha del viaje.
-     * @param Precio    Precio del viaje.
+     * @param pasajero  Pasajero dueño del pasaje.
+     * @param asiento   Asiento del pasajero.
+     * @param origen    Ciudad de origen del viaje.
+     * @param destino   Ciudad de destino del viaje.
+     * @param fecha     Fecha del viaje.
+     * @param precio    Precio del viaje.
+     * @param descuento Descuento aplicado al viaje.
      */
-    public Pasaje(Pasajero Pasajero, Asiento Asiento, Ciudades Origen, Ciudades Destino, LocalDateTime Fecha, int Precio,Descuentos descuento) {
-        this.pasajero = Pasajero;
-        this.asiento = Asiento;
+    public Pasaje(Pasajero pasajero, Asiento asiento, Ciudades origen, Ciudades destino, LocalDateTime fecha, int precio, Descuentos descuento) {
+        this.pasajero = pasajero;
+        this.asiento = asiento;
         this.numAsiento = asiento.getNumero();
-        this.origen = Origen;
-        this.destino = Destino;
-        this.fecha = Fecha;
-        this.viajePrecio = Precio;
+        this.origen = origen;
+        this.destino = destino;
+        this.fecha = fecha;
+        this.viajePrecio = precio;
         this.descuento = descuento;
     }
 
     /**
-     * Metodo para obtener información del pasaje.
-     * @return  String con la informacion en formato natural de la respectiva variable.
+     * Método para obtener información del pasaje.
+     * @return  String con la información en formato natural de la respectiva variable.
      */
     public String obtenerPasaje() {
-        return "Nombre: "+pasajero.getNombre()+" "+pasajero.getApellido()+"\n"+
-                "Número de Asiento: "+asiento.getNumero()+
-                " TIPO: " +asiento.getCategoria() +"\n"+
-                "Origen: "+origen+"\n"+
-                "Destino: "+destino+"\n"+
-                "Fecha: "+fecha+"\n"+
-                "DESCUENTO: " + descuento.toString()+"\n"+
-                "Precio del Viaje: "+viajePrecio+"\n";
+        return "Nombre: " + pasajero.getNombre() + " " + pasajero.getApellido() + "\n" +
+                "Número de Asiento: " + asiento.getNumero() +
+                " TIPO: " + asiento.getCategoria() + "\n" +
+                "Origen: " + origen + "\n" +
+                "Destino: " + destino + "\n" +
+                "Fecha: " + fecha + "\n" +
+                "DESCUENTO: " + descuento.toString() + "\n" +
+                "Precio del Viaje: " + viajePrecio + "\n";
     }
 
     /**
-     * Metodo para ponerle un nombre al pasaje
+     * Método para ponerle un nombre al pasaje
      * @return el nombre del pasaje
      */
-    public String nombrar(){
-        String titulo = new String("Pasajero");
-        titulo += origen.ordinal() ;
+    public String nombrar() {
+        String titulo = "Pasajero";
+        titulo += origen.ordinal();
         titulo += destino.ordinal();
         titulo += fecha.getDayOfYear();
         titulo += fecha.getHour();
@@ -68,13 +71,16 @@ public class Pasaje {
     }
 
     /**
-     * Metodo para serializar en un archivo txt el pasaje
+     * Método para serializar en un archivo txt el pasaje
      */
-    public void imprimir(){
-        FileWriter informe = null ;
-        PrintWriter escritor = null;
+    public void imprimir() {
+        FileWriter informe = null;
+        PrintWriter escritor;
         try {
-            File archivo = new File("Test pasajes/"+nombrar()+".txt");
+            // Ruta relativa al directorio del proyecto
+            String ruta = System.getProperty("user.dir") + "/ProyectoBus/Test pasajes/";
+            File archivo = new File(ruta + nombrar() + ".txt");
+
             informe = new FileWriter(archivo);
             escritor = new PrintWriter(informe);
 
@@ -82,10 +88,18 @@ public class Pasaje {
             escritor.println(obtenerPasaje());
             escritor.println("\n");
 
-        } catch (Exception e) {
-            System.out.println("Error:"+e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error al crear el archivo: " + e.getMessage());
+            e.printStackTrace();
         } finally {
-            escritor.close();
+            if (informe != null) {
+                try {
+                    informe.close();
+                } catch (IOException e) {
+                    System.out.println("Error al cerrar el FileWriter: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
