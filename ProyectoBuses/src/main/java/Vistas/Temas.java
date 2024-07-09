@@ -83,8 +83,8 @@ public class Temas {
 
     /**
      * Selecciona un tema aleatorio de la lista de temas cargados.
-     *
-     * @return El tema seleccionado aleatoriamente.
+     *y la guarda en el tema seleccionado
+     *  .
      */
     public void seleccionarTemaAleatorio() {
         int index = random.nextInt(temas.size());

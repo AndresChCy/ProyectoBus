@@ -130,7 +130,6 @@ public class PanelAsientos extends JPanel implements CalendarioObserver, TemasOb
             this.remove(panelBus);
             this.remove(panelCambioPiso);
         } catch (Exception ignored) {}
-
         try {
             // Obtiene los pisos del bus y crea los paneles correspondientes
             ArrayList<PisoBus> pisos = CalendarioViajes.getInstance().getViaje().getBus().getPisosBus();
@@ -140,14 +139,6 @@ public class PanelAsientos extends JPanel implements CalendarioObserver, TemasOb
             }
             panelBus = paneles.get(0);
             panelCambioPiso = new PanelCambioPiso(this);
-
-            // Añade los nuevos paneles al panel principal
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.fill = GridBagConstraints.BOTH; // Permitir que los componentes se expandan
-            gbc.weightx = 1.0; // Permitir expansión horizontal
-            gbc.weighty = 1.0; // Permitir expansión vertical
-            gbc.gridx = 0;
-            gbc.gridy = 0;
 
             this.add(panelBus);
             this.add(panelCambioPiso);
@@ -167,7 +158,7 @@ public class PanelAsientos extends JPanel implements CalendarioObserver, TemasOb
 
     /**
      * Establece el panel de bus actual basado en un índice.
-     * @param i Índice del panel de bus.
+     * @param i Indice del panel de bus.
      */
     public void setPanelBus(int i) {
         this.panelBus = paneles.get(i);

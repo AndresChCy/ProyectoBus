@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: a a
+Número de Asiento: 22 TIPO: Salón Cama
+Origen: SANTIAGO
+Destino: CHILLAN
+Fecha: 2024-07-09T01:05
+DESCUENTO: ESTUDIANTE
+Precio del Viaje: 3121
+
+
+

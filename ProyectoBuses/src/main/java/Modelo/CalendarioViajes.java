@@ -2,14 +2,12 @@ package Modelo;
 
 
 import java.io.*;
-import java.security.Guard;
 
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.time.*;
 import java.util.Collections;
-import java.util.Comparator;
 
 
 /**
@@ -26,7 +24,7 @@ public class CalendarioViajes implements Serializable {
     private LocalDate ultimoGuardado;
     private ArrayList<ViajeBus> diaApuntado;
     private ViajeBus viajeApuntado;
-    private ArrayList<CalendarioObserver> seguidores;
+    private transient ArrayList<CalendarioObserver> seguidores;
 
 
     /**
@@ -75,7 +73,7 @@ public class CalendarioViajes implements Serializable {
      * Añade un viaje al calendario
      * @param viaje viaje que se añade segun su origen destino y fecha
      */
-    public void añadirViaje(ViajeBus viaje ){
+    public void anadirViaje(ViajeBus viaje ){
         Ciudades orig = viaje.getOrigen();
         Ciudades est = viaje.getDestino();
         LocalDateTime fecha = viaje.getFecha();

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class BotonConfiguraciones extends JButton {
     private ImageIcon iconoTuerca; // Icono de la tuerca para ser mostrado en el botón
     private Image imagenOriginal; // Imagen original de la tuerca cargada desde un archivo
-    private double angulo = 0; // Ángulo de rotación actual de la imagen
+    private double angulo = 0; // Angulo de rotación actual de la imagen
     private Timer timer; // Timer para controlar la animación de rotación
     private static final Logger logger = Logger.getLogger(BotonConfiguraciones.class.getName());
 

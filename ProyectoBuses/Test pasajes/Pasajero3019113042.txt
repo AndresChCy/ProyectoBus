@@ -1,0 +1,11 @@
+----PASAJE BUS----
+Nombre: sasa as
+Número de Asiento: 42 TIPO: Estándar
+Origen: SANTIAGO
+Destino: CHILLAN
+Fecha: 2024-07-09T01:30
+DESCUENTO: ADULTOMAYOR
+Precio del Viaje: 2288
+
+
+

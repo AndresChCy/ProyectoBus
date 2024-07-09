@@ -32,7 +32,7 @@ public class PanelCodigoColor extends JPanel {
         agregarEtiquetaColoreada("PREFERENCIAL", COLOR_PREFERENCIAL, fuente);
 
         // Agrega etiquetas con imágenes y texto descriptivo
-        agregarEtiquetaImagen("ESTÁNDAR", "/estándar.png", fuente);
+        agregarEtiquetaImagen("ESTANDAR", "/estandar.png", fuente);
         agregarEtiquetaImagen("SEMI CAMA", "/semicama.png", fuente);
         agregarEtiquetaImagen("SALÓN CAMA", "/salóncama.png", fuente);
         agregarEtiquetaImagen("PREMIUM", "/premium.png", fuente);

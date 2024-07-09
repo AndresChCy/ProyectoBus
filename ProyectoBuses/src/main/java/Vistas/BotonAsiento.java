@@ -20,7 +20,7 @@ public class BotonAsiento extends JButton {
     // Mapa estático para mapear tipos de asiento a sus respectivas rutas de imágenes
     private static final Map<String, String> RUTAS_IMAGENES = new HashMap<>();
     static {
-        RUTAS_IMAGENES.put("Estándar", "/estándar.png");
+        RUTAS_IMAGENES.put("Estándar", "/estandar.png");
         RUTAS_IMAGENES.put("SemiCama", "/semicama.png");
         RUTAS_IMAGENES.put("Salón Cama", "/salóncama.png");
         RUTAS_IMAGENES.put("Premium", "/premium.png");
